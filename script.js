@@ -1,32 +1,35 @@
 
+const canvas = document.querySelector('#canvas')
+const ctx = canvas.getContext('2d')
 
 
 
-
-let roadImg = new Image()
-roadImg.src = './images/road.png'
-roadImg.onload = function (e) {
-    ctx.drawImage(roadImg, 0, 0, 700, 900)
-}
+// let roadImg = new Image()
+// roadImg.src = './images/road.png'
+// roadImg.onload = function (e) {
+//     ctx.drawImage(roadImg, 0, 0, 640, 960)
+// }
 
 
 // PLAYABLE HERO CHARACTER
 class Player {
-    constructor(x, y, w, h, src, speed) {
+    constructor(x, y, w, h, speed) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
-        this.src = src;
         this.PlayerImg = new Image()
         this.speed = speed
+        this.color = 'black'
     }
     loadHero = () => {
         this.PlayerImg.src = this.src
         this.PlayerImg.onload = this.draw
     }
     draw = () => {
-        ctx.drawImage(this.HeroImg, this.x, this.y, this.w, this.h)
+        ctx.fillStyle = this.color
+        ctx.fillRect(this.x, this.y, this.w, this.h)
+        //ctx.drawImage(this.HeroImg, this.x, this.y, this.w, this.h)
     }
 }
 
@@ -41,12 +44,13 @@ class Projectile {
         this.velocity = velocity
     }
     draw() {
-        c.beginPath()
-        c.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
-        c.fillStyle = this.color
-        c.fill()
+        ctx.beginPath()
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false)
+        ctx.fillStyle = this.color
+        ctx.fill()
     }
     update() {
+        this.draw()
         this.x = this.x + this.velocity.x
         this.y = this.y + this.velocity.y
     }
@@ -56,9 +60,8 @@ class Projectile {
 
 
 
-
 // CREATING PLAYER 
-const player = new Player(x, y, w, h, src, speed)
+const player = new Player(10, 10, 50, 50, 5)
 player.draw()
 
 
@@ -67,32 +70,70 @@ player.draw()
 const projectile = new Projectile(player.x, player.y, 5, 'red', { x: 1, y: 1 })
 projectile.draw()
 
+const projectiles = []
+
+
+
+
+
+
+
+// MOVING PLAYER
+onkeydown = function (e) {
+    console.log(e.key)
+    if (e.key === 'ArrowLeft') {
+        if (player.x > 0) {
+            player.x -= 15
+        }
+    }
+    if (e.key === 'ArrowRight') {
+        if (player.x < 960) {
+            player.x += 15
+        }
+    }
+    if (e.key === 'ArrowUp') {
+        if (player.y > 0) {
+            player.y -= 15
+        }
+    }
+    if (e.key === 'ArrowDown') {
+        if (player.y < 640) {
+            player.y += 15
+        }
+    }
+}
+
 
 
 
 // ANIMATE
 function animate() {
     requestAnimationFrame(animate)
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+
     projectiles.forEach((projectile) => {
         projectile.update()
     })
+
+    player.draw()
 }
 
-
+animate()
 
 
 // PLAYER ATTACK EVENT LISTENER
 addEventListener('click', (event) => {
     const angle = Math.atan2(
         event.clientY - canvas.height / 2,
-        event.clientx - canvas.width / 2
+        event.clientX - canvas.width / 2
     )
     const velocity = {
         x: Math.cos(angle),
         y: Math.sin(angle)
     }
     projectiles.push(
-        new Projectile()
+        new Projectile(player.x, player.y, 5, 'red', velocity)
     )
 })
 
