@@ -58,23 +58,8 @@ class Projectile {
 
 
 
-
-
 // CREATING PLAYER 
 const player = new Player(10, 10, 50, 50, 5)
-player.draw()
-
-
-
-//CREATING PROJECTILES
-const projectile = new Projectile(player.x, player.y, 5, 'red', { x: 1, y: 1 })
-projectile.draw()
-
-const projectiles = []
-
-
-
-
 
 
 
@@ -103,7 +88,7 @@ onkeydown = function (e) {
     }
 }
 
-
+const projectiles = []
 
 
 // ANIMATE
@@ -111,22 +96,19 @@ function animate() {
     requestAnimationFrame(animate)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
+    player.draw()
 
     projectiles.forEach((projectile) => {
         projectile.update()
     })
-
-    player.draw()
 }
-
-animate()
 
 
 // PLAYER ATTACK EVENT LISTENER
 addEventListener('click', (event) => {
     const angle = Math.atan2(
-        event.clientY - canvas.height / 2,
-        event.clientX - canvas.width / 2
+        event.clientY - player.y,
+        event.clientX - player.x
     )
     const velocity = {
         x: Math.cos(angle),
@@ -138,14 +120,7 @@ addEventListener('click', (event) => {
 })
 
 
-
-
-
-
-
-
-
-
+animate()
 
 
 // COLLISION DETECTION - HERO VS ENEMY
