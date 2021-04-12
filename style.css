@@ -1,13 +1,18 @@
-
 body {
-    margin: 0;
-    width: 100vw;
+  margin: 0;
+  width: 100vw;
+}
+
+canvas {
+  background-image: url("./images/levelone.png");
+  background-position: contain;
+  background-repeat: no-repeat;
+  background-size: 1200;
 }
 
 #game-board {
-    width: 1200px;
-    height: 700px;
-    padding-top: 100px;
-    padding-left: 100px;
+  width: 1200px;
+  height: 700px;
+  padding-top: 100px;
+  padding-left: 100px;
 }
-
