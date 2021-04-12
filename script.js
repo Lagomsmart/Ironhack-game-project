@@ -57,7 +57,6 @@ class Projectile {
 }
 
 
-
 // CREATING PLAYER 
 const player = new Player(10, 10, 50, 50, 15)
 
