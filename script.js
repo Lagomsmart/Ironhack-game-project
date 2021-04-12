@@ -163,17 +163,35 @@ function animate() {
         enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'blue'))
     }
 
-    detectCollision()
-
     enemies.forEach((enemy, index) => {
         enemy.update()
     });
+
+    // enemies.forEach((enemy, i) => {
+    //     projectiles.forEach((projectile, j) => {
+    //         if (
+    //             projectile.x < enemy.x + enemy.width &&
+    //             projectile.x + projectile.width > enemy.x &&
+    //             projectile.y < enemy.y + enemy.height &&
+    //             projectile.y + projectile.height > enemy.y
+    //         ) {
+    //             enemies.splice(i, 1);
+    //             projectiles.splice(j, 1);
+    //         }
+    //         // if(enemy.y >canvas.height +600){
+    //         //   enemies.splice(i,1)
+    //         // }
+    //         if (projectile.y < 0 || projectile.y > 2000) {
+    //             projectiles.splice(j, 1);
+    //         }
+    //     });
+    // });
+
 
     enemies.forEach((enemy, index) => {
         enemy.update(
 
             projectiles.forEach((projectile) => {
-
 
                 const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
 
@@ -189,11 +207,14 @@ function animate() {
         //detectCollision(player, enemy) // player and enemy collide
     })
     //If player reaches next door
-    // if (player.x == canvas.width - 50 && player.y < 350 && player.y > 250) {
-    //     console.log('next room!');
-    // }
-}
+    if (player.x == canvas.width - 50 && player.y < 350 && player.y > 250) {
+        console.log('next room!');
+    }
 
+
+
+
+}
 
 animate()
 // ---------- END OF ANIMATE ----------
@@ -231,10 +252,15 @@ function detectCollision() {
     enemies.forEach((enemy, i) => {
         projectiles.forEach((projectile, j) => {
             if (
-                projectile.x < enemy.x + enemy.width &&
-                projectile.x + projectile.width > enemy.x &&
-                projectile.y < enemy.y + enemy.height &&
-                projectile.y + projectile.height > enemy.y
+                projectile.x < enemy.x + enemy.w &&
+                projectile.x + projectile.w > enemy.x &&
+                projectile.y < enemy.y + enemy.h &&
+                projectile.y + projectile.h > enemy.y
+
+                // rect1.x < rect2.x + rect2.w &&
+                // rect1.x + rect1.w > rect2.x &&
+                // rect1.y < rect2.y + rect2.h &&
+                // rect1.y + rect1.h > rect2.y
             ) {
                 //enemies[i].strength--;
                 // if (enemies[i].strength <= 0) {
