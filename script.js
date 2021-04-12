@@ -10,8 +10,7 @@ const ctx = canvas.getContext('2d')
 //     ctx.drawImage(roadImg, 0, 0, 640, 960)
 // }
 
-
-// PLAYABLE HERO CHARACTER
+// ---------- Player class ----------
 class Player {
     constructor(x, y, w, h, speed) {
         this.x = x;
@@ -33,7 +32,7 @@ class Player {
     }
 }
 
-
+// ---------- Player Projectile class ----------
 // PROJECTILE CLASS
 class Projectile {
     constructor(x, y, radius, color, velocity) {
@@ -57,15 +56,18 @@ class Projectile {
 }
 
 
+
+
+// ---------- Enemy class ----------
 class Enemy {
-    constructor(x, y, w, h, speed) {
+    constructor(x, y, w, h, speed, color) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
         this.EnemyImg = new Image()
         this.speed = speed
-        this.color = 'red'
+        this.color = color
     }
     loadHero = () => {
         this.EnemyImg.src = this.src
@@ -77,19 +79,24 @@ class Enemy {
     }
     update() {
         this.draw()
-        this.x = this.x + this.velocity.x
-        this.y = this.y + this.velocity.y
+        this.x = this.x// + this.velocity.x
+        this.y = this.y// + this.velocity.y
     }
 }
 
 
 // CREATING PLAYER 
-const player = new Player(10, 10, 50, 50, 15)
+const player = new Player(10, canvas.height / 2, 50, 50, 15)
 
 // CREATING ENEMY
+<<<<<<< HEAD
 const enemyLevel1 = new Enemy(650, 200, 50, 50, 15)
+=======
+//const enemyLevel1 = new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'green')
+>>>>>>> ce40df13b23a1df4f59ec1eae5324a7ddae60dcc
 
 let enemies = [];
+
 
 // ---------- MOVING PLAYER ----------
 var LEFT = false;
@@ -125,26 +132,42 @@ function move() {
 // ---------- END OF PLAYER MOVEMENT ----------
 
 
-const projectile = new Projectile (player.x, player.y, 5, 'red', 30) // might need to be removed later
-
+const projectile = new Projectile(player.x, player.y, 5, 'red', 30) // might need to be removed later
 const projectiles = []
 
 
-// ANIMATE
+
+
+
+//enemies.push()
+
+
+
+
+
+
+// ---------- ANIMATE ----------
 function animate() {
     requestAnimationFrame(animate)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     player.draw()
     move() //Player movement
+<<<<<<< HEAD
     enemyLevel1.draw()
     
+=======
+
+    //enemyLevel1.draw()
+
+>>>>>>> ce40df13b23a1df4f59ec1eae5324a7ddae60dcc
 
     projectiles.forEach((projectile) => {
         detectCollision(projectile, enemyLevel1)
         projectile.update()
     })
 
+<<<<<<< HEAD
     // enemies.forEach((enemy, index) => {
     //     enemy.update(
 
@@ -165,11 +188,53 @@ function animate() {
 
     detectCollision(player, enemyLevel1) // player and enemy collide
     detectCollision(projectile, enemyLevel1)
+=======
+
+    if (enemies.length < 2) { // if new room? spawn push new enemies into array
+        enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'blue'))
+    }
+
+    detectCollision()
+
+    enemies.forEach((enemy, index) => {
+        enemy.update()
+    });
+
+    //     enemies.forEach((enemy, index) => {
+    //         enemy.update(
+
+    //             projectiles.forEach((projectile) => {
+
+
+    //                 const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
+
+    //                 // objects touch
+    //                 // if (dist - enemy.h / 2 - projectile.radius < 1) {
+    //                 //     setTimeout(() => {
+    //                 //         enemies.splice(index, 1)
+    //                 //         projectiles.splice(index, 1)
+    //                 //     })
+    //                 // }
+    //             })
+    //         )
+    //         //detectCollision(player, enemy) // player and enemy collide
+    //     })
+    //     If player reaches next door
+    //     if (player.x == canvas.width - 50 && player.y < 350 && player.y > 250) {
+    //         console.log('next room!');
+    //     }
+>>>>>>> ce40df13b23a1df4f59ec1eae5324a7ddae60dcc
 }
 
 
+animate()
+// ---------- END OF ANIMATE ----------
 
-// PLAYER ATTACK EVENT LISTENER
+
+
+
+
+// ---------- PLAYER ATTACK EVENT LISTENER ----------
 addEventListener('click', (event) => {
     const angle = Math.atan2(
         event.clientY - player.y - 100,
@@ -185,17 +250,81 @@ addEventListener('click', (event) => {
 })
 
 
-animate()
+
+
+
+
+
+
+// ---------- COLLISION DETECTION ----------
+
+// VALS COLLISION CODE
+function detectCollision() {
+    enemies.forEach((enemy, i) => {
+        projectiles.forEach((projectile, j) => {
+            if (
+                projectile.x < enemy.x + enemy.width &&
+                projectile.x + projectile.width > enemy.x &&
+                projectile.y < enemy.y + enemy.height &&
+                projectile.y + projectile.height > enemy.y
+            ) {
+                //enemies[i].strength--;
+                // if (enemies[i].strength <= 0) {
+                //     let newCoin = {
+                //         x: enemies[i].x,
+                //         y: enemies[i].y,
+                //         width: 20,
+                //         height: 20,
+                //         imgP: 0,
+                //     };
+                //     coins.push(newCoin);
+                //     enemies.splice(i, 1);
+                // }
+                projectiles.splice(j, 1);
+            }
+            // if(enemy.y >canvas.height +600){
+            //   enemies.splice(i,1)
+            // }
+            if (projectile.y < 0 || projectile.y > 2000) {
+                projectiles.splice(j, 1);
+            }
+        });
+    });
+}
+
+
+
+//detectCollision(projectile, enemy) // hero projectile vs enemy
+
+
 
 
 // COLLISION DETECTION - HERO VS ENEMY
-function detectCollision(rect1, rect2) {
-    if (rect1.x < rect2.x + rect2.w &&
-        rect1.x + rect1.w > rect2.x &&
-        rect1.y < rect2.y + rect2.h &&
-        rect1.y + rect1.h > rect2.y) {
-        // collision detected!
-        console.log("COLLISION")
-        alert("Enemy HIT")
-    }
-}
+// function detectCollision(rect1, rect2) {
+//     if (rect1.x < rect2.x + rect2.w &&
+//         rect1.x + rect1.w > rect2.x &&
+//         rect1.y < rect2.y + rect2.h &&
+//         rect1.y + rect1.h > rect2.y) {
+//         // collision detected!
+//         console.log("COLLISION")
+//         alert("Player HIT")
+//     }
+// }
+
+// COLLISION DETECTION - HERO Projectile VS ENEMY
+// function detectCollisionProjectilveVsHero(rect1, rect2) {
+//     if (rect1.x < rect2.x + rect2.w &&
+//         rect1.x + rect1.w > rect2.x &&
+//         rect1.y < rect2.y + rect2.h &&
+//         rect1.y + rect1.h > rect2.y) {
+//         // collision detected!
+//         console.log("COLLISION - Enemy hit by Projectile")
+//     }
+// }
+
+
+
+
+
+
+// ---------- END OF COLLISION DETECTION ----------
