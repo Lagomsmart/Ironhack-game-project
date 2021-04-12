@@ -68,22 +68,22 @@ onkeydown = function (e) {
     console.log(e.key)
     if (e.key === 'ArrowLeft') {
         if (player.x > 0) {
-            player.x -= 15
+            player.x -= 30
         }
     }
     if (e.key === 'ArrowRight') {
         if (player.x < 960) {
-            player.x += 15
+            player.x += 30
         }
     }
     if (e.key === 'ArrowUp') {
         if (player.y > 0) {
-            player.y -= 15
+            player.y -= 30
         }
     }
     if (e.key === 'ArrowDown') {
         if (player.y < 640) {
-            player.y += 15
+            player.y += 30
         }
     }
 }
@@ -111,8 +111,8 @@ addEventListener('click', (event) => {
         event.clientX - player.x
     )
     const velocity = {
-        x: Math.cos(angle),
-        y: Math.sin(angle)
+        x: Math.cos(angle) * 6,
+        y: Math.sin(angle) * 6
     }
     projectiles.push(
         new Projectile(player.x, player.y, 5, 'red', velocity)
