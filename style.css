@@ -1,11 +1,13 @@
+
 body {
     margin: 0;
     width: 100vw;
-    height: 1000px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
 }
 
-#
+#game-board {
+    width: 1200px;
+    height: 700px;
+    padding-top: 100px;
+    padding-left: 100px;
+}
+
