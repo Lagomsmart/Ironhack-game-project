@@ -59,34 +59,68 @@ class Projectile {
 
 
 // CREATING PLAYER 
-const player = new Player(10, 10, 50, 50, 5)
+const player = new Player(10, 10, 50, 50, 15)
 
 
 
-// MOVING PLAYER
-onkeydown = function (e) {
-    console.log(e.key)
-    if (e.key === 'ArrowLeft') {
-        if (player.x > 0) {
-            player.x -= 30
-        }
+// ---------- MOVING PLAYER ----------
+var LEFT = false;
+var RIGHT = false;
+var UP = false;
+let DOWN = false;
+document.onkeydown = function (e) {
+    if (e.keyCode == 37) LEFT = true;
+    if (e.keyCode == 39) RIGHT = true;
+    if (e.keyCode == 38) UP = true;
+    if (e.keyCode == 40) DOWN = true;
+}
+document.onkeyup = function (e) {
+    if (e.keyCode == 37) LEFT = false;
+    if (e.keyCode == 39) RIGHT = false;
+    if (e.keyCode == 38) UP = false;
+    if (e.keyCode == 40) DOWN = false;
+}
+function move() {
+    if (LEFT) {
+        player.x -= player.speed;
     }
-    if (e.key === 'ArrowRight') {
-        if (player.x < 960) {
-            player.x += 30
-        }
+    if (RIGHT) {
+        player.x += player.speed;
     }
-    if (e.key === 'ArrowUp') {
-        if (player.y > 0) {
-            player.y -= 30
-        }
+    if (UP) {
+        player.y -= player.speed;
     }
-    if (e.key === 'ArrowDown') {
-        if (player.y < 640) {
-            player.y += 30
-        }
+    if (DOWN) {
+        player.y += player.speed;
     }
 }
+// ---------- END OF PLAYER MOVEMENT ----------
+
+
+
+// onkeydown = function (e) {     //----- OLD WAY OF MOVING -----
+//     console.log(e.key)
+//     if (e.key === 'ArrowLeft') {
+//         if (player.x > 0) {
+//             player.x -= 30
+//         }
+//     }
+//     if (e.key === 'ArrowRight') {
+//         if (player.x < 960) {
+//             player.x += 30
+//         }
+//     }
+//     if (e.key === 'ArrowUp') {
+//         if (player.y > 0) {
+//             player.y -= 30
+//         }
+//     }
+//     if (e.key === 'ArrowDown') {
+//         if (player.y < 640) {
+//             player.y += 30
+//         }
+//     }
+// }
 
 const projectiles = []
 
@@ -97,6 +131,7 @@ function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     player.draw()
+    move() //Player movement
 
     projectiles.forEach((projectile) => {
         projectile.update()
