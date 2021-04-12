@@ -87,7 +87,7 @@ class Enemy {
 const player = new Player(10, 10, 50, 50, 15)
 
 // CREATING ENEMY
-const enemyLevel1 = new Enemy(Math.random() * 650 + 50, 200, 50, 50, 15)
+const enemyLevel1 = new Enemy(650, 200, 50, 50, 15)
 
 let enemies = [];
 
@@ -138,30 +138,33 @@ function animate() {
     player.draw()
     move() //Player movement
     enemyLevel1.draw()
+    
 
     projectiles.forEach((projectile) => {
+        detectCollision(projectile, enemyLevel1)
         projectile.update()
     })
 
-    enemies.forEach((enemy, index) => {
-        enemy.update(
+    // enemies.forEach((enemy, index) => {
+    //     enemy.update(
 
-            projectiles.forEach((projectile) => {
-                const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
+    //         projectiles.forEach((projectile) => {
+    //             const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
 
-                // objects touch
-                if (dist - enemy.h/2 - projectile.radius < 1) {
-                    enemies.splice(index, 1)
-                    projectiles.splice(index, 1)
-                }
+    //             // objects touch
+    //             if (dist - enemy.h/2 - projectile.radius < 1) {
+    //                 enemies.splice(index, 1)
+    //                 projectiles.splice(index, 1)
+    //             }
             
-            })
-        )
-    })
+    //         })
+    //     )
+    // })
 
-    detectCollision(projectile, enemyLevel1) // hero projectile vs enemy
+    
 
     detectCollision(player, enemyLevel1) // player and enemy collide
+    detectCollision(projectile, enemyLevel1)
 }
 
 
