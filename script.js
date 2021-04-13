@@ -427,9 +427,6 @@ function animate() {
 
     }
 
-    projectiles.forEach((projectile) => {
-        projectile.update()
-    })
 }
 
 animate()
