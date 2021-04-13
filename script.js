@@ -253,15 +253,15 @@ function animate() {
         projectile.update()
     })
 
-
+//  CREATING/PUSHING THE ENEMIES //
     let maxAmountOfEnemies = 3; //we can ++ this to increase monsterspawn per room cleared
     let maxAmountOfOtherEnemies = 3
 
     if (enemies.length < maxAmountOfEnemies) {
-        enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 10))
+        enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
     }
     if (otherEnemies.length < maxAmountOfOtherEnemies) {
-        otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 10))
+        otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
     }
 
     // [enemies] moving
@@ -316,19 +316,24 @@ function animate() {
         }
     })
 
-    // setInterval(() => {
+    function poop () {
     enemies.forEach((enemy) => {
         if (detectCollision(enemy, player)) {
-            player.health - enemy.damage
+            player.health -= enemy.damage
         }
     });
+    if (elapsed < 2000) {
+        window.requestAnimationFrame(poop);
+    }
+}
+
 
     otherEnemies.forEach((otherenemy) => {
         if (detectCollision(otherenemy, player)) {
-            player.health - otherenemy.damage
+            player.health -= otherenemy.damage
         }
     });
-// }, 500)
+
 
 
     //If player reaches next door
