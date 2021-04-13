@@ -41,13 +41,13 @@ class Player {
         ctx.fillStyle = 'green'
         ctx.fillRect(10, 10, Math.max(0, this.health / 100 * 200), 25)
         if (this.health <= 0) {
-            this.dead()
+            //this.dead()
         }
     }
-    dead = () => {
-        cancelAnimationFrame(stopGame)
-        restartGame()
-    }
+    // dead = () => {
+    //     cancelAnimationFrame(stopGame)
+    //     restartGame()
+    // }
 }
 
 // ---------- Player Projectile class ----------
@@ -316,19 +316,19 @@ function animate() {
         }
     })
 
-    // setInterval(() => {
+
     enemies.forEach((enemy) => {
         if (detectCollision(enemy, player)) {
-            player.health - enemy.damage
+            player.health -= enemy.damage
         }
     });
 
     otherEnemies.forEach((otherenemy) => {
         if (detectCollision(otherenemy, player)) {
-            player.health - otherenemy.damage
+            player.health -= otherenemy.damage
         }
     });
-// }, 500)
+
 
 
     //If player reaches next door
