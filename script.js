@@ -16,7 +16,7 @@ const ctx = canvas.getContext('2d')
 
 // ---------- Player class ----------
 class Player {
-    constructor(x, y, w, h, speed, health, damage, stamina) {
+    constructor(x, y, w, h, speed, maxhealth, health, damage, stamina) {
         this.x = x;
         this.y = y;
         this.w = w;
@@ -25,6 +25,7 @@ class Player {
         this.speed = speed
         this.color = 'black'
         this.health = health;
+        this.maxhealth = maxhealth
         this.damage = damage;
         this.stamina = stamina;
     }
@@ -85,8 +86,8 @@ class Enemy {
         this.EnemyImg = new Image()
         this.speed = speed
         this.color = color
-        this.damage = damage
         this.health = health
+        this.damage = damage
     }
     loadHero = () => {
         this.EnemyImg.src = this.src
@@ -103,25 +104,56 @@ class Enemy {
     }
     move() {
         if (player.x > this.x) {
-            this.x++
+            this.x += this.speed
         }
         if (player.x < this.x) {
-            this.x--
+            this.x -= this.speed
         }
         if (player.y > this.y) {
-            this.y++
+            this.y += this.speed
         }
         if (player.y < this.y) {
-            this.y--
+            this.y -= this.speed
         }
     }
     randomPathing() { //TESTING    Enemy random pathing left
         let randomNum = Math.floor(Math.random() * 2)
-        this.x--
+        this.x -= this.speed
         if (randomNum === 1) {
-            this.y--
+            this.y -= this.speed
         } else {
-            this.y++
+            this.y += this.speed
+        }
+    }
+}
+
+// ---------- Powerup class ----------
+class Powerups {
+    constructor(x, y, w, h, color) {
+        this.x = x;
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.color = color
+    }
+}
+
+// ---------- Heal Powerup ----------
+class healPowerup extends Powerups {
+    constructor(x, y, w, h, color) {
+        super(x, y, w, h, color)
+    }
+    draw = () => {
+        ctx.fillStyle = this.color
+        ctx.fillRect(this.x, this.y, this.w, this.h)
+    }
+    heal(player) {
+        if (player.health < player.maxhealth) {
+            player.health += 50
+
+            if (player.health > player.maxhealth) {
+                player.health = player.maxhealth
+            }
         }
     }
 }
@@ -144,18 +176,15 @@ class Enemy {
 
 //----------DECLARING PLAYER, ENEMY, OBJECTS ----------
 // CREATING PLAYER 
-const player = new Player(10, canvas.height / 2, 50, 50, 15, 100, 5, 100)
+const player = new Player(10, canvas.height / 2, 50, 50, 5, 100, 100, 5, 100)
 
-// CREATING ENEMY
-//const enemyLevel1 = new Enemy(650, 200, 50, 50, 15)
-const enemyLevel1 = new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'green', 10, 10)
+let healthBoost = new healPowerup(1000, 300, 30, 30, 'green')
+
 
 let enemies = [];
 let otherEnemies = [];
 
-
-const projectile = new Projectile(player.x, player.y, 5, 'red', 30) // might need to be removed later
-const projectiles = []
+const projectiles = [];
 
 
 
@@ -212,7 +241,7 @@ function move() {
 
 
 
-// ---------- ANIMATE ----------
+// ---------- ANIMATE ---------- ---------- ANIMATE ---------- ---------- ANIMATE ----------
 function animate() {
     requestAnimationFrame(animate)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -229,10 +258,10 @@ function animate() {
     let maxAmountOfOtherEnemies = 3
 
     if (enemies.length < maxAmountOfEnemies) {
-        enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'blue', 10, 10))
+        enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 10))
     }
     if (otherEnemies.length < maxAmountOfOtherEnemies) {
-        otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 15, 'green', 10, 10))
+        otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 10))
     }
 
     // [enemies] moving
@@ -265,7 +294,7 @@ function animate() {
         )
     })
 
-    // [otherEnemies] updating  GREEN
+    // [otherEnemies] updating  RED
     otherEnemies.forEach((enemy, index) => {
         enemy.update(
 
@@ -275,6 +304,11 @@ function animate() {
                     otherEnemies.splice(index, 1)
                     projectiles.splice(index, 1)
                 }
+
+                //If projectile is outside of screen, delete it
+                if (projectile.y < 0 || projectile.y > 2000 || projectile.x < -200 || projectile.x > 2000) {
+                    projectiles.splice(index, 1);
+                }
             })
         )
         if (enemy.x < -200) { // if enemy walk off screen left, they are removed from array
@@ -282,19 +316,19 @@ function animate() {
         }
     })
 
-    setInterval(() => {
+    // setInterval(() => {
     enemies.forEach((enemy) => {
-        if (!detectCollision(enemy, player)) {
+        if (detectCollision(enemy, player)) {
             player.health - enemy.damage
         }
     });
 
     otherEnemies.forEach((otherenemy) => {
-        if (!detectCollision(otherenemy, player)) {
+        if (detectCollision(otherenemy, player)) {
             player.health - otherenemy.damage
         }
     });
-}, 500)
+// }, 500)
 
 
     //If player reaches next door
@@ -304,7 +338,7 @@ function animate() {
 }
 
 animate()
-// ---------- END OF ANIMATE ----------
+// ---------- END OF ANIMATE ---------- ---------- END OF ANIMATE ---------- ---------- END OF ANIMATE ----------
 
 
 
