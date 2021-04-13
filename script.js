@@ -159,6 +159,11 @@ class Powerups {
         ctx.fillStyle = this.color
         ctx.fillRect(this.x, this.y, this.w, this.h)
     }
+    update() {
+        this.draw()
+        this.x = this.x// + this.velocity.x
+        this.y = this.y// + this.velocity.y
+    }
 }
 
 // ---------- Heal Powerup ----------
@@ -196,9 +201,12 @@ let healthPotion = new healPowerup(1000, 300, 30, 30, 'green')
 
 
 let enemies = [];
+
 let otherEnemies = [];
 
 const projectiles = [];
+
+let powerups = [];
 
 
 
@@ -283,7 +291,9 @@ setInterval(() => {
 
 
 
-
+if (powerups.length < 1) {
+    powerups.push(healthPotion)
+}
 
 
 // ---------- ANIMATE ---------- ---------- ANIMATE ---------- ---------- ANIMATE ----------
@@ -295,17 +305,27 @@ function animate() {
 
     move() //Player movement
 
-    healthPotion.draw()
+    
 
-    if (detectCollision(player, healthPotion)) {
-        healthPotion.heal()
-    }
+   
 
-
-
-    projectiles.forEach((projectile) => {
-        projectile.update()
+    powerups.forEach((powerup, x) => {
+        
+        if (detectCollision(player, powerup)) {
+            powerup.heal()
+            powerups.splice(x, 1)
+        } else {
+            powerup.draw()
+        }
     })
+
+
+
+
+    // projectiles.forEach((projectile) => {
+    //     projectile.update()
+    // })
+
 
 //  CREATING/PUSHING THE ENEMIES //
     let maxAmountOfEnemies = 3; //we can ++ this to increase monsterspawn per room cleared
@@ -378,6 +398,10 @@ function animate() {
     if (player.x == canvas.width - 50 && player.y < 350 && player.y > 250) {
         console.log('next room!');
     }
+
+    projectiles.forEach((projectile) => {
+        projectile.update()
+    })
 }
 
 animate()
