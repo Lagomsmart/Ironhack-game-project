@@ -330,9 +330,9 @@ function animate() {
 
 
 
-    // projectiles.forEach((projectile) => {
-    //     projectile.update()
-    // })
+    projectiles.forEach((projectile) => {
+        projectile.update()
+    })
 
 
     //  CREATING/PUSHING THE ENEMIES //
@@ -451,7 +451,7 @@ addEventListener('click', (event) => {
             y: Math.sin(angle) * 14
         }
         projectiles.push(
-            new Projectile(player.x, player.y, 5, 'red', velocity)
+            new Projectile(player.x + player.w/2, player.y + player.h/2, 5, 'red', velocity)
         )
     } else {
         console.log('Not enough Stamina!');
