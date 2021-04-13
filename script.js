@@ -89,11 +89,7 @@ class Enemy {
 const player = new Player(10, canvas.height / 2, 50, 50, 15)
 
 // CREATING ENEMY
-<<<<<<< HEAD
-const enemyLevel1 = new Enemy(650, 200, 50, 50, 15)
-=======
 //const enemyLevel1 = new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'green')
->>>>>>> ce40df13b23a1df4f59ec1eae5324a7ddae60dcc
 
 let enemies = [];
 
@@ -153,77 +149,42 @@ function animate() {
 
     player.draw()
     move() //Player movement
-<<<<<<< HEAD
-    enemyLevel1.draw()
-    
-=======
 
     //enemyLevel1.draw()
 
->>>>>>> ce40df13b23a1df4f59ec1eae5324a7ddae60dcc
 
     projectiles.forEach((projectile) => {
-        detectCollision(projectile, enemyLevel1)
         projectile.update()
     })
 
-<<<<<<< HEAD
-    // enemies.forEach((enemy, index) => {
-    //     enemy.update(
-
-    //         projectiles.forEach((projectile) => {
-    //             const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
-
-    //             // objects touch
-    //             if (dist - enemy.h/2 - projectile.radius < 1) {
-    //                 enemies.splice(index, 1)
-    //                 projectiles.splice(index, 1)
-    //             }
-            
-    //         })
-    //     )
-    // })
-
-    
-
-    detectCollision(player, enemyLevel1) // player and enemy collide
-    detectCollision(projectile, enemyLevel1)
-=======
 
     if (enemies.length < 2) { // if new room? spawn push new enemies into array
         enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'blue'))
     }
 
-    detectCollision()
+        enemies.forEach((enemy, index) => {
+            enemy.update()
 
-    enemies.forEach((enemy, index) => {
-        enemy.update()
-    });
-
-    //     enemies.forEach((enemy, index) => {
-    //         enemy.update(
-
-    //             projectiles.forEach((projectile) => {
+                projectiles.forEach((projectile) => {
 
 
-    //                 const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
+                    const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
 
-    //                 // objects touch
-    //                 // if (dist - enemy.h / 2 - projectile.radius < 1) {
-    //                 //     setTimeout(() => {
-    //                 //         enemies.splice(index, 1)
-    //                 //         projectiles.splice(index, 1)
-    //                 //     })
-    //                 // }
-    //             })
-    //         )
-    //         //detectCollision(player, enemy) // player and enemy collide
-    //     })
-    //     If player reaches next door
-    //     if (player.x == canvas.width - 50 && player.y < 350 && player.y > 250) {
-    //         console.log('next room!');
-    //     }
->>>>>>> ce40df13b23a1df4f59ec1eae5324a7ddae60dcc
+                    // objects touch
+                    if (dist - enemy.h / 2 - projectile.radius < 1) {
+                        setTimeout(() => {
+                            enemies.splice(index, 1)
+                            projectiles.splice(index, 1)
+                        })
+                    }
+                })
+        })
+            //detectCollision(player, enemy) // player and enemy collide
+      
+        // If player reaches next door
+        if (player.x == canvas.width - 50 && player.y < 350 && player.y > 250) {
+            console.log('next room!');
+        }
 }
 
 
