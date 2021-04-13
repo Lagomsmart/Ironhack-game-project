@@ -16,7 +16,7 @@ const ctx = canvas.getContext('2d')
 
 // ---------- Player class ----------
 class Player {
-    constructor(x, y, w, h, speed) {
+    constructor(x, y, w, h, speed, health, damage, stamina) {
         this.x = x;
         this.y = y;
         this.w = w;
@@ -24,6 +24,9 @@ class Player {
         this.PlayerImg = new Image()
         this.speed = speed
         this.color = 'black'
+        this.health = health;
+        this.damage = damage;
+        this.stamina = stamina;
     }
     loadHero = () => {
         this.PlayerImg.src = this.src
@@ -64,7 +67,7 @@ class Projectile {
 
 // ---------- Enemy class ----------
 class Enemy {
-    constructor(x, y, w, h, speed, color) {
+    constructor(x, y, w, h, speed, color, health, damage) {
         this.x = x;
         this.y = y;
         this.w = w;
@@ -129,11 +132,11 @@ class Enemy {
 
 //----------DECLARING PLAYER, ENEMY, OBJECTS ----------
 // CREATING PLAYER 
-const player = new Player(10, canvas.height / 2, 50, 50, 15)
+const player = new Player(10, canvas.height / 2, 50, 50, 15, 100, 5, 100)
 
 // CREATING ENEMY
 //const enemyLevel1 = new Enemy(650, 200, 50, 50, 15)
-const enemyLevel1 = new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'green')
+const enemyLevel1 = new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'green', 10, 10)
 
 let enemies = [];
 let otherEnemies = [];
@@ -214,10 +217,10 @@ function animate() {
     let maxAmountOfOtherEnemies = 3
 
     if (enemies.length < maxAmountOfEnemies) {
-        enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'blue'))
+        enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'blue', 10, 10))
     }
     if (otherEnemies.length < maxAmountOfOtherEnemies) {
-        otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 15, 'green'))
+        otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 15, 'green', 10, 10))
     }
 
     // [enemies] moving
