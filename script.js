@@ -8,13 +8,16 @@ const ctx = canvas.getContext('2d')
 
 //Math.reduce to spawn X amount of enemies by empying array?
 
-// let roadImg = new Image()
-// roadImg.src = './images/road.png'
-// roadImg.onload = function (e) {
-//     ctx.drawImage(roadImg, 0, 0, 640, 960)
-// }
+let playerImg = new Image()
+playerImg.src = `./images/walk-run-facing-right-512px-x-512px-per-frame.png`
 
 
+let sx = 0
+let sy = rowImOn * img.height / numberOfRows
+let sw = img.width / numberOfImages
+let sh = img.height / numberOfRows
+let dx = 0
+let dy = 0
 
 // ---------- Player class ----------
 class Player {
@@ -37,8 +40,12 @@ class Player {
         this.PlayerImg.onload = this.draw
     }
     draw = () => {
-        ctx.fillStyle = this.color
-        ctx.fillRect(this.x, this.y, this.w, this.h)
+        // ctx.fillStyle = this.color
+        // ctx.fillRect(this.x, this.y, this.w, this.h)
+        ctx.drawImage(playerImg, sx, sy, sw, sh, dx, dy, this.w, this.h)
+
+
+
         ctx.fillStyle = 'red'
         ctx.fillRect(10, 10, 200, 25)
         ctx.fillStyle = 'green'
@@ -290,8 +297,6 @@ setInterval(() => {
 setInterval(() => {
     player.rechargeStamina(10)
 
-
-
 }, 300)
 
 
@@ -330,9 +335,9 @@ function animate() {
 
 
 
-    // projectiles.forEach((projectile) => {
-    //     projectile.update()
-    // })
+    projectiles.forEach((projectile) => {
+        projectile.update()
+    })
 
 
     //  CREATING/PUSHING THE ENEMIES //
@@ -408,7 +413,6 @@ function animate() {
 
         //fade screen
         //ctx.fillRect(0, 0, canvas.width, canvas.height)
-        fadeOut();
 
 
         //reset player X and Y back
@@ -458,8 +462,11 @@ addEventListener('click', (event) => {
     }
 })
 
-
-
+//event listener for Player to follow cursor
+addEventListener('mousemove', (event) => {
+    state.mouse.x = event.clientX
+    state.mouse.y = event.clientY
+})
 
 
 
