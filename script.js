@@ -2,7 +2,11 @@
 const canvas = document.querySelector('#canvas')
 const ctx = canvas.getContext('2d')
 
+//What if the monsters keep spawning untill you kill X amount, instead of them being there from the start?. Then you can pass through the door. Or combine both?
+//If yes, keep right side "door" more open for bigger spawn area
 
+
+//Math.reduce to spawn X amount of enemies by empying array?
 
 // let roadImg = new Image()
 // roadImg.src = './images/road.png'
@@ -12,7 +16,7 @@ const ctx = canvas.getContext('2d')
 
 // ---------- Player class ----------
 class Player {
-    constructor(x, y, w, h, speed) {
+    constructor(x, y, w, h, speed, health, damage, stamina) {
         this.x = x;
         this.y = y;
         this.w = w;
@@ -20,6 +24,9 @@ class Player {
         this.PlayerImg = new Image()
         this.speed = speed
         this.color = 'black'
+        this.health = health;
+        this.damage = damage;
+        this.stamina = stamina;
     }
     loadHero = () => {
         this.PlayerImg.src = this.src
@@ -28,7 +35,17 @@ class Player {
     draw = () => {
         ctx.fillStyle = this.color
         ctx.fillRect(this.x, this.y, this.w, this.h)
-        //ctx.drawImage(this.HeroImg, this.x, this.y, this.w, this.h)
+        ctx.fillStyle = 'red'
+        ctx.fillRect(10, 10, 200, 25)
+        ctx.fillStyle = 'green'
+        ctx.fillRect(10, 10, Math.max(0, this.health / 100 * 200), 25)
+        if (this.health <= 0) {
+            this.dead()
+        }
+    }
+    dead = () => {
+        cancelAnimationFrame(stopGame)
+        restartGame()
     }
 }
 
@@ -60,7 +77,7 @@ class Projectile {
 
 // ---------- Enemy class ----------
 class Enemy {
-    constructor(x, y, w, h, speed, color) {
+    constructor(x, y, w, h, speed, color, health, damage) {
         this.x = x;
         this.y = y;
         this.w = w;
@@ -68,6 +85,8 @@ class Enemy {
         this.EnemyImg = new Image()
         this.speed = speed
         this.color = color
+        this.damage = damage
+        this.health = health
     }
     loadHero = () => {
         this.EnemyImg.src = this.src
@@ -82,19 +101,74 @@ class Enemy {
         this.x = this.x// + this.velocity.x
         this.y = this.y// + this.velocity.y
     }
+    move() {
+        if (player.x > this.x) {
+            this.x++
+        }
+        if (player.x < this.x) {
+            this.x--
+        }
+        if (player.y > this.y) {
+            this.y++
+        }
+        if (player.y < this.y) {
+            this.y--
+        }
+    }
+    randomPathing() { //TESTING    Enemy random pathing left
+        let randomNum = Math.floor(Math.random() * 2)
+        this.x--
+        if (randomNum === 1) {
+            this.y--
+        } else {
+            this.y++
+        }
+    }
 }
 
 
+
+
+
+
+
+//TESTING   playest size for hitbox?
+//let playersRightSide = player.x + player.w 
+//let playersLowerSide = player.y + player.h
+
+
+
+
+
+
+
+//----------DECLARING PLAYER, ENEMY, OBJECTS ----------
 // CREATING PLAYER 
-const player = new Player(10, canvas.height / 2, 50, 50, 15)
+const player = new Player(10, canvas.height / 2, 50, 50, 15, 100, 5, 100)
 
 // CREATING ENEMY
-//const enemyLevel1 = new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'green')
+//const enemyLevel1 = new Enemy(650, 200, 50, 50, 15)
+const enemyLevel1 = new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'green', 10, 10)
 
 let enemies = [];
+let otherEnemies = [];
 
 
-// ---------- MOVING PLAYER ----------
+const projectile = new Projectile(player.x, player.y, 5, 'red', 30) // might need to be removed later
+const projectiles = []
+
+
+
+
+
+
+
+
+
+
+
+
+// ---------- PLAYER MOVEMENT ----------
 var LEFT = false;
 var RIGHT = false;
 var UP = false;
@@ -128,14 +202,10 @@ function move() {
 // ---------- END OF PLAYER MOVEMENT ----------
 
 
-const projectile = new Projectile(player.x, player.y, 5, 'red', 30) // might need to be removed later
-const projectiles = []
 
 
 
 
-
-//enemies.push()
 
 
 
@@ -150,43 +220,88 @@ function animate() {
     player.draw()
     move() //Player movement
 
-    //enemyLevel1.draw()
-
-
     projectiles.forEach((projectile) => {
         projectile.update()
     })
 
 
-    if (enemies.length < 2) { // if new room? spawn push new enemies into array
-        enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'blue'))
+    let maxAmountOfEnemies = 3; //we can ++ this to increase monsterspawn per room cleared
+    let maxAmountOfOtherEnemies = 3
+
+    if (enemies.length < maxAmountOfEnemies) {
+        enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 15, 'blue', 10, 10))
+    }
+    if (otherEnemies.length < maxAmountOfOtherEnemies) {
+        otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 15, 'green', 10, 10))
     }
 
-        enemies.forEach((enemy, index) => {
-            enemy.update()
+    // [enemies] moving
+    enemies.forEach((enemy) => {
 
-                projectiles.forEach((projectile) => {
+        otherEnemies.forEach((otherenemy) => {
+            if (!detectCollision(otherenemy, enemy) && (!detectCollision(otherenemy, player))) {
+                otherenemy.randomPathing()
+            }
+
+            if (!detectCollision(enemy, player) && (!detectCollision(otherenemy, enemy))) {
+                enemy.move()
+            }
+        });
 
 
-                    const dist = Math.hypot(projectile.x - enemy.x, projectile.y - enemy.y)
+    });
 
-                    // objects touch
-                    if (dist - enemy.h / 2 - projectile.radius < 1) {
-                        setTimeout(() => {
-                            enemies.splice(index, 1)
-                            projectiles.splice(index, 1)
-                        })
-                    }
-                })
-        })
-            //detectCollision(player, enemy) // player and enemy collide
-      
-        // If player reaches next door
-        if (player.x == canvas.width - 50 && player.y < 350 && player.y > 250) {
-            console.log('next room!');
+    // [enemies] updating   BLUE
+    enemies.forEach((enemy, index) => {
+        enemy.update(
+
+            projectiles.forEach((projectile) => {
+
+                if (RectCircleColliding(projectile, enemy)) {
+                    enemies.splice(index, 1)
+                    projectiles.splice(index, 1)
+                }
+            })
+        )
+    })
+
+    // [otherEnemies] updating  GREEN
+    otherEnemies.forEach((enemy, index) => {
+        enemy.update(
+
+            projectiles.forEach((projectile) => {
+
+                if (RectCircleColliding(projectile, enemy)) {
+                    otherEnemies.splice(index, 1)
+                    projectiles.splice(index, 1)
+                }
+            })
+        )
+        if (enemy.x < -200) { // if enemy walk off screen left, they are removed from array
+            otherEnemies.splice(index, 1)
         }
-}
+    })
 
+    setInterval(() => {
+    enemies.forEach((enemy) => {
+        if (!detectCollision(enemy, player)) {
+            player.health - enemy.damage
+        }
+    });
+
+    otherEnemies.forEach((otherenemy) => {
+        if (!detectCollision(otherenemy, player)) {
+            player.health - otherenemy.damage
+        }
+    });
+}, 500)
+
+
+    //If player reaches next door
+    if (player.x == canvas.width - 50 && player.y < 350 && player.y > 250) {
+        console.log('next room!');
+    }
+}
 
 animate()
 // ---------- END OF ANIMATE ----------
@@ -219,40 +334,6 @@ addEventListener('click', (event) => {
 
 // ---------- COLLISION DETECTION ----------
 
-// VALS COLLISION CODE
-function detectCollision() {
-    enemies.forEach((enemy, i) => {
-        projectiles.forEach((projectile, j) => {
-            if (
-                projectile.x < enemy.x + enemy.width &&
-                projectile.x + projectile.width > enemy.x &&
-                projectile.y < enemy.y + enemy.height &&
-                projectile.y + projectile.height > enemy.y
-            ) {
-                //enemies[i].strength--;
-                // if (enemies[i].strength <= 0) {
-                //     let newCoin = {
-                //         x: enemies[i].x,
-                //         y: enemies[i].y,
-                //         width: 20,
-                //         height: 20,
-                //         imgP: 0,
-                //     };
-                //     coins.push(newCoin);
-                //     enemies.splice(i, 1);
-                // }
-                projectiles.splice(j, 1);
-            }
-            // if(enemy.y >canvas.height +600){
-            //   enemies.splice(i,1)
-            // }
-            if (projectile.y < 0 || projectile.y > 2000) {
-                projectiles.splice(j, 1);
-            }
-        });
-    });
-}
-
 
 
 //detectCollision(projectile, enemy) // hero projectile vs enemy
@@ -260,28 +341,32 @@ function detectCollision() {
 
 
 
-// COLLISION DETECTION - HERO VS ENEMY
-// function detectCollision(rect1, rect2) {
-//     if (rect1.x < rect2.x + rect2.w &&
-//         rect1.x + rect1.w > rect2.x &&
-//         rect1.y < rect2.y + rect2.h &&
-//         rect1.y + rect1.h > rect2.y) {
-//         // collision detected!
-//         console.log("COLLISION")
-//         alert("Player HIT")
-//     }
-// }
+// ---------- COLLISION DETECTION - HERO VS ENEMY ----------
+function detectCollision(rect1, rect2) {
+    if (rect1.x < rect2.x + rect2.w &&
+        rect1.x + rect1.w > rect2.x &&
+        rect1.y < rect2.y + rect2.h &&
+        rect1.y + rect1.h > rect2.y) {
+        return true
+    }
+}
 
-// COLLISION DETECTION - HERO Projectile VS ENEMY
-// function detectCollisionProjectilveVsHero(rect1, rect2) {
-//     if (rect1.x < rect2.x + rect2.w &&
-//         rect1.x + rect1.w > rect2.x &&
-//         rect1.y < rect2.y + rect2.h &&
-//         rect1.y + rect1.h > rect2.y) {
-//         // collision detected!
-//         console.log("COLLISION - Enemy hit by Projectile")
-//     }
-// }
+// ---------- COLLISION DETECTION - HERO Projectile VS ENEMY ----------
+// return true if the rectangle and circle are colliding
+function RectCircleColliding(circle, rect) {
+    var distX = Math.abs(circle.x - rect.x - rect.w / 2);
+    var distY = Math.abs(circle.y - rect.y - rect.h / 2);
+
+    if (distX > (rect.w / 2 + circle.radius)) { return false; }
+    if (distY > (rect.h / 2 + circle.radius)) { return false; }
+
+    if (distX <= (rect.w / 2)) { return true; }
+    if (distY <= (rect.h / 2)) { return true; }
+
+    var dx = distX - rect.w / 2;
+    var dy = distY - rect.h / 2;
+    return (dx * dx + dy * dy <= (circle.radius * circle.radius));
+}
 
 
 
