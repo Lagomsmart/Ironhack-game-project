@@ -16,7 +16,7 @@ const ctx = canvas.getContext('2d')
 
 // ---------- Player class ----------
 class Player {
-    constructor(x, y, w, h, speed, maxhealth, health, damage, stamina) {
+    constructor(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina) {
         this.x = x;
         this.y = y;
         this.w = w;
@@ -28,6 +28,7 @@ class Player {
         this.maxhealth = maxhealth
         this.damage = damage;
         this.stamina = stamina;
+        this.maxStamina = maxStamina
     }
     loadHero = () => {
         this.PlayerImg.src = this.src
@@ -41,13 +42,25 @@ class Player {
         ctx.fillStyle = 'green'
         ctx.fillRect(10, 10, Math.max(0, this.health / 100 * 200), 25)
         if (this.health <= 0) {
-            this.dead()
+            //this.dead()
         }
     }
-    dead = () => {
-        cancelAnimationFrame(stopGame)
-        restartGame()
+    rechargeStamina = (num) => {
+        console.log('stamina function called');
+        if (this.stamina < this.maxStamina) {
+            this.stamina += num
+            console.log('Adding stamina');
+
+            if (this.stamina > this.maxStamina) {
+                this.stamina = this.maxStamina
+                console.log('stamina max');
+            }
+        }
     }
+    // dead = () => {
+    //     cancelAnimationFrame(stopGame)
+    //     restartGame()
+    // }
 }
 
 // ---------- Player Projectile class ----------
@@ -136,16 +149,16 @@ class Powerups {
         this.h = h;
         this.color = color
     }
+    draw = () => {
+        ctx.fillStyle = this.color
+        ctx.fillRect(this.x, this.y, this.w, this.h)
+    }
 }
 
 // ---------- Heal Powerup ----------
 class healPowerup extends Powerups {
     constructor(x, y, w, h, color) {
         super(x, y, w, h, color)
-    }
-    draw = () => {
-        ctx.fillStyle = this.color
-        ctx.fillRect(this.x, this.y, this.w, this.h)
     }
     heal(player) {
         if (player.health < player.maxhealth) {
@@ -164,11 +177,6 @@ class healPowerup extends Powerups {
 
 
 
-//TESTING   playest size for hitbox?
-//let playersRightSide = player.x + player.w 
-//let playersLowerSide = player.y + player.h
-
-
 
 
 
@@ -176,7 +184,7 @@ class healPowerup extends Powerups {
 
 //----------DECLARING PLAYER, ENEMY, OBJECTS ----------
 // CREATING PLAYER 
-const player = new Player(10, canvas.height / 2, 50, 50, 5, 100, 100, 5, 100)
+const player = new Player(10, canvas.height / 2, 50, 50, 5, 100, 100, 5, 100, 100) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
 
 let healthBoost = new healPowerup(1000, 300, 30, 30, 'green')
 
@@ -238,6 +246,37 @@ function move() {
 
 
 
+// ---------- Set Interval ----------
+
+setInterval(() => {
+enemies.forEach((enemy) => {
+    if (detectCollision(enemy, player)) {
+        player.health -= enemy.damage
+    }
+});
+
+otherEnemies.forEach((otherenemy) => {
+    if (detectCollision(otherenemy, player)) {
+        player.health -= otherenemy.damage
+    }
+});
+}, 1000)
+
+
+
+
+
+
+
+setInterval(() => {
+    player.rechargeStamina(20)
+}, 1000)
+
+
+// ---------- END OF Set Interval ----------
+
+
+
 
 
 
@@ -248,6 +287,12 @@ function animate() {
 
     player.draw()
     move() //Player movement
+
+
+
+
+
+
 
     projectiles.forEach((projectile) => {
         projectile.update()
@@ -316,23 +361,7 @@ function animate() {
         }
     })
 
-    function poop () {
-    enemies.forEach((enemy) => {
-        if (detectCollision(enemy, player)) {
-            player.health -= enemy.damage
-        }
-    });
-    if (elapsed < 2000) {
-        window.requestAnimationFrame(poop);
-    }
-}
-
-
-    otherEnemies.forEach((otherenemy) => {
-        if (detectCollision(otherenemy, player)) {
-            player.health -= otherenemy.damage
-        }
-    });
+    
 
 
 
@@ -350,20 +379,41 @@ animate()
 
 
 // ---------- PLAYER ATTACK EVENT LISTENER ----------
-addEventListener('click', (event) => {
-    const angle = Math.atan2(
-        event.clientY - player.y - 100,
-        event.clientX - player.x - 100
-    )
-    const velocity = {
-        x: Math.cos(angle) * 14,
-        y: Math.sin(angle) * 14
-    }
-    projectiles.push(
-        new Projectile(player.x, player.y, 5, 'red', velocity)
-    )
-})
+// addEventListener('click', (event) => {
+//     const angle = Math.atan2(
+//         event.clientY - player.y - 100,
+//         event.clientX - player.x - 100
+//     )
+//     const velocity = {
+//         x: Math.cos(angle) * 14,
+//         y: Math.sin(angle) * 14
+//     }
+//     projectiles.push(
+//         new Projectile(player.x, player.y, 5, 'red', velocity)
+//     )
+// })
 
+// ---------- PLAYER ATTACK EVENT LISTENER ----------
+addEventListener('click', (event) => {
+    if (player.stamina > 10) {
+        player.stamina -= 10;
+        console.log(player.stamina);
+
+        const angle = Math.atan2(
+            event.clientY - player.y - 100,
+            event.clientX - player.x - 100
+        )
+        const velocity = {
+            x: Math.cos(angle) * 14,
+            y: Math.sin(angle) * 14
+        }
+        projectiles.push(
+            new Projectile(player.x, player.y, 5, 'red', velocity)
+        )
+    } else {
+        console.log('Not enough Stamina!');
+    }
+})
 
 
 
