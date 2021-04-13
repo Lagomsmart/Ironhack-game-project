@@ -14,6 +14,8 @@ const ctx = canvas.getContext('2d')
 //     ctx.drawImage(roadImg, 0, 0, 640, 960)
 // }
 
+
+
 // ---------- Player class ----------
 class Player {
     constructor(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina) {
@@ -190,7 +192,10 @@ class healPowerup extends Powerups {
 
 //----------DECLARING PLAYER, ENEMY, OBJECTS ----------
 // CREATING PLAYER 
-const player = new Player(10, canvas.height / 2, 50, 50, 5, 100, 100, 5, 100, 100) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
+let defaultPlayerX = 10
+let defaultPlayerY = canvas.height / 2
+let maxAmountOfPowerups = 1
+const player = new Player(defaultPlayerX, defaultPlayerY, 50, 50, 5, 100, 100, 5, 100, 100) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
 
 let healthPotion = new healPowerup(1000, 300, 30, 30, 'green')
 
@@ -255,17 +260,17 @@ function move() {
 // ---------- Set Interval ----------
 
 setInterval(() => {
-enemies.forEach((enemy) => {
-    if (detectCollision(enemy, player)) {
-        player.health -= enemy.damage
-    }
-});
+    enemies.forEach((enemy) => {
+        if (detectCollision(enemy, player)) {
+            player.health -= enemy.damage
+        }
+    });
 
-otherEnemies.forEach((otherenemy) => {
-    if (detectCollision(otherenemy, player)) {
-        player.health -= otherenemy.damage
-    }
-});
+    otherEnemies.forEach((otherenemy) => {
+        if (detectCollision(otherenemy, player)) {
+            player.health -= otherenemy.damage
+        }
+    });
 }, 1000)
 
 
@@ -275,8 +280,11 @@ otherEnemies.forEach((otherenemy) => {
 
 
 setInterval(() => {
-    player.rechargeStamina(20)
-}, 1000)
+    player.rechargeStamina(10)
+
+
+
+}, 300)
 
 
 // ---------- END OF Set Interval ----------
@@ -307,7 +315,7 @@ function animate() {
         projectile.update()
     })
 
-//  CREATING/PUSHING THE ENEMIES //
+    //  CREATING/PUSHING THE ENEMIES //
     let maxAmountOfEnemies = 3; //we can ++ this to increase monsterspawn per room cleared
     let maxAmountOfOtherEnemies = 3
 
@@ -338,11 +346,11 @@ function animate() {
     enemies.forEach((enemy, index) => {
         enemy.update(
 
-            projectiles.forEach((projectile) => {
+            projectiles.forEach((projectile, pIndex) => {
 
                 if (RectCircleColliding(projectile, enemy)) {
                     enemies.splice(index, 1)
-                    projectiles.splice(index, 1)
+                    projectiles.splice(pIndex, 1)
                 }
             })
         )
@@ -352,11 +360,11 @@ function animate() {
     otherEnemies.forEach((enemy, index) => {
         enemy.update(
 
-            projectiles.forEach((projectile) => {
+            projectiles.forEach((projectile, pIndex) => {
 
                 if (RectCircleColliding(projectile, enemy)) {
                     otherEnemies.splice(index, 1)
-                    projectiles.splice(index, 1)
+                    projectiles.splice(pIndex, 1)
                 }
 
                 //If projectile is outside of screen, delete it
@@ -370,13 +378,33 @@ function animate() {
         }
     })
 
-    
+
 
 
 
     //If player reaches next door
     if (player.x == canvas.width - 50 && player.y < 350 && player.y > 250) {
         console.log('next room!');
+
+        //fade screen
+        //ctx.fillRect(0, 0, canvas.width, canvas.height)
+        fadeOut();
+
+
+        //reset player X and Y back
+        player.x = defaultPlayerX
+        player.y = defaultPlayerY
+
+        //reset and push enemy amount
+        // for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
+        //     otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
+        // }
+
+        //reset and push powerup
+        // if (Math.floor(Math.random() * 2) == 1) { //50% chance to spawn 1 powerup per room
+        //     //poweruparray.push(healthPotion)
+        // }
+
     }
 }
 
