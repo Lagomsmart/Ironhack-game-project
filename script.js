@@ -53,6 +53,16 @@ class Player {
             }
         }
     }
+    // rechargeHealth = (num) => {
+    //     console.log('recharge health called');
+    //     if (this.health < this.maxhealth) {
+    //         this.health += num
+    //         console.log('adding health');
+    //     } else if (this.health > this.maxhealth) {
+    //         this.health = this.maxhealth
+    //         console.log('health max')
+    //     }
+    // }
     // dead = () => {
     //     cancelAnimationFrame(stopGame)
     //     restartGame()
@@ -156,7 +166,7 @@ class healPowerup extends Powerups {
     constructor(x, y, w, h, color) {
         super(x, y, w, h, color)
     }
-    heal(player) {
+    heal() {
         if (player.health < player.maxhealth) {
             player.health += 50
 
@@ -182,7 +192,7 @@ class healPowerup extends Powerups {
 // CREATING PLAYER 
 const player = new Player(10, canvas.height / 2, 50, 50, 5, 100, 100, 5, 100, 100) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
 
-let healthBoost = new healPowerup(1000, 300, 30, 30, 'green')
+let healthPotion = new healPowerup(1000, 300, 30, 30, 'green')
 
 
 let enemies = [];
@@ -282,11 +292,14 @@ function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     player.draw()
+
     move() //Player movement
 
+    healthPotion.draw()
 
-
-
+    if (detectCollision(player, healthPotion)) {
+        healthPotion.heal()
+    }
 
 
 
