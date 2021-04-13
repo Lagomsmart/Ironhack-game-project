@@ -46,14 +46,10 @@ class Player {
         }
     }
     rechargeStamina = (num) => {
-        console.log('stamina function called');
         if (this.stamina < this.maxStamina) {
             this.stamina += num
-            console.log('Adding stamina');
-
             if (this.stamina > this.maxStamina) {
                 this.stamina = this.maxStamina
-                console.log('stamina max');
             }
         }
     }
@@ -377,21 +373,6 @@ animate()
 
 
 
-
-// ---------- PLAYER ATTACK EVENT LISTENER ----------
-// addEventListener('click', (event) => {
-//     const angle = Math.atan2(
-//         event.clientY - player.y - 100,
-//         event.clientX - player.x - 100
-//     )
-//     const velocity = {
-//         x: Math.cos(angle) * 14,
-//         y: Math.sin(angle) * 14
-//     }
-//     projectiles.push(
-//         new Projectile(player.x, player.y, 5, 'red', velocity)
-//     )
-// })
 
 // ---------- PLAYER ATTACK EVENT LISTENER ----------
 addEventListener('click', (event) => {
