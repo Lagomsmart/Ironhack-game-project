@@ -166,31 +166,35 @@ class Enemy {
         this.dx = 0
         this.dy = 0
     }
-    loadHero = () => {
-        this.EnemyImg.src = this.src
-        this.EnemyImg.onload = this.draw
-    }
-    draw = () => {
-        ctx.fillStyle = this.color
-        ctx.fillRect(this.x, this.y, this.w, this.h)
-    }
     init = () => {
         let i = 0;
-        
-        setInterval(function () {
+       
+  
+        setInterval( (function () {
+          
+            console.log(this)
+            this.sx += this.sw 
             
-            player.sx += player.sw
-            i++
-            if (i >= player.numOfActualImages - 1) {
-                player.sx = 0;
-                i = 0;
+            if (i % 3 === 0) {
+                this.sy += this.sh
+                this.rowImOn ++
             }
-        }, 30)
+            i++
+            if (i >= this.numOfActualImages - 1) {
+                this.sx = 0;
+                this.sy = 0;
+                i = 0;
+                this.rowImOn = 0;
+            }
+        }).bind(this), 30)
     }
     update() {
-        this.draw()
-        this.x = this.x// + this.velocity.x
-        this.y = this.y// + this.velocity.y
+        ctx.clearRect(0, 0, canvas.width, canvas.height)
+        ctx.drawImage(
+            this.enemyImg, this.sx, this.sy, this.sw, this.sh,
+            this.dx, this.dy,
+            this.w, this.h
+        )
     }
     move() {
         if (player.x > this.x) {
@@ -216,6 +220,53 @@ class Enemy {
         }
     }
 }
+
+// ----------- ZOMBIE CLASS ------------ //
+
+class Zombie extends Enemy {
+    constructor(x, y, w, h, speed, color, health, damage, enemyImg) {
+    super(x, y, w, h, speed, color, health, damage, enemyImg)
+        this.numberOfImages = 9
+        this.numberOfRows = 3
+        this.numOfActualImages = 9
+        this.rowImOn = 0
+        this.enemyImg = enemyImg
+        this.sx = 0
+        this.sy = this.rowImOn * 314
+        this.sw = 338
+        this.sh = 314
+        this.dx = 0
+        this.dy = 0
+    }
+    
+}
+
+
+
+
+
+// ------------ FIREBALL CLASS ------------ //
+class Fireball extends Enemy {
+    constructor(x, y, w, h, speed, color, health, damage, enemyImg) {
+        super(x, y, w, h, speed, color, health, damage, enemyImg)
+            this.numberOfImages = 6
+            this.numberOfRows = 2
+            this.numOfActualImages = 6
+            this.rowImOn = 0
+            this.enemyImg = enemyImg
+            this.sx = 0
+            this.sy = this.rowImOn * 197
+            this.sw = 512
+            this.sh = 197
+            this.dx = 0
+            this.dy = 0
+        }
+        
+}
+
+
+
+
 
 // ---------- Powerup class ----------
 class Powerups {
@@ -269,10 +320,41 @@ let defaultPlayerY = canvas.height / 2
 let img = new Image()
 img.src = './images/smallgirlx2.png';
 
+const fireball = new Fireball(
+    1150, 
+    Math.random() * 450 + 100, 
+    512, 
+    197, 
+    1, 
+    'red', 
+    10, 
+    1
+    )
+let fireballImg = new Image()
+fireballImg.src = './sprites/spritefireball.png'
+fireball.enemyImg = fireballImg
+
+
+const zombie = new Zombie(
+    Math.random() * 1000 + 200,
+    Math.random() * 650, 
+    338, 
+    314, 
+    1, 
+    'blue', 
+    10, 
+    1
+    )
+let zombieImg = new Image()
+zombieImg.src = './images/enemy1.png'
+zombie.enemyImg = zombieImg
+
+
+
 
 const player = new Player(defaultPlayerX, defaultPlayerY, img.width, img.height, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
 
-const fireball = new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1)
+
 
 
 
@@ -448,10 +530,10 @@ function animate() {
 
 
     if (enemies.length < maxAmountOfEnemies) {
-        enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
+        enemies.push(zombie)
     }
     if (otherEnemies.length < maxAmountOfOtherEnemies) {
-        otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
+        otherEnemies.push(fireball)
     }
 
     // [enemies] moving
@@ -559,6 +641,12 @@ function animate() {
 img.onload = () => {
     player.init()
     animate()
+}
+fireballImg.onload = () => {
+    fireball.init()
+}
+zombieImg.onload = () => {
+    zombie.init()
 }
 
 // ---------- END OF ANIMATE ---------- ---------- END OF ANIMATE ---------- ---------- END OF ANIMATE ----------
