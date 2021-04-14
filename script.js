@@ -33,17 +33,17 @@ class Player {
         this.angle = 0;
 
 
-        this.numberOfImages = 4
-        this.numberOfRows = 2
-        this.numOfActualImages = 4
-        this.rowImOn = 1
+        // this.numberOfImages = 4
+        // this.numberOfRows = 2
+        // this.numOfActualImages = 4
+        // this.rowImOn = 1
         this.img = img
-        this.sx = 0
-        this.sy = this.rowImOn * this.img.height / this.numberOfRows
-        this.sw = this.img.width / this.numberOfImages
-        this.sh = this.img.height / this.numberOfRows
-        this.dx = 0
-        this.dy = 0
+        // this.sx = 0
+        // this.sy = this.rowImOn * this.img.height / this.numberOfRows
+        // this.sw = this.img.width / this.numberOfImages
+        // this.sh = this.img.height / this.numberOfRows
+        // this.dx = this.w
+        // this.dy = this.h
 
     }
     drawArrow = (angle) => {
@@ -52,7 +52,7 @@ class Player {
     drawGuy = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.save();
-        ctx.translate(this.x, this.y);
+        ctx.translate(this.x + this.w/2, this.y + this.h/2);
         ctx.rotate(-Math.PI / 2);
         ctx.rotate(this.angle);
         ctx.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
@@ -149,15 +149,14 @@ class Enemy {
         this.y = y;
         this.w = w;
         this.h = h;
-        this.enemyImg = new Image()
         this.speed = speed
         this.color = color
         this.health = health
         this.damage = damage
 
-        this.numberOfImages = 4
-        this.numberOfRows = 2
-        this.numOfActualImages = 4
+        this.numberOfImages = 9
+        this.numberOfRows = 3
+        this.numOfActualImages = 9
         this.rowImOn = 1
         this.enemyImg = enemyImg
         this.sx = 0
@@ -174,6 +173,19 @@ class Enemy {
     draw = () => {
         ctx.fillStyle = this.color
         ctx.fillRect(this.x, this.y, this.w, this.h)
+    }
+    init = () => {
+        let i = 0;
+        
+        setInterval(function () {
+            
+            player.sx += player.sw
+            i++
+            if (i >= player.numOfActualImages - 1) {
+                player.sx = 0;
+                i = 0;
+            }
+        }, 30)
     }
     update() {
         this.draw()
@@ -255,7 +267,7 @@ let defaultPlayerX = 10
 let defaultPlayerY = canvas.height / 2
 
 let img = new Image()
-img.src = './images/player.png';
+img.src = './images/smallgirlx2.png';
 
 
 const player = new Player(defaultPlayerX, defaultPlayerY, img.width, img.height, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
@@ -567,7 +579,7 @@ addEventListener('click', (event) => {
             y: Math.sin(angle) * 14
         }
         projectiles.push(
-            new Projectile(player.x + player.w / 2, player.y + player.h / 2, 5, 'red', velocity)
+            new Projectile(player.x + player.w, player.y + player.h / 9, 5, 'red', velocity)
         )
     } else {
         console.log('Not enough Stamina!');
