@@ -4,7 +4,6 @@ body {
 }
 
 canvas {
-  background-image: url("./images/levelone.png");
   background-position: contain;
   background-repeat: no-repeat;
   background-size: 1200;

@@ -12,14 +12,13 @@ let playerImg = new Image()
 playerImg.onload = function () {
     player.drawArrow(0);
 };
-playerImg.src = '/sprites/croppedArmature-shoot-000.png'
+playerImg.src = './sprites/Armature-shoot-000.png' 
 
-// let sx = 0
-// let sy = rowImOn * img.height / numberOfRows
-// let sw = img.width / numberOfImages
-// let sh = img.height / numberOfRows
-// let dx = 0
-// let dy = 0
+
+
+
+
+
 
 // ---------- Player class ----------
 class Player {
@@ -38,24 +37,14 @@ class Player {
         this.maxStamina = maxStamina
     }
     drawArrow = (angle) => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.save();
-        ctx.translate(player.x + player.w / 2, player.y + player.h / 2);
-        ctx.rotate(-Math.PI / 2);   // correction for image starting position
-        ctx.rotate(angle);
-        ctx.drawImage(playerImg, -playerImg.width / 2.5, -playerImg.height / 2.5);
-        ctx.restore();
     }
     draw = () => {
-        //ctx.fillStyle = this.color
-        //ctx.fillRect(this.x, this.y, this.w, this.h)
-        //ctx.drawImage(playerImg, this.x, this.y)
-
 
         ctx.fillStyle = 'red'
         ctx.fillRect(10, 10, 200, 25)
         ctx.fillStyle = 'green'
         ctx.fillRect(10, 10, Math.max(0, this.health / 100 * 200), 25)
+
         if (this.health <= 0) {
             //this.dead()
         }
@@ -206,27 +195,25 @@ class healPowerup extends Powerups {
 
 
 
-
-
-
 //----------DECLARING PLAYER, ENEMY, OBJECTS ----------
 // CREATING PLAYER 
 let defaultPlayerX = 10
 let defaultPlayerY = canvas.height / 2
-let maxAmountOfPowerups = 1
+
 const player = new Player(defaultPlayerX, defaultPlayerY, playerImg.width, playerImg.height, 5, 100, 100, 5, 100, 100) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
 
 let healthPotion = new healPowerup(1000, 300, 30, 30, 'green')
 
 
 let enemies = [];
-
 let otherEnemies = [];
+let maxAmountOfEnemies = 3; //we can ++ this to increase monsterspawn per room cleared
+let maxAmountOfOtherEnemies = 3
 
 const projectiles = [];
 
 let powerups = [];
-
+let maxAmountOfPowerups = 1
 
 
 
@@ -246,8 +233,8 @@ let powerups = [];
 //   }
 
 document.onmousemove = function (e) {
-    var dx = e.pageX - player.x + player.w / 2;
-    var dy = e.pageY - player.y + player.h / 2;
+    var dx = e.pageX - (player.x + player.w / 2);
+    var dy = e.pageY - (player.y + player.h / 2);
     var theta = Math.atan2(dy, dx);
     player.drawArrow(theta);
 };
@@ -331,9 +318,24 @@ setInterval(() => {
 
 
 
+
+
+
+
 if (powerups.length < 1) {
     powerups.push(healthPotion)
 }
+
+for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
+    otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
+}
+for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
+    enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
+}
+
+
+
+ctx.drawImage(playerImg, player.x, player.y)
 
 
 // ---------- ANIMATE ---------- ---------- ANIMATE ---------- ---------- ANIMATE ----------
@@ -343,18 +345,20 @@ function animate() {
 
     player.draw()
 
+
+
     move() //Player movement
 
 
-    function drawArrow(angle) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.save();
-        ctx.translate(player.x + player.w / 2, player.y + player.h / 2);
-        ctx.rotate(-Math.PI / 2);   // correction for image starting position
-        ctx.rotate(angle);
-        ctx.drawImage(playerImg, -playerImg.width / 2.5, -playerImg.height / 2.5);
-        ctx.restore();
-    }
+    // function drawArrow(angle) {
+    //     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    //     ctx.save();
+    //     ctx.translate(player.x + player.w / 2, player.y + player.h / 2);
+    //     ctx.rotate(-Math.PI / 2);   // correction for image starting position
+    //     ctx.rotate(angle);
+    //     ctx.drawImage(playerImg, -playerImg.width / 2.5, -playerImg.height / 2.5);
+    //     ctx.restore();
+    // }
 
 
     powerups.forEach((powerup, x) => {
@@ -376,15 +380,14 @@ function animate() {
 
 
     //  CREATING/PUSHING THE ENEMIES //
-    let maxAmountOfEnemies = 3; //we can ++ this to increase monsterspawn per room cleared
-    let maxAmountOfOtherEnemies = 3
 
-    if (enemies.length < maxAmountOfEnemies) {
-        enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
-    }
-    if (otherEnemies.length < maxAmountOfOtherEnemies) {
-        otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
-    }
+
+    // if (enemies.length < maxAmountOfEnemies) {
+    //     enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
+    // }
+    // if (otherEnemies.length < maxAmountOfOtherEnemies) {
+    //     otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
+    // }
 
     // [enemies] moving
     enemies.forEach((enemy) => {
@@ -443,8 +446,9 @@ function animate() {
 
 
     //If player reaches next door
-    if (player.x == canvas.width - 50 && player.y < 350 && player.y > 250) {
+    if (player.x == canvas.width - 50 && player.y < 350 && player.y > 250 && otherEnemies.length < 1 && enemies.length < 1) {
         console.log('next room!');
+        let currentLevel = 1
 
         //fade screen
         //ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -455,14 +459,33 @@ function animate() {
         player.y = defaultPlayerY
 
         //reset and push enemy amount
-        // for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
-        //     otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
-        // }
+        for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
+            otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
+        }
+        for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
+            enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
+        }
 
         //reset and push powerup
         // if (Math.floor(Math.random() * 2) == 1) { //50% chance to spawn 1 powerup per room
         //     //poweruparray.push(healthPotion)
         // }
+
+
+        //change background image to next level
+
+        // let randomlevel = Math.floor(Math.random() * 2)
+
+        // if (randomlevel = 0) {
+        //     document.querySelector("#canvas").style.backgroundImage = "url('NEXTLEVEL')"
+        // } else if (randomelevl = 1) {
+        //     document.querySelector("#canvas").style.backgroundImage = "url('NEXTLEVEL')"
+        // } else if (randomelevl = 2) {
+        //     document.querySelector("#canvas").style.backgroundImage = "url('NEXTLEVEL')"
+        // }
+
+
+
 
     }
 
