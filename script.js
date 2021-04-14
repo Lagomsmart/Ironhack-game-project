@@ -66,7 +66,7 @@ class Player {
         ctx.restore();
 
     }
-
+    
     init = () => {
         let i = 0;
         //console.log(player)
@@ -160,9 +160,9 @@ class Enemy {
         this.rowImOn = 1
         this.enemyImg = enemyImg
         this.sx = 0
-        //this.sy = this.rowImOn * (this.enemyImg.height / this.numberOfRows)
-        //this.sw = this.img.width / this.numberOfImages
-        //this.sh = this.img.height / this.numberOfRows
+        // this.sy = this.rowImOn * (this.enemyImg.height / this.numberOfRows)
+        // this.sw = this.img.width / this.numberOfImages
+        // this.sh = this.img.height / this.numberOfRows
         this.dx = 0
         this.dy = 0
     }
@@ -192,7 +192,7 @@ class Enemy {
         this.x = this.x// + this.velocity.x
         this.y = this.y// + this.velocity.y
     }
-    move() { // Enemy following player
+    move() {
         if (player.x > this.x) {
             this.x += this.speed
         }
@@ -206,7 +206,7 @@ class Enemy {
             this.y -= this.speed
         }
     }
-    randomPathing() { // Enemy random pathing left
+    randomPathing() { //TESTING    Enemy random pathing left
         let randomNum = Math.floor(Math.random() * 2)
         this.x -= this.speed
         if (randomNum === 1) {
@@ -269,8 +269,10 @@ let defaultPlayerY = canvas.height / 2
 let img = new Image()
 img.src = './images/smallgirlx2.png';
 
+
 const player = new Player(defaultPlayerX, defaultPlayerY, img.width, img.height, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
 
+const fireball = new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1)
 
 
 
@@ -374,10 +376,9 @@ setInterval(() => {
 }, 1000)
 
 
-// Spawn enemies every X seconds
-setInterval(() => {
 
-}, 1000)
+
+
 
 
 setInterval(() => {
@@ -391,22 +392,20 @@ setInterval(() => {
 
 
 
+
+
+
 if (powerups.length < 1) {
     powerups.push(healthPotion)
 }
 
+// for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
+//     otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
+// }
+// for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
+//     enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
+// }
 
-
-// ---------- INITIAL ENEMY SPAWNS - ONLY ONCE  ----------
-
-window.onload = function () {
-    for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
-        otherEnemies.push(new Enemy(1350, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
-    }
-    for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
-        enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
-    }
-}
 
 
 ctx.drawImage(player.img, player.x, player.y)
@@ -445,16 +444,15 @@ function animate() {
     })
 
 
-
-    //  ----- CREATING/PUSHING THE ENEMIES  constantly   //
-    // if (enemies.length < maxAmountOfEnemies) {
-    //     enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
-    // }
-    // if (otherEnemies.length < maxAmountOfOtherEnemies) {
-    //     otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
-    // }
+    //  CREATING/PUSHING THE ENEMIES //
 
 
+    if (enemies.length < maxAmountOfEnemies) {
+        enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
+    }
+    if (otherEnemies.length < maxAmountOfOtherEnemies) {
+        otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
+    }
 
     // [enemies] moving
     enemies.forEach((enemy) => {
@@ -472,7 +470,7 @@ function animate() {
 
     });
 
-    // [enemies] updating   BLUE ZOMBIE
+    // [enemies] updating   BLUE
     enemies.forEach((enemy, index) => {
         enemy.update(
 
@@ -486,7 +484,7 @@ function animate() {
         )
     })
 
-    // [otherEnemies] updating  RED FIREBALL
+    // [otherEnemies] updating  RED
     otherEnemies.forEach((enemy, index) => {
         enemy.update(
 
@@ -513,7 +511,7 @@ function animate() {
 
 
     //If player reaches next door
-    if (player.x == canvas.width - player.w && player.y < 350 && player.y > 250 && otherEnemies.length < 1 && enemies.length < 1) {
+    if (player.x == canvas.width - 50 && player.y < 350 && player.y > 250 && otherEnemies.length < 1 && enemies.length < 1) {
         console.log('next room!');
         let currentLevel = 1
 
@@ -583,7 +581,7 @@ addEventListener('click', (event) => {
             y: Math.sin(angle) * 14
         }
         projectiles.push(
-            new Projectile(player.x + player.w, player.y + player.h / 9, 5, 'red', velocity)
+            new Projectile(player.x + player.w / 2, player.y + player.h / 2, 5, 'red', velocity)
         )
     } else {
         console.log('Not enough Stamina!');
