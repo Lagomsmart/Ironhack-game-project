@@ -8,16 +8,17 @@ const ctx = canvas.getContext('2d')
 
 //Math.reduce to spawn X amount of enemies by empying array?
 
-let playerImg = new Image()
-playerImg.src = `./images/walk-run-facing-right-512px-x-512px-per-frame.png`
+var arrow = new Image();
+arrow.src = 'https://i.ibb.co/fvwpZNm/Armature-shoot-000.png';
+arrow.onload = () => drawArrow(0);
 
 
-let sx = 0
-let sy = rowImOn * img.height / numberOfRows
-let sw = img.width / numberOfImages
-let sh = img.height / numberOfRows
-let dx = 0
-let dy = 0
+// let sx = 0
+// let sy = rowImOn * img.height / numberOfRows
+// let sw = img.width / numberOfImages
+// let sh = img.height / numberOfRows
+// let dx = 0
+// let dy = 0
 
 // ---------- Player class ----------
 class Player {
@@ -39,12 +40,18 @@ class Player {
         this.PlayerImg.src = this.src
         this.PlayerImg.onload = this.draw
     }
-    draw = () => {
+    draw = (angle) => {
         // ctx.fillStyle = this.color
         // ctx.fillRect(this.x, this.y, this.w, this.h)
-        ctx.drawImage(playerImg, sx, sy, sw, sh, dx, dy, this.w, this.h)
-
-
+        // ctx.drawImage(playerImg, sx, sy, sw, sh, dx, dy, this.w, this.h)
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+	    ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(-Math.PI / 2);   // correction for image starting position
+        ctx.rotate(angle);
+	    ctx.drawImage(arrow, -arrow.width / 2.5, -arrow.height / 2.5);
+        ctx.restore();
+  
 
         ctx.fillStyle = 'red'
         ctx.fillRect(10, 10, 200, 25)
@@ -77,6 +84,7 @@ class Player {
     //     restartGame()
     // }
 }
+
 
 // ---------- Player Projectile class ----------
 // PROJECTILE CLASS
@@ -219,13 +227,6 @@ let otherEnemies = [];
 const projectiles = [];
 
 let powerups = [];
-
-
-
-
-
-
-
 
 
 
@@ -430,6 +431,7 @@ function animate() {
         // }
 
     }
+    
 
 }
 
@@ -462,11 +464,17 @@ addEventListener('click', (event) => {
     }
 })
 
-//event listener for Player to follow cursor
-addEventListener('mousemove', (event) => {
-    state.mouse.x = event.clientX
-    state.mouse.y = event.clientY
-})
+// //event listener for Player to follow cursor
+// addEventListener('mousemove', (event) => {
+//     state.mouse.x = event.clientX
+//     state.mouse.y = event.clientY
+// })
+document.addEventListener("mousemove", function(e) {
+    var dx = e.pageX - player.x;
+    var dy = e.pageY - player.y;
+    var theta = Math.atan2(dy, dx);
+      drawArrow(theta);
+  });
 
 
 
