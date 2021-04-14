@@ -8,10 +8,7 @@ const ctx = canvas.getContext('2d')
 
 //Math.reduce to spawn X amount of enemies by empying array?
 
-var arrow = new Image();
-arrow.src = 'https://i.ibb.co/fvwpZNm/Armature-shoot-000.png';
-arrow.onload = () => drawArrow(0);
-
+let playerImg = new Image()
 
 // let sx = 0
 // let sy = rowImOn * img.height / numberOfRows
@@ -27,7 +24,7 @@ class Player {
         this.y = y;
         this.w = w;
         this.h = h;
-        this.PlayerImg = new Image()
+        this.playerImg = playerImg;
         this.speed = speed
         this.color = 'black'
         this.health = health;
@@ -36,21 +33,14 @@ class Player {
         this.stamina = stamina;
         this.maxStamina = maxStamina
     }
-    loadHero = () => {
-        this.PlayerImg.src = this.src
-        this.PlayerImg.onload = this.draw
-    }
-    draw = (angle) => {
+    // loadHero = () => {
+    //     this.playerImg.src = this.src
+    //     this.playerImg.onload = this.draw
+    // }
+    draw = () => {
         // ctx.fillStyle = this.color
         // ctx.fillRect(this.x, this.y, this.w, this.h)
         // ctx.drawImage(playerImg, sx, sy, sw, sh, dx, dy, this.w, this.h)
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-	    ctx.save();
-        ctx.translate(this.x, this.y);
-        ctx.rotate(-Math.PI / 2);   // correction for image starting position
-        ctx.rotate(angle);
-	    ctx.drawImage(arrow, -arrow.width / 2.5, -arrow.height / 2.5);
-        ctx.restore();
   
 
         ctx.fillStyle = 'red'
@@ -232,6 +222,37 @@ let powerups = [];
 
 
 
+
+// var arrow = new Image();
+playerImg.onload = function() {
+    drawArrow(0);
+};
+playerImg.src = 'https://i.ibb.co/fvwpZNm/Armature-shoot-000.png'
+
+// function drawArrow(angle) {
+//     ctx.clearRect(0, 0, canvas.width, canvas.height);
+//       ctx.save();
+//     ctx.translate(player.x + player.w/2, player.y + player.h/2);
+//     ctx.rotate(-Math.PI / 2);   // correction for image starting position
+//     ctx.rotate(angle);
+//       ctx.drawImage(playerImg, -playerImg.width / 2.5, -playerImg.height / 2.5);
+//     ctx.restore();
+//   }
+  
+  document.onmousemove = function(e) {
+    var dx = e.pageX - player.x + player.w/2;
+    var dy = e.pageY - player.y + player.h/2;
+    var theta = Math.atan2(dy, dx);
+    console.log("hi there")
+      drawArrow(theta);
+  };
+
+
+
+
+
+
+
 // ---------- PLAYER MOVEMENT ----------
 var LEFT = false;
 var RIGHT = false;
@@ -320,7 +341,15 @@ function animate() {
     move() //Player movement
 
     
-
+    function drawArrow(angle) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+          ctx.save();
+        ctx.translate(player.x + player.w/2, player.y + player.h/2);
+        ctx.rotate(-Math.PI / 2);   // correction for image starting position
+        ctx.rotate(angle);
+          ctx.drawImage(playerImg, -playerImg.width / 2.5, -playerImg.height / 2.5);
+        ctx.restore();
+      }
    
 
     powerups.forEach((powerup, x) => {
@@ -464,17 +493,11 @@ addEventListener('click', (event) => {
     }
 })
 
-// //event listener for Player to follow cursor
+//event listener for Player to follow cursor
 // addEventListener('mousemove', (event) => {
 //     state.mouse.x = event.clientX
 //     state.mouse.y = event.clientY
 // })
-document.addEventListener("mousemove", function(e) {
-    var dx = e.pageX - player.x;
-    var dy = e.pageY - player.y;
-    var theta = Math.atan2(dy, dx);
-      drawArrow(theta);
-  });
 
 
 
