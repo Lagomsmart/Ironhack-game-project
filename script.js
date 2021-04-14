@@ -66,7 +66,7 @@ class Player {
         ctx.restore();
 
     }
-    
+
     init = () => {
         let i = 0;
         //console.log(player)
@@ -372,6 +372,7 @@ setInterval(() => {
 if (powerups.length < 1) {
     powerups.push(healthPotion)
 }
+
 
 for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
     otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
