@@ -241,13 +241,9 @@ class healPowerup extends Powerups {
 // CREATING PLAYER 
 let defaultPlayerX = 10
 let defaultPlayerY = canvas.height / 2
-<<<<<<< HEAD
-// let maxAmountOfPowerups = 1
-=======
->>>>>>> 2f932083216be44353a4c3c8644e71e5957f71c2
 
 let img = new Image()
-img.src = './sprites/HeroBlue/jump-facing-right-512px-x-512px-per-frame.png';
+img.src = './images/player.png';
 
 
 const player = new Player(defaultPlayerX, defaultPlayerY, img.width / 4, img.height / 2, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
