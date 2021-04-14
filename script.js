@@ -8,9 +8,9 @@ const ctx = canvas.getContext('2d')
 
 //Math.reduce to spawn X amount of enemies by empying array?
 
-let playerImg = new Image()
-playerImg.src = 'https://d30y9cdsu7xlg0.cloudfront.net/png/35-200.png';
-playerImg.onload = () => player.drawArrow(0);
+// let playerImg = new Image()
+// playerImg.src = 'https://d30y9cdsu7xlg0.cloudfront.net/png/35-200.png';
+// playerImg.onload = () => player.drawArrow(0);
 
 
 
@@ -23,7 +23,6 @@ class Player {
         this.y = y;
         this.w = w;
         this.h = h;
-        this.playerImg = playerImg;
         this.speed = speed;
         this.color = 'black';
         this.health = health;
@@ -56,7 +55,7 @@ class Player {
         ctx.translate(this.x, this.y);
         ctx.rotate(-Math.PI / 2);
         ctx.rotate(this.angle);
-        ctx.drawImage(playerImg, -playerImg.width / 2, -playerImg.height / 2);
+        ctx.drawImage(this.img, -this.img.width / 2, -this.img.height / 2);
         // ctx.drawImage(
         //     this.img, this.sx, this.sy, this.sw, this.sh,
         //     this.dx, this.dy,
@@ -67,11 +66,12 @@ class Player {
         ctx.restore();
 
     }
+    
     init = () => {
         let i = 0;
-        console.log(player)
+        //console.log(player)
         setInterval(function () {
-            console.log(player.sw, player.sx, player)
+            //console.log(player.sw, player.sx, player)
             player.sx += player.sw
             i++
             if (i >= player.numOfActualImages - 1) {
@@ -241,13 +241,12 @@ class healPowerup extends Powerups {
 // CREATING PLAYER 
 let defaultPlayerX = 10
 let defaultPlayerY = canvas.height / 2
-let maxAmountOfPowerups = 1
 
 let img = new Image()
 img.src = './sprites/HeroBlue/jump-facing-right-512px-x-512px-per-frame.png';
 
 
-const player = new Player(defaultPlayerX, defaultPlayerY, playerImg.width, playerImg.height, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
+const player = new Player(defaultPlayerX, defaultPlayerY, img.width / 4, img.height / 2, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
 
 
 
@@ -383,7 +382,7 @@ for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
 
 
 
-ctx.drawImage(playerImg, player.x, player.y)
+ctx.drawImage(player.img, player.x, player.y)
 
 
 // ---------- ANIMATE ---------- ---------- ANIMATE ---------- ---------- ANIMATE ----------
@@ -556,7 +555,7 @@ addEventListener('click', (event) => {
             y: Math.sin(angle) * 14
         }
         projectiles.push(
-            new Projectile(player.x, player.y, 5, 'red', velocity)
+            new Projectile(player.x + player.w / 2, player.y + player.h / 2, 5, 'red', velocity)
         )
     } else {
         console.log('Not enough Stamina!');
