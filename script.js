@@ -9,6 +9,10 @@ const ctx = canvas.getContext('2d')
 //Math.reduce to spawn X amount of enemies by empying array?
 
 let playerImg = new Image()
+playerImg.onload = function () {
+    player.drawArrow(0);
+};
+playerImg.src = '/sprites/croppedArmature-shoot-000.png'
 
 // let sx = 0
 // let sy = rowImOn * img.height / numberOfRows
@@ -33,15 +37,20 @@ class Player {
         this.stamina = stamina;
         this.maxStamina = maxStamina
     }
-    // loadHero = () => {
-    //     this.playerImg.src = this.src
-    //     this.playerImg.onload = this.draw
-    // }
+    drawArrow = (angle) => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.save();
+        ctx.translate(player.x + player.w / 2, player.y + player.h / 2);
+        ctx.rotate(-Math.PI / 2);   // correction for image starting position
+        ctx.rotate(angle);
+        ctx.drawImage(playerImg, -playerImg.width / 2.5, -playerImg.height / 2.5);
+        ctx.restore();
+    }
     draw = () => {
-        // ctx.fillStyle = this.color
-        // ctx.fillRect(this.x, this.y, this.w, this.h)
-        // ctx.drawImage(playerImg, sx, sy, sw, sh, dx, dy, this.w, this.h)
-  
+        //ctx.fillStyle = this.color
+        //ctx.fillRect(this.x, this.y, this.w, this.h)
+        //ctx.drawImage(playerImg, this.x, this.y)
+
 
         ctx.fillStyle = 'red'
         ctx.fillRect(10, 10, 200, 25)
@@ -205,7 +214,7 @@ class healPowerup extends Powerups {
 let defaultPlayerX = 10
 let defaultPlayerY = canvas.height / 2
 let maxAmountOfPowerups = 1
-const player = new Player(defaultPlayerX, defaultPlayerY, 50, 50, 5, 100, 100, 5, 100, 100) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
+const player = new Player(defaultPlayerX, defaultPlayerY, playerImg.width, playerImg.height, 5, 100, 100, 5, 100, 100) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
 
 let healthPotion = new healPowerup(1000, 300, 30, 30, 'green')
 
@@ -224,10 +233,7 @@ let powerups = [];
 
 
 // var arrow = new Image();
-playerImg.onload = function() {
-    drawArrow(0);
-};
-playerImg.src = 'https://i.ibb.co/fvwpZNm/Armature-shoot-000.png'
+
 
 // function drawArrow(angle) {
 //     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -238,14 +244,13 @@ playerImg.src = 'https://i.ibb.co/fvwpZNm/Armature-shoot-000.png'
 //       ctx.drawImage(playerImg, -playerImg.width / 2.5, -playerImg.height / 2.5);
 //     ctx.restore();
 //   }
-  
-  document.onmousemove = function(e) {
-    var dx = e.pageX - player.x + player.w/2;
-    var dy = e.pageY - player.y + player.h/2;
+
+document.onmousemove = function (e) {
+    var dx = e.pageX - player.x + player.w / 2;
+    var dy = e.pageY - player.y + player.h / 2;
     var theta = Math.atan2(dy, dx);
-    console.log("hi there")
-      drawArrow(theta);
-  };
+    player.drawArrow(theta);
+};
 
 
 
@@ -340,20 +345,20 @@ function animate() {
 
     move() //Player movement
 
-    
+
     function drawArrow(angle) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-          ctx.save();
-        ctx.translate(player.x + player.w/2, player.y + player.h/2);
+        ctx.save();
+        ctx.translate(player.x + player.w / 2, player.y + player.h / 2);
         ctx.rotate(-Math.PI / 2);   // correction for image starting position
         ctx.rotate(angle);
-          ctx.drawImage(playerImg, -playerImg.width / 2.5, -playerImg.height / 2.5);
+        ctx.drawImage(playerImg, -playerImg.width / 2.5, -playerImg.height / 2.5);
         ctx.restore();
-      }
-   
+    }
+
 
     powerups.forEach((powerup, x) => {
-        
+
         if (detectCollision(player, powerup)) {
             powerup.heal()
             powerups.splice(x, 1)
@@ -460,7 +465,7 @@ function animate() {
         // }
 
     }
-    
+
 
 }
 
@@ -475,7 +480,6 @@ animate()
 addEventListener('click', (event) => {
     if (player.stamina > 10) {
         player.stamina -= 10;
-        console.log(player.stamina);
 
         const angle = Math.atan2(
             event.clientY - player.y - 100,
@@ -486,7 +490,7 @@ addEventListener('click', (event) => {
             y: Math.sin(angle) * 14
         }
         projectiles.push(
-            new Projectile(player.x + player.w/2, player.y + player.h/2, 5, 'red', velocity)
+            new Projectile(player.x + player.w / 2, player.y + player.h / 2, 5, 'red', velocity)
         )
     } else {
         console.log('Not enough Stamina!');
