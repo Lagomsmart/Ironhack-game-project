@@ -144,16 +144,28 @@ class Projectile {
 
 // ---------- Enemy class ----------
 class Enemy {
-    constructor(x, y, w, h, speed, color, health, damage) {
+    constructor(x, y, w, h, speed, color, health, damage, enemyImg) {
         this.x = x;
         this.y = y;
         this.w = w;
         this.h = h;
-        this.EnemyImg = new Image()
+        this.enemyImg = new Image()
         this.speed = speed
         this.color = color
         this.health = health
         this.damage = damage
+
+        this.numberOfImages = 4
+        this.numberOfRows = 2
+        this.numOfActualImages = 4
+        this.rowImOn = 1
+        this.enemyImg = enemyImg
+        this.sx = 0
+        this.sy = this.rowImOn * (this.enemyImg.height / this.numberOfRows)
+        this.sw = this.img.width / this.numberOfImages
+        this.sh = this.img.height / this.numberOfRows
+        this.dx = 0
+        this.dy = 0
     }
     loadHero = () => {
         this.EnemyImg.src = this.src
@@ -246,7 +258,7 @@ let img = new Image()
 img.src = './images/player.png';
 
 
-const player = new Player(defaultPlayerX, defaultPlayerY, img.width / 4, img.height / 2, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
+const player = new Player(defaultPlayerX, defaultPlayerY, img.width, img.height, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
 
 
 
