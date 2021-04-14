@@ -9,10 +9,8 @@ const ctx = canvas.getContext('2d')
 //Math.reduce to spawn X amount of enemies by empying array?
 
 let playerImg = new Image()
-playerImg.onload = function () {
-    player.drawArrow(0);
-};
-playerImg.src = '/sprites/croppedArmature-shoot-000.png'
+playerImg.src = 'https://d30y9cdsu7xlg0.cloudfront.net/png/35-200.png';
+playerImg.onload = () => player.drawArrow(0);
 
 // let sx = 0
 // let sy = rowImOn * img.height / numberOfRows
@@ -20,6 +18,9 @@ playerImg.src = '/sprites/croppedArmature-shoot-000.png'
 // let sh = img.height / numberOfRows
 // let dx = 0
 // let dy = 0
+
+
+
 
 // ---------- Player class ----------
 class Player {
@@ -36,14 +37,25 @@ class Player {
         this.damage = damage;
         this.stamina = stamina;
         this.maxStamina = maxStamina
+        this.angle = 0;
     }
     drawArrow = (angle) => {
+        // ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // ctx.save();
+        // ctx.translate(player.x + player.w / 2, player.y + player.h / 2);
+        // ctx.rotate(-Math.PI / 2);   // correction for image starting position
+        // ctx.rotate(angle);
+        // ctx.drawImage(playerImg, -playerImg.width / 2.5, -playerImg.height / 2.5);
+        // ctx.restore();
+        this.angle = angle;
+    }
+    drawGuy = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.save();
-        ctx.translate(player.x + player.w / 2, player.y + player.h / 2);
+        ctx.translate(player.x, player.y);
         ctx.rotate(-Math.PI / 2);   // correction for image starting position
-        ctx.rotate(angle);
-        ctx.drawImage(playerImg, -playerImg.width / 2.5, -playerImg.height / 2.5);
+        ctx.rotate(this.angle);
+        ctx.drawImage(playerImg, -playerImg.width / 2, -playerImg.height / 2);
         ctx.restore();
     }
     draw = () => {
@@ -228,7 +240,12 @@ const projectiles = [];
 let powerups = [];
 
 
-
+document.onmousemove = function (e) {
+    var dx = e.pageX - (player.x + player.w / 2);
+    var dy = e.pageY - (player.y + player.h / 2);
+    var theta = Math.atan2(dy, dx);
+    player.drawArrow(theta);
+};
 
 
 
@@ -245,12 +262,7 @@ let powerups = [];
 //     ctx.restore();
 //   }
 
-document.onmousemove = function (e) {
-    var dx = e.pageX - player.x + player.w / 2;
-    var dy = e.pageY - player.y + player.h / 2;
-    var theta = Math.atan2(dy, dx);
-    player.drawArrow(theta);
-};
+
 
 
 
@@ -341,20 +353,12 @@ function animate() {
     requestAnimationFrame(animate)
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
-    player.draw()
+    player.drawGuy()
+    
 
     move() //Player movement
 
 
-    function drawArrow(angle) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.save();
-        ctx.translate(player.x + player.w / 2, player.y + player.h / 2);
-        ctx.rotate(-Math.PI / 2);   // correction for image starting position
-        ctx.rotate(angle);
-        ctx.drawImage(playerImg, -playerImg.width / 2.5, -playerImg.height / 2.5);
-        ctx.restore();
-    }
 
 
     powerups.forEach((powerup, x) => {
@@ -490,7 +494,7 @@ addEventListener('click', (event) => {
             y: Math.sin(angle) * 14
         }
         projectiles.push(
-            new Projectile(player.x + player.w / 2, player.y + player.h / 2, 5, 'red', velocity)
+            new Projectile(player.x, player.y, 5, 'red', velocity)
         )
     } else {
         console.log('Not enough Stamina!');
