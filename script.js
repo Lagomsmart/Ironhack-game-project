@@ -241,7 +241,7 @@ class healPowerup extends Powerups {
 // CREATING PLAYER 
 let defaultPlayerX = 10
 let defaultPlayerY = canvas.height / 2
-let maxAmountOfPowerups = 1
+// let maxAmountOfPowerups = 1
 
 let img = new Image()
 img.src = './sprites/HeroBlue/jump-facing-right-512px-x-512px-per-frame.png';
@@ -374,12 +374,12 @@ if (powerups.length < 1) {
     powerups.push(healthPotion)
 }
 
-for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
-    otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
-}
-for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
-    enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
-}
+// for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
+//     otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
+// }
+// for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
+//     enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
+// }
 
 
 
@@ -393,7 +393,7 @@ function animate() {
 
     player.drawGuy()
 
-
+    player.draw()
 
 
     move() //Player movement
@@ -422,12 +422,12 @@ function animate() {
     //  CREATING/PUSHING THE ENEMIES //
 
 
-    // if (enemies.length < maxAmountOfEnemies) {
-    //     enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
-    // }
-    // if (otherEnemies.length < maxAmountOfOtherEnemies) {
-    //     otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
-    // }
+    if (enemies.length < maxAmountOfEnemies) {
+        enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
+    }
+    if (otherEnemies.length < maxAmountOfOtherEnemies) {
+        otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
+    }
 
     // [enemies] moving
     enemies.forEach((enemy) => {
@@ -499,12 +499,12 @@ function animate() {
         player.y = defaultPlayerY
 
         //reset and push enemy amount
-        for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
-            otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
-        }
-        for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
-            enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
-        }
+        // for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
+        //     otherEnemies.push(new Enemy(1150, Math.random() * 450 + 100, 50, 50, 1, 'red', 10, 1))
+        // }
+        // for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
+        //     enemies.push(new Enemy(Math.random() * 1000 + 200, Math.random() * 650, 50, 50, 1, 'blue', 10, 1))
+        // }
 
         //reset and push powerup
         // if (Math.floor(Math.random() * 2) == 1) { //50% chance to spawn 1 powerup per room
