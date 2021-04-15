@@ -8,17 +8,19 @@ export default class Fireball extends Enemy {
         this.numberOfImages = 6
         this.numberOfRows = 2
         this.numOfActualImages = 6
-        this.rowImOn = 0
+        this.rowImOn = 1
         this.enemyImg = enemyImg
         this.sx = 0
-        this.sy = this.rowImOn * 197
-        this.sw = 512
-        this.sh = 197
+        this.sy = this.rowImOn * this.h
+        this.sw = this.w
+        this.sh = this.h
         this.dx = 0
         this.dy = 0
+        this.dw = this.w //wrong?
+        this.dh = this.h //wrong?
     }
     draw() {
-        ctx.drawImage(this.enemyImg, this.x, this.y, this.w, this.h)
+        ctx.drawImage(this.enemyImg, this.x, this.y, this.dw, this.dh)
     }
 }
 

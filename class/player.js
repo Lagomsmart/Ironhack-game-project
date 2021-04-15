@@ -84,7 +84,7 @@ export default class Player {
         ctx.fillText(`ammo`, 320, 30)
 
         //Score
-        ctx.fillStyle = 'black'
+        ctx.fillStyle = 'white'
         ctx.font = '32px ccclobberintimecrunchy';
         ctx.fillText(`Current Level: ${currentLevel}`, 870, 40)
 
