@@ -8,7 +8,7 @@ export default class Enemy {
         this.y = y;
         this.w = w;
         this.h = h;
-        this.speed = speed
+        this.speed = 0//speed
         this.color = color
         this.health = health
         this.damage = damage

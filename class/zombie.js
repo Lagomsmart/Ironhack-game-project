@@ -1,6 +1,6 @@
 import { ctx } from '../script.js';
 import Enemy from './enemy.js';
-
+import { player } from '../script.js'
 
 // let sx = 0
 // let sy = rowImOn * img.height / numberOfRows
@@ -9,6 +9,7 @@ import Enemy from './enemy.js';
 // let dx = 0
 // let dy = 0
 
+console.log('hi')
 
 class Zombie extends Enemy {
     constructor(x, y, w, h, speed, color, health, damage, enemyImg) {
@@ -34,40 +35,53 @@ class Zombie extends Enemy {
                 this.sx = 0;
                 i = 0;
             }
-        }).bind(this), 100)
+        }).bind(this), 500)
     }
     draw() {
-        //ctx.clearRect(0, 0, canvas.width, canvas.height);
-        //ctx.drawImage(this.enemyImg, this.x, this.y, this.w, this.h)
-        //ctx.save();
-        //ctx.translate(this.x + this.w / 2, this.y + this.h / 2); //Offset x and y 
-        // ctx.rotate(-Math.PI / 2); //Correct for original image position 
-        //ctx.rotate(Math.PI / 180 * 45); //angle
+
+        ctx.save()
 
 
-        // ctx.drawImage(git
-        //     this.enemyImg, this.sx, this.sy, this.sw, this.sh,
-        //     this.x, this.y,
-        //     // canvas.width / numberOfImages, 
-        //     // canvas.height / numberOfRows * (sw / sh)
-        //     150, 150
+        // const angle = Math.atan2(
+        //     event.clientY - (player.y + player.h / 2) - 100,
+        //     event.clientX - (player.x + player.w / 2) - 100
         // )
-        ctx.drawImage(
-            this.enemyImg, this.sx, this.sy, this.sw, this.sh,
-            -this.w / 2, -this.h / 2,
-            // canvas.width / numberOfImages, 
-            // canvas.height / numberOfRows * (sw / sh)
-            150, 150
-        )
-        // ctx.drawImage(this.img, this.x, this.y, this.width, 
-        //     this.height, x, y, this.width, this.height);
+        // console.log(player.x, player.y)
 
-        // ctx.save();
-        // ctx.translate(x + this.width / 2, y + this.height / 2);
-        // ctx.rotate(this.angle * Math.PI / 180);
-        // ctx.drawImage(this.img, this.x, this.y, this.width, this.height,
-        //                         -this.width / 2, -this.height / 2, this.width, this.height);
-        // ctx.restore();
+        console.log('y00o', player)
+        // ctx.rotate(-5 * Math.PI / 180);
+        // ctx.translate(150, 75);
+        // ctx.rotate(20 * (Math.PI / 180));
+        // ctx.translate(-150, -75);
+
+        let size = .9
+
+        let centerX = this.x + (this.w / 9 * size / 2)
+        let centerY = this.y + (this.h * size / 2)
+
+        ctx.translate(centerX, centerY);
+
+        ctx.rotate(145 * Math.PI / 180);
+        //ctx.rotate(Math.PI / 2);
+        ctx.translate(-1 * centerX, -1 * centerY)
+        // ctx.drawImage(
+        //     this.enemyImg, this.x, this.y,
+        //     this.w, this.h
+        // )
+
+
+
+        ctx.drawImage(
+            this.enemyImg,
+            this.sx,
+            this.sy,
+            this.sw,
+            this.sh,
+            this.x, this.y,
+            this.w / 9 * size, this.h * size
+        )
+
+
 
         ctx.restore()
 
