@@ -4,15 +4,15 @@ import Enemy from './enemy.js';
 class Zombie extends Enemy {
     constructor(x, y, w, h, speed, color, health, damage, enemyImg) {
         super(x, y, w, h, speed, color, health, damage, enemyImg)
-        this.numberOfImages = 9
+        this.numberOfImages = 3
         this.numberOfRows = 3
-        this.numOfActualImages = 9
+        this.numOfActualImages = 3
         this.rowImOn = 0
         this.enemyImg = enemyImg
         this.sx = 0
-        this.sy = this.rowImOn * 314
-        this.sw = 338
-        this.sh = 314
+        this.sy = this.rowImOn * this.h
+        this.sw = this.w / 3
+        this.sh = this.h / 3
         this.dx = 0
         this.dy = 0
     }
@@ -20,19 +20,12 @@ class Zombie extends Enemy {
         let i = 0;
 
         setInterval((function () {
-
             this.sx += this.sw
 
-            if (i % 3 === 0) {
-                this.sy += this.sh
-                this.rowImOn++
-            }
             i++
             if (i >= this.numOfActualImages - 1) {
                 this.sx = 0;
-                this.sy = 0;
                 i = 0;
-                this.rowImOn = 0;
             }
         }).bind(this), 300)
     }
