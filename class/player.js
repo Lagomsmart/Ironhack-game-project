@@ -1,4 +1,4 @@
-import { ctx, player, } from './../script.js'
+import { ctx, player, currentLevel } from './../script.js'
 
 
 export default class Player {
@@ -76,6 +76,11 @@ export default class Player {
         ctx.fillRect(250, 10, 200, 25)
         ctx.fillStyle = 'yellow'
         ctx.fillRect(250, 10, Math.max(0, this.stamina / 100 * 200), 25)
+
+        //Score
+        ctx.fillStyle = 'black'
+        ctx.font = '32px serif';
+        ctx.fillText(`Current Level: ${currentLevel}`, 500, 30)
 
         if (this.health <= 0) {
             //this.dead()

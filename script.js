@@ -71,6 +71,7 @@ let enemies = [];
 let otherEnemies = [];
 let maxAmountOfEnemies = 3; //we can ++ this to increase monsterspawn per room cleared
 let maxAmountOfOtherEnemies = 3
+let currentLevel = 1
 
 const projectiles = [];
 
@@ -276,7 +277,8 @@ function animate() {
     //If player reaches next door
     if (player.x == canvas.width - player.w && player.y > 233 && player.y < 466 && otherEnemies.length < 1 && enemies.length < 1) {
         console.log('next room!');
-        let currentLevel = 1
+
+        currentLevel++
 
         //fade screen
         //ctx.fillRect(0, 0, canvas.width, canvas.height)
@@ -304,16 +306,16 @@ function animate() {
 
         let randomlevel = Math.floor(Math.random() * 2)
 
-        // if (randomlevel = 0) {
-        //     document.querySelector("#canvas").style.backgroundImage = "url('./images/newLevel')"
-        // } else if (randomelevel = 1) {
-        //     document.querySelector("#canvas").style.backgroundImage = "url('./images/level2')"
-        //     // } else if (randomelevl = 2) {
-        //     //     document.querySelector("#canvas").style.backgroundImage = "url('NEXTLEVEL')"
-        //     // }
+        if (randomlevel == 0) {
+            document.querySelector("#canvas").style.backgroundImage = "url('./images/newLevel.png')"
+        } else if (randomlevel == 1) {
+            document.querySelector("#canvas").style.backgroundImage = "url('./images/level2.png')"
+            // } else if (randomelevl = 2) {
+            //     document.querySelector("#canvas").style.backgroundImage = "url('NEXTLEVEL')"
+            // }
 
 
-        // }
+        }
 
 
     }
@@ -376,4 +378,4 @@ addEventListener('click', (event) => {
 
 
 
-export { ctx, player, powerups }
+export { ctx, player, powerups, currentLevel }
