@@ -78,10 +78,9 @@ let powerups = [];
 let maxAmountOfPowerups = 1
 
 
-//Are we using this?
 document.onmousemove = function (e) {
-    var dx = e.pageX - (player.x + player.w / 2);
-    var dy = e.pageY - (player.y + player.h / 2);
+    var dx = e.pageX - (player.x + player.w / 2) - 100;
+    var dy = e.pageY - (player.y + player.h / 2) - 100;
     var theta = Math.atan2(dy, dx);
     player.drawArrow(theta);
 };
@@ -126,16 +125,16 @@ document.onkeyup = function (e) {
     if (e.keyCode == 40) DOWN = false;
 }
 function move() {
-    if (LEFT && player.x > 6) {
+    if (LEFT && player.x > 6 + 50) {
         player.x -= player.speed;
     }
-    if (RIGHT && player.x < (canvas.width - player.w)) {
+    if (RIGHT && player.x < (canvas.width - player.w) - 50) {
         player.x += player.speed;
     }
-    if (UP && player.y > 6) {
+    if (UP && player.y > 50) {
         player.y -= player.speed;
     }
-    if (DOWN && player.y < (canvas.height - player.h)) {
+    if (DOWN && player.y < (canvas.height - player.h - 50)) {
         player.y += player.speed;
     }
 }
@@ -288,6 +287,10 @@ function animate() {
         player.x = defaultPlayerX
         player.y = defaultPlayerY
 
+        //increase difficulty
+        maxAmountOfOtherEnemies += 1
+        maxAmountOfEnemies += 2
+
         //reset and push enemy amount
         for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
             otherEnemies.push(fireball)
@@ -302,8 +305,9 @@ function animate() {
         // }
 
 
-        //change background image to next level
 
+
+        //change background image to next level
         let randomlevel = Math.floor(Math.random() * 2)
 
         if (randomlevel == 0) {
@@ -329,12 +333,12 @@ img.onload = () => {
     player.init()
     animate()
 }
-fireballImg.onload = () => {
-    fireball.init()
-}
-zombieImg.onload = () => {
-    zombie.init()
-}
+// fireballImg.onload = () => {
+//     fireball.init()
+// }
+// zombieImg.onload = () => {
+//     zombie.init()
+// }
 
 
 
