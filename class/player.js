@@ -70,17 +70,23 @@ export default class Player {
         ctx.fillRect(10, 10, 200, 25)
         ctx.fillStyle = 'green'
         ctx.fillRect(10, 10, Math.max(0, this.health / 100 * 200), 25)
+        ctx.fillStyle = 'black'
+        ctx.font = '20px ccclobberintimecrunchy';
+        ctx.fillText(`health`, 80, 30)
 
         //Stamina Bar
         ctx.fillStyle = 'white'
         ctx.fillRect(250, 10, 200, 25)
         ctx.fillStyle = 'yellow'
         ctx.fillRect(250, 10, Math.max(0, this.stamina / 100 * 200), 25)
+        ctx.fillStyle = 'black'
+        ctx.font = '20px ccclobberintimecrunchy';
+        ctx.fillText(`stamina`, 310, 30)
 
         //Score
         ctx.fillStyle = 'black'
-        ctx.font = 'bold 32px serif';
-        ctx.fillText(`Current Level: ${currentLevel}`, 500, 30)
+        ctx.font = '32px ccclobberintimecrunchy';
+        ctx.fillText(`Current Level: ${currentLevel}`, 870, 40)
 
         if (this.health <= 0) {
             //this.dead()
