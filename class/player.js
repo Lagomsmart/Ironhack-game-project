@@ -81,7 +81,7 @@ export default class Player {
         ctx.fillRect(250, 10, Math.max(0, this.stamina / 100 * 200), 25)
         ctx.fillStyle = 'black'
         ctx.font = '20px ccclobberintimecrunchy';
-        ctx.fillText(`stamina`, 310, 30)
+        ctx.fillText(`ammo`, 320, 30)
 
         //Score
         ctx.fillStyle = 'black'

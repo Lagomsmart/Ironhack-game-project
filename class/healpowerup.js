@@ -1,11 +1,13 @@
-import { ctx, player, } from './../script.js'
+import { ctx, player, } from '../script.js'
 
 import { Powerups } from './powerups.js';
+
 
 
 class healPowerup extends Powerups {
     constructor(x, y, w, h, color) {
         super(x, y, w, h, color)
+        
     }
     heal() {
         if (player.health < player.maxhealth) {
