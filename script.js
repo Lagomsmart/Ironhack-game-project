@@ -172,19 +172,19 @@ class Enemy {
   
         setInterval( (function () {
           
-            console.log(this)
+           
             this.sx += this.sw 
             
-            if (i % 3 === 0) {
-                this.sy += this.sh
-                this.rowImOn ++
-            }
+            // if (i % 3 === 0) {
+            //     this.sy += this.sh
+            //     this.rowImOn ++
+            // }
             i++
             if (i >= this.numOfActualImages - 1) {
                 this.sx = 0;
-                this.sy = 0;
+                // this.sy = 0;
                 i = 0;
-                this.rowImOn = 0;
+                // this.rowImOn = 0;
             }
         }).bind(this), 30)
     }
