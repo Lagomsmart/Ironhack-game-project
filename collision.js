@@ -35,8 +35,6 @@ function PowerupCollosion() {
             powerup.heal()
             powerup.increaseAmmoCap()
             powerups.splice(x, 1)
-        } else {
-            powerup.draw()
         }
     })
 }

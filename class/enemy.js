@@ -13,42 +13,8 @@ export default class Enemy {
         this.health = health
         this.damage = damage
 
-        // this.numberOfImages = 9
-        // this.numberOfRows = 3
-        // this.numOfActualImages = 9
-        // this.rowImOn = 1
-        // this.enemyImg = enemyImg
-        // this.sx = 0
-        // // this.sy = this.rowImOn * (this.enemyImg.height / this.numberOfRows)
-        // // this.sw = this.img.width / this.numberOfImages
-        // // this.sh = this.img.height / this.numberOfRows
-        // this.dx = 0
-        // this.dy = 0
     }
-    // init = () => {
-    //     let i = 0;
-
-    //     setInterval((function () {
-
-    //         this.sx += this.sw
-
-    //         if (i % 3 === 0) {
-    //             this.sy += this.sh
-    //             this.rowImOn++
-    //         }
-    //         i++
-    //         if (i >= this.numOfActualImages - 1) {
-    //             this.sx = 0;
-    //             this.sy = 0;
-    //             i = 0;
-    //             this.rowImOn = 0;
-    //         }
-    //     }).bind(this), 300)
-    // }
     update() {
-        //this.init() // Iterates through each enemy and runs this.init for every single one
-
-        //draw enemy here?
         this.draw()
 
 

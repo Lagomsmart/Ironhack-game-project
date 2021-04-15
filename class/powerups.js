@@ -12,11 +12,6 @@ class Powerups {
         ctx.fillStyle = this.color
         ctx.fillRect(this.x, this.y, this.w, this.h)
     }
-    update() {
-        this.draw()
-        this.x = this.x// + this.velocity.x
-        this.y = this.y// + this.velocity.y
-    }
 }
 
 
