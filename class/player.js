@@ -79,7 +79,7 @@ export default class Player {
 
         //Score
         ctx.fillStyle = 'black'
-        ctx.font = '32px serif';
+        ctx.font = 'bold 32px serif';
         ctx.fillText(`Current Level: ${currentLevel}`, 500, 30)
 
         if (this.health <= 0) {

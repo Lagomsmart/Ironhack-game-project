@@ -46,6 +46,11 @@ export default class Enemy {
     }
     update() {
         this.init() // Iterates through each enemy and runs this.init for every single one
+        
+        //draw enemy here?
+        
+
+
     }
     move() {
         if (player.x > this.x) {

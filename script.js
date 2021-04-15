@@ -329,12 +329,12 @@ img.onload = () => {
     player.init()
     animate()
 }
-// fireballImg.onload = () => {
-//     fireball.init()
-// }
-// zombieImg.onload = () => {
-//     zombie.init()
-// }
+fireballImg.onload = () => {
+    fireball.init()
+}
+zombieImg.onload = () => {
+    zombie.init()
+}
 
 
 
@@ -372,7 +372,6 @@ addEventListener('click', (event) => {
 //     state.mouse.x = event.clientX
 //     state.mouse.y = event.clientY
 // })
-
 
 
 
