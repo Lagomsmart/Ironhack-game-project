@@ -36,7 +36,7 @@ const fireball = new Fireball(
     Math.random() * 450 + 100,
     233,
     90,
-    1,
+    0.5,
     'red',
     10,
     1
@@ -45,13 +45,13 @@ let fireballImg = new Image()
 fireballImg.src = './sprites/spritefireball.png'
 fireball.enemyImg = fireballImg
 
-
+//(x, y, w, h, speed, color, health, damage)
 const zombie = new Zombie(
     Math.random() * 800 + 400,
     Math.random() * 650,
     338,
     314,
-    1,
+    0.2,
     'blue',
     10,
     1
@@ -122,16 +122,16 @@ document.onkeyup = function (e) {
     if (e.keyCode == 40) DOWN = false;
 }
 function move() {
-    if (LEFT && player.x > 6 + 50) {
+    if (LEFT && player.x > 6) {
         player.x -= player.speed;
     }
-    if (RIGHT && player.x < (canvas.width - player.w) - 50) {
+    if (RIGHT && player.x < (canvas.width - player.w)) {
         player.x += player.speed;
     }
     if (UP && player.y > 50) {
         player.y -= player.speed;
     }
-    if (DOWN && player.y < (canvas.height - player.h - 50)) {
+    if (DOWN && player.y < (canvas.height - player.h)) {
         player.y += player.speed;
     }
 }
