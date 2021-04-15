@@ -4,8 +4,7 @@ import { Zombie } from './class/zombie.js';
 import { Fireball } from './class/fireball.js';
 import { healPowerup } from './class/healpowerup.js';
 import { detectCollision, RectCircleColliding, PowerupCollosion } from './collision.js'
-
-
+import { AmmoCap } from './class/ammocap.js';
 
 const canvas = document.querySelector('#canvas')
 const ctx = canvas.getContext('2d')
@@ -49,27 +48,44 @@ fireball.enemyImg = fireballImg
 const zombie = new Zombie(
     Math.random() * 800 + 400,
     Math.random() * 650,
-    338,
-    314,
-    0.2,
+    1700,
+    175,
+    1,
     'blue',
-    10,
-    1
+    20,
+    6
 )
+const zombie2 = new Zombie(
+    Math.random() * 800 + 400,
+    Math.random() * 650,
+    1700,
+    175,
+    1,
+    'blue',
+    20,
+    6
+)
+
 let zombieImg = new Image()
-zombieImg.src = './images/enemy1.png'
+zombieImg.src = './images/zombie-revised.png'
 zombie.enemyImg = zombieImg
+zombie2.enemyImg = zombieImg
 
 
 const player = new Player(defaultPlayerX, defaultPlayerY, 101, 101, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
+
+let ammoCapUpgrade = new AmmoCap(800, 300, 75, 75, 'yellow') //x, y, w, h, color
+
+
 
 
 let healthPotion = new healPowerup(1000, 300, 30, 30, 'green')
 
 
+
 let enemies = [];
 let otherEnemies = [];
-let maxAmountOfEnemies = 3; //we can ++ this to increase monsterspawn per room cleared
+let maxAmountOfEnemies = 2; //we can ++ this to increase monsterspawn per room cleared
 let maxAmountOfOtherEnemies = 3
 let currentLevel = 1
 
@@ -79,23 +95,10 @@ let powerups = [];
 let maxAmountOfPowerups = 1
 
 
-//Are we using this?
 
 
 
 
-// var arrow = new Image();
-
-
-// function drawArrow(angle) {
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-//       ctx.save();
-//     ctx.translate(player.x + player.w/2, player.y + player.h/2);
-//     ctx.rotate(-Math.PI / 2);   // correction for image starting position
-//     ctx.rotate(angle);
-//       ctx.drawImage(playerImg, -playerImg.width / 2.5, -playerImg.height / 2.5);
-//     ctx.restore();
-//   }
 
 
 
@@ -186,13 +189,18 @@ if (powerups.length < 1) {
 for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
     otherEnemies.push(fireball)
 }
-for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
+for (let i = enemies.length; i < 1; i++) {
     enemies.push(zombie)
+}
+for (let i = enemies.length; i < 2; i++) {
+    enemies.push(zombie2)
 }
 
 
 
 ctx.drawImage(player.img, player.x, player.y)
+healthPotion.draw()
+console.log(healthPotion)
 
 
 // ---------- ANIMATE ---------- ---------- ANIMATE ---------- ---------- ANIMATE ----------
@@ -217,15 +225,10 @@ function animate() {
     enemies.forEach((enemy) => {
 
         otherEnemies.forEach((otherenemy) => {
-            if (!detectCollision(otherenemy, player)) {
-                otherenemy.randomPathing()
-            }
-
-            if (!detectCollision(enemy, player)) {
-                enemy.move()
-            }
+            otherenemy.randomPathing()
+            
         });
-
+    enemy.move()
 
     });
 
@@ -236,7 +239,11 @@ function animate() {
             projectiles.forEach((projectile, pIndex) => {
 
                 if (RectCircleColliding(projectile, enemy)) {
-                    enemies.splice(index, 1)
+                   
+                    enemy.health -= player.damage
+                    if (enemy.health < 1) {
+                        enemies.splice(index, 1)
+                    }
                     projectiles.splice(pIndex, 1)
                 }
             })
@@ -296,9 +303,13 @@ function animate() {
             enemies.push(zombie)
         }
 
+
+        let randompowerup = Math.floor(Math.random() * 2)
         //reset and push powerup
-        // if (Math.floor(Math.random() * 2) == 1) { //50% chance to spawn 1 powerup per room
+        // if (randompowerup == 0) { //50% chance to spawn 1 powerup per room
         //     //poweruparray.push(healthPotion)
+        // } else if (randompowerup == 1) { //50% chance to spawn 1 powerup per room
+        //     //poweruparray.push(ammocap)
         // }
 
 
@@ -310,7 +321,7 @@ function animate() {
         if (randomlevel == 0) {
             document.querySelector("#canvas").style.backgroundImage = "url('./images/newLevel.png')"
         } else if (randomlevel == 1) {
-            document.querySelector("#canvas").style.backgroundImage = "url('./images/level2.png')"
+            document.querySelector("#canvas").style.backgroundImage = "url('./images/Level3.png')"
             // } else if (randomelevl = 2) {
             //     document.querySelector("#canvas").style.backgroundImage = "url('NEXTLEVEL')"
             // }
@@ -330,12 +341,13 @@ img.onload = () => {
     player.init()
     animate()
 }
-// fireballImg.onload = () => {
-//     fireball.init()
-// }
-// zombieImg.onload = () => {
-//     zombie.init()
-// }
+fireballImg.onload = () => {
+    fireball.init()
+}
+zombieImg.onload = () => {
+    zombie.init()
+    zombie2.init()
+}
 
 
 
@@ -380,7 +392,7 @@ addEventListener('click', (event) => {
 // })
 
 
-
+window.enemies = enemies
 
 
 export { ctx, player, powerups, currentLevel }
