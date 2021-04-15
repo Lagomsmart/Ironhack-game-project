@@ -35,6 +35,7 @@ class Zombie extends Enemy {
                 this.sx = 0;
                 i = 0;
             }
+            console.log('y00o', player)
         }).bind(this), 500)
     }
     draw() {
@@ -46,9 +47,20 @@ class Zombie extends Enemy {
         //     event.clientY - (player.y + player.h / 2) - 100,
         //     event.clientX - (player.x + player.w / 2) - 100
         // )
+
+        let angle = Math.atan2(
+            player.y - (this.y + this.h / 2) - 100,
+            player.x - (this.x + this.w / 2) - 100
+        )
+
+
+        let angleDeg = Math.atan2(this.y - player.y, this.x - player.x) * 180 / Math.PI;
+
+
+        console.log(angleDeg);
         // console.log(player.x, player.y)
 
-        console.log('y00o', player)
+
         // ctx.rotate(-5 * Math.PI / 180);
         // ctx.translate(150, 75);
         // ctx.rotate(20 * (Math.PI / 180));
@@ -61,7 +73,7 @@ class Zombie extends Enemy {
 
         ctx.translate(centerX, centerY);
 
-        ctx.rotate(145 * Math.PI / 180);
+        ctx.rotate(angleDeg * Math.PI / 180);
         //ctx.rotate(Math.PI / 2);
         ctx.translate(-1 * centerX, -1 * centerY)
         // ctx.drawImage(
