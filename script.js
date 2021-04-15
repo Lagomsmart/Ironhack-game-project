@@ -46,18 +46,30 @@ fireball.enemyImg = fireballImg
 
 //(x, y, w, h, speed, color, health, damage) Math.random() * 800 + 400    Math.random() * 650
 const zombie = new Zombie(
-    200,
-    200,
+    Math.random() * 800 + 400,
+    Math.random() * 650,
     1700,
     175,
-    0.2,
+    0.5,
     'blue',
     10,
     1
 )
+const zombie2 = new Zombie(
+    Math.random() * 800 + 400,
+    Math.random() * 650,
+    1700,
+    175,
+    0.5,
+    'blue',
+    10,
+    1
+)
+
 let zombieImg = new Image()
 zombieImg.src = './images/zombie-revised.png'
 zombie.enemyImg = zombieImg
+zombie2.enemyImg = zombieImg
 
 
 const player = new Player(defaultPlayerX, defaultPlayerY, 101, 101, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
@@ -73,7 +85,7 @@ let healthPotion = new healPowerup(1000, 300, 30, 30, 'green')
 
 let enemies = [];
 let otherEnemies = [];
-let maxAmountOfEnemies = 3; //we can ++ this to increase monsterspawn per room cleared
+let maxAmountOfEnemies = 2; //we can ++ this to increase monsterspawn per room cleared
 let maxAmountOfOtherEnemies = 3
 let currentLevel = 1
 
@@ -177,8 +189,11 @@ if (powerups.length < 1) {
 for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
     otherEnemies.push(fireball)
 }
-for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
+for (let i = enemies.length; i < 1; i++) {
     enemies.push(zombie)
+}
+for (let i = enemies.length; i < 2; i++) {
+    enemies.push(zombie2)
 }
 
 
@@ -208,15 +223,9 @@ function animate() {
     enemies.forEach((enemy) => {
 
         otherEnemies.forEach((otherenemy) => {
-            if (!detectCollision(otherenemy, player)) {
-                otherenemy.randomPathing()
-            }
-
-            if (!detectCollision(enemy, player)) {
-                enemy.move()
-            }
+            otherenemy.randomPathing()
+            enemy.move()
         });
-
 
     });
 
@@ -375,7 +384,7 @@ addEventListener('click', (event) => {
 // })
 
 
-
+window.enemies = enemies
 
 
 export { ctx, player, powerups, currentLevel }

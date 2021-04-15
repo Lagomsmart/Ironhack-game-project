@@ -35,7 +35,6 @@ class Zombie extends Enemy {
                 this.sx = 0;
                 i = 0;
             }
-            console.log('y00o', player)
         }).bind(this), 500)
     }
     draw() {
@@ -56,8 +55,6 @@ class Zombie extends Enemy {
 
         let angleDeg = Math.atan2(this.y - player.y, this.x - player.x) * 180 / Math.PI;
 
-
-        console.log(angleDeg);
         // console.log(player.x, player.y)
 
 
