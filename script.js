@@ -45,19 +45,19 @@ let fireballImg = new Image()
 fireballImg.src = './sprites/spritefireball.png'
 fireball.enemyImg = fireballImg
 
-//(x, y, w, h, speed, color, health, damage)
+//(x, y, w, h, speed, color, health, damage) Math.random() * 800 + 400    Math.random() * 650
 const zombie = new Zombie(
-    Math.random() * 800 + 400,
-    Math.random() * 650,
-    338,
-    314,
+    200,
+    200,
+    1700,
+    175,
     0.2,
     'blue',
     10,
     1
 )
 let zombieImg = new Image()
-zombieImg.src = './images/enemy1.png'
+zombieImg.src = './images/zombie-revised.png'
 zombie.enemyImg = zombieImg
 
 
@@ -330,12 +330,12 @@ img.onload = () => {
     player.init()
     animate()
 }
-// fireballImg.onload = () => {
-//     fireball.init()
-// }
-// zombieImg.onload = () => {
-//     zombie.init()
-// }
+fireballImg.onload = () => {
+    fireball.init()
+}
+zombieImg.onload = () => {
+    zombie.init()
+}
 
 
 

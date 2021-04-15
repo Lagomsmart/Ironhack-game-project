@@ -46,7 +46,7 @@ export default class Enemy {
     //     }).bind(this), 300)
     // }
     update() {
-        this.init() // Iterates through each enemy and runs this.init for every single one
+        //this.init() // Iterates through each enemy and runs this.init for every single one
 
         //draw enemy here?
         this.draw()
