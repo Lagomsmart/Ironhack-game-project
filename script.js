@@ -44,7 +44,11 @@ let fireballImg = new Image()
 fireballImg.src = './sprites/spritefireball.png'
 fireball.enemyImg = fireballImg
 
+<<<<<<< HEAD
 //(x, y, w, h, speed, color, health, damage)
+=======
+//(x, y, w, h, speed, color, health, damage) 
+>>>>>>> 243043637aa2ac25195acbfaa0f2c78b0864a1af
 const zombie = new Zombie(
     Math.random() * 800 + 400,
     Math.random() * 650,
@@ -52,8 +56,13 @@ const zombie = new Zombie(
     175,
     1,
     'blue',
+<<<<<<< HEAD
     20,
     6
+=======
+    10,
+    10
+>>>>>>> 243043637aa2ac25195acbfaa0f2c78b0864a1af
 )
 const zombie2 = new Zombie(
     Math.random() * 800 + 400,
@@ -62,15 +71,19 @@ const zombie2 = new Zombie(
     175,
     1,
     'blue',
+<<<<<<< HEAD
     20,
     6
+=======
+    10,
+    10
+>>>>>>> 243043637aa2ac25195acbfaa0f2c78b0864a1af
 )
 
 let zombieImg = new Image()
 zombieImg.src = './images/zombie-revised.png'
 zombie.enemyImg = zombieImg
 zombie2.enemyImg = zombieImg
-
 
 const player = new Player(defaultPlayerX, defaultPlayerY, 101, 101, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
 
@@ -149,6 +162,7 @@ function move() {
 
 
 // ---------- Set Interval ----------
+
 
 setInterval(() => {
     enemies.forEach((enemy) => {
@@ -278,7 +292,7 @@ function animate() {
 
 
     //If player reaches next door
-    if (player.x == canvas.width - player.w && player.y > 233 && player.y < 466 && otherEnemies.length < 1 && enemies.length < 1) {
+    if (player.x > 1050 && player.y > 233 && player.y < 466 && otherEnemies.length < 1 && enemies.length < 1) {
         console.log('next room!');
 
         currentLevel++
@@ -292,7 +306,7 @@ function animate() {
         player.y = defaultPlayerY
 
         //increase difficulty
-        maxAmountOfOtherEnemies += 1
+        maxAmountOfOtherEnemies += 2
         maxAmountOfEnemies += 2
 
         //reset and push enemy amount
@@ -316,17 +330,18 @@ function animate() {
 
 
         //change background image to next level
-        let randomlevel = Math.floor(Math.random() * 2)
+        let randomlevel = Math.floor(Math.random() * 5)
 
         if (randomlevel == 0) {
-            document.querySelector("#canvas").style.backgroundImage = "url('./images/newLevel.png')"
+            document.querySelector("#canvas").style.backgroundImage = "url('./Levels/1Level.png')"
         } else if (randomlevel == 1) {
-            document.querySelector("#canvas").style.backgroundImage = "url('./images/Level3.png')"
-            // } else if (randomelevl = 2) {
-            //     document.querySelector("#canvas").style.backgroundImage = "url('NEXTLEVEL')"
-            // }
-
-
+            document.querySelector("#canvas").style.backgroundImage = "url('./Levels/2Level.png')"
+        } else if (randomelevl == 3) {
+            document.querySelector("#canvas").style.backgroundImage = "url('./Levels/3Level.png')"
+        } else if (randomelevl == 4) {
+            document.querySelector("#canvas").style.backgroundImage = "url('./Levels/4Level.png')"
+        } else if (randomelevl == 5) {
+            document.querySelector("#canvas").style.backgroundImage = "url('./Levels/5Level.png')"
         }
 
 
@@ -334,6 +349,7 @@ function animate() {
 
 
 }
+
 // ---------- END OF ANIMATE ---------- ---------- END OF ANIMATE ---------- ---------- END OF ANIMATE ----------
 
 
@@ -393,6 +409,8 @@ addEventListener('click', (event) => {
 
 
 window.enemies = enemies
+window.otherEnemies = otherEnemies
+window.player = player
 
 
 export { ctx, player, powerups, currentLevel }
