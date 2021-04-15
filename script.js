@@ -302,23 +302,27 @@ function animate() {
 
         //change background image to next level
 
-        // let randomlevel = Math.floor(Math.random() * 2)
+        let randomlevel = Math.floor(Math.random() * 2)
 
         // if (randomlevel = 0) {
-        //     document.querySelector("#canvas").style.backgroundImage = "url('NEXTLEVEL')"
-        // } else if (randomelevl = 1) {
-        //     document.querySelector("#canvas").style.backgroundImage = "url('NEXTLEVEL')"
-        // } else if (randomelevl = 2) {
-        //     document.querySelector("#canvas").style.backgroundImage = "url('NEXTLEVEL')"
+        //     document.querySelector("#canvas").style.backgroundImage = "url('./images/newLevel')"
+        // } else if (randomelevel = 1) {
+        //     document.querySelector("#canvas").style.backgroundImage = "url('./images/level2')"
+        //     // } else if (randomelevl = 2) {
+        //     //     document.querySelector("#canvas").style.backgroundImage = "url('NEXTLEVEL')"
+        //     // }
+
+
         // }
-
-
 
 
     }
 
 
 }
+// ---------- END OF ANIMATE ---------- ---------- END OF ANIMATE ---------- ---------- END OF ANIMATE ----------
+
+
 img.onload = () => {
     player.init()
     animate()
@@ -330,7 +334,7 @@ img.onload = () => {
 //     zombie.init()
 // }
 
-// ---------- END OF ANIMATE ---------- ---------- END OF ANIMATE ---------- ---------- END OF ANIMATE ----------
+
 
 
 
@@ -350,7 +354,7 @@ addEventListener('click', (event) => {
             event.clientX - player.x - 100
         )
         const velocity = {
-            x: Math.cos(angle) * 14,
+            x: Math.cos(angle) * 14, //bullet speed
             y: Math.sin(angle) * 14
         }
         projectiles.push(
