@@ -217,11 +217,11 @@ function animate() {
     enemies.forEach((enemy) => {
 
         otherEnemies.forEach((otherenemy) => {
-            if (!detectCollision(otherenemy, enemy) && (!detectCollision(otherenemy, player))) {
+            if (!detectCollision(otherenemy, player)) {
                 otherenemy.randomPathing()
             }
 
-            if (!detectCollision(enemy, player) && (!detectCollision(otherenemy, enemy))) {
+            if (!detectCollision(enemy, player)) {
                 enemy.move()
             }
         });
