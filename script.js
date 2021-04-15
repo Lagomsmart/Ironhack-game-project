@@ -217,11 +217,11 @@ function animate() {
     enemies.forEach((enemy) => {
 
         otherEnemies.forEach((otherenemy) => {
-            if (!detectCollision(otherenemy, enemy) && (!detectCollision(otherenemy, player))) {
+            if (!detectCollision(otherenemy, player)) {
                 otherenemy.randomPathing()
             }
 
-            if (!detectCollision(enemy, player) && (!detectCollision(otherenemy, enemy))) {
+            if (!detectCollision(enemy, player)) {
                 enemy.move()
             }
         });
@@ -310,7 +310,7 @@ function animate() {
         if (randomlevel == 0) {
             document.querySelector("#canvas").style.backgroundImage = "url('./images/newLevel.png')"
         } else if (randomlevel == 1) {
-            document.querySelector("#canvas").style.backgroundImage = "url('./images/level2.png')"
+            document.querySelector("#canvas").style.backgroundImage = "url('./images/Level3.png')"
             // } else if (randomelevl = 2) {
             //     document.querySelector("#canvas").style.backgroundImage = "url('NEXTLEVEL')"
             // }
