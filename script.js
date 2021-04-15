@@ -4,8 +4,7 @@ import { Zombie } from './class/zombie.js';
 import { Fireball } from './class/fireball.js';
 import { healPowerup } from './class/healpowerup.js';
 import { detectCollision, RectCircleColliding, PowerupCollosion } from './collision.js'
-
-
+import { AmmoCap } from './class/ammocap.js';
 
 const canvas = document.querySelector('#canvas')
 const ctx = canvas.getContext('2d')
@@ -63,8 +62,13 @@ zombie.enemyImg = zombieImg
 
 const player = new Player(defaultPlayerX, defaultPlayerY, 101, 101, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
 
+let ammoCapUpgrade = new AmmoCap(800, 300, 75, 75, 'yellow') //x, y, w, h, color
+
+
+console.log(ammoCapUpgrade)
 
 let healthPotion = new healPowerup(1000, 300, 30, 30, 'green')
+
 
 
 let enemies = [];
@@ -79,23 +83,10 @@ let powerups = [];
 let maxAmountOfPowerups = 1
 
 
-//Are we using this?
 
 
 
 
-// var arrow = new Image();
-
-
-// function drawArrow(angle) {
-//     ctx.clearRect(0, 0, canvas.width, canvas.height);
-//       ctx.save();
-//     ctx.translate(player.x + player.w/2, player.y + player.h/2);
-//     ctx.rotate(-Math.PI / 2);   // correction for image starting position
-//     ctx.rotate(angle);
-//       ctx.drawImage(playerImg, -playerImg.width / 2.5, -playerImg.height / 2.5);
-//     ctx.restore();
-//   }
 
 
 
@@ -296,9 +287,13 @@ function animate() {
             enemies.push(zombie)
         }
 
+
+        let randompowerup = Math.floor(Math.random() * 2)
         //reset and push powerup
-        // if (Math.floor(Math.random() * 2) == 1) { //50% chance to spawn 1 powerup per room
+        // if (randompowerup == 0) { //50% chance to spawn 1 powerup per room
         //     //poweruparray.push(healthPotion)
+        // } else if (randompowerup == 1) { //50% chance to spawn 1 powerup per room
+        //     //poweruparray.push(ammocap)
         // }
 
 

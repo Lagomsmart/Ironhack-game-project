@@ -27,7 +27,6 @@ class Zombie extends Enemy {
     }
     init = () => {
         let i = 0;
-        //console.log(this)
         setInterval((function () {
             this.sx += this.sw
             i++
