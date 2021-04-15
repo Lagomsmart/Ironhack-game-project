@@ -61,7 +61,8 @@ zombieImg.src = './images/enemy1.png'
 zombie.enemyImg = zombieImg
 
 
-const player = new Player(defaultPlayerX, defaultPlayerY, 60, 101, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
+const player = new Player(defaultPlayerX, defaultPlayerY, 101, 101, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
+
 
 let healthPotion = new healPowerup(1000, 300, 30, 30, 'green')
 
@@ -78,12 +79,8 @@ let powerups = [];
 let maxAmountOfPowerups = 1
 
 
-document.onmousemove = function (e) {
-    var dx = e.pageX - (player.x + player.w / 2) - 100;
-    var dy = e.pageY - (player.y + player.h / 2) - 100;
-    var theta = Math.atan2(dy, dx);
-    player.drawArrow(theta);
-};
+//Are we using this?
+
 
 
 
@@ -342,7 +339,12 @@ img.onload = () => {
 
 
 
-
+document.onmousemove = function (e) {
+    var dx = e.pageX - (player.x + player.w / 2) - 100;
+    var dy = e.pageY - (player.y + player.h / 2) - 100;
+    var theta = Math.atan2(dy, dx);
+    player.drawArrow(theta);
+};
 
 
 
@@ -356,8 +358,8 @@ addEventListener('click', (event) => {
             player.reload()
         }
         const angle = Math.atan2(
-            event.clientY - player.y - 100,
-            event.clientX - player.x - 100
+            event.clientY - (player.y + player.h / 2) - 100,
+            event.clientX - (player.x + player.w / 2) - 100
         )
         const velocity = {
             x: Math.cos(angle) * 14, //bullet speed

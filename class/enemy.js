@@ -3,7 +3,7 @@ import { ctx, player, } from './../script.js'
 
 
 export default class Enemy {
-    constructor(x, y, w, h, speed, color, health, damage, enemyImg) {
+    constructor(x, y, w, h, speed, color, health, damage) {
         this.x = x;
         this.y = y;
         this.w = w;
