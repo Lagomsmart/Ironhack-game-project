@@ -17,7 +17,9 @@ export default class Fireball extends Enemy {
         this.dx = 0
         this.dy = 0
     }
-
+    draw() {
+        ctx.drawImage(this.enemyImg, this.x, this.y, this.w, this.h)
+    }
 }
 
 

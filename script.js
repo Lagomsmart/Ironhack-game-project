@@ -34,8 +34,8 @@ img.src = './images/smallgirlx2.png';
 const fireball = new Fireball(
     1150,
     Math.random() * 450 + 100,
-    512,
-    197,
+    233,
+    90,
     1,
     'red',
     10,
@@ -61,8 +61,7 @@ zombieImg.src = './images/enemy1.png'
 zombie.enemyImg = zombieImg
 
 
-const player = new Player(defaultPlayerX, defaultPlayerY, 85, 142, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
-
+const player = new Player(defaultPlayerX, defaultPlayerY, 60, 101, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
 
 let healthPotion = new healPowerup(1000, 300, 30, 30, 'green')
 
@@ -245,6 +244,7 @@ function animate() {
                     projectiles.splice(pIndex, 1)
                 }
             })
+
         )
     })
 

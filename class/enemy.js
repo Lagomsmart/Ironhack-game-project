@@ -1,6 +1,7 @@
 import { ctx, player, } from './../script.js'
 
 
+
 export default class Enemy {
     constructor(x, y, w, h, speed, color, health, damage, enemyImg) {
         this.x = x;
@@ -46,9 +47,9 @@ export default class Enemy {
     }
     update() {
         this.init() // Iterates through each enemy and runs this.init for every single one
-        
+
         //draw enemy here?
-        
+        this.draw()
 
 
     }

@@ -1,3 +1,4 @@
+import { ctx } from '../script.js';
 import Enemy from './enemy.js';
 
 class Zombie extends Enemy {
@@ -14,6 +15,10 @@ class Zombie extends Enemy {
         this.sh = 314
         this.dx = 0
         this.dy = 0
+    }
+    draw() {
+        //ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(this.enemyImg, this.x, this.y, this.w, this.h)
     }
 
 }
