@@ -2,12 +2,13 @@ import { ctx, player, } from './../script.js'
 
 
 export default class Projectile {
-    constructor(x, y, radius, color, velocity) {
+    constructor(x, y, radius, color, velocity, projectileImg) {
         this.x = x
         this.y = y
         this.radius = radius
         this.color = color
         this.velocity = velocity
+        this.projectileImg = projectileImg
     }
     draw() {
         ctx.beginPath()

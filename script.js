@@ -242,11 +242,12 @@ function animate() {
     // [enemies] moving
     enemies.forEach((enemy) => {
 
-        otherEnemies.forEach((otherenemy) => {
-            otherenemy.randomPathing()
-
-        });
         enemy.move()
+
+    });
+
+    otherEnemies.forEach((otherenemy) => {
+        otherenemy.randomPathing()
 
     });
 
@@ -451,11 +452,7 @@ addEventListener('click', (event) => {
             y: Math.sin(angle) * 14
         }
         projectiles.push(
-<<<<<<< HEAD
             new Projectile(player.x + player.w / 2, player.y + player.h / 2, 2, 'gold', velocity)
-=======
-            new Projectile(player.x + player.w / 2, player.y + player.h / 2, 3, 'rgba(255, 165, 0, 0.6)', velocity)
->>>>>>> bb137eefd56072ff01d547a77d756b0c79302181
         )
     } else {
         console.log('Not enough Ammo! RELOADING');
