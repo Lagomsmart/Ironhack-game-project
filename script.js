@@ -26,8 +26,12 @@ const score = document.querySelector('#score')
 // playerImg.src = 'https://d30y9cdsu7xlg0.cloudfront.net/png/35-200.png';
 // playerImg.onload = () => player.drawArrow(0);
 
+//----------------AUDIO--------------//
+let audio = new Audio('./sprites/Horror.wav');
+audio.play();
+audio.volume = 0.09;
 
-
+//------------END AUDIO-----------------//
 
 //----------DECLARING PLAYER, ENEMY, OBJECTS ----------
 // CREATING PLAYER 
