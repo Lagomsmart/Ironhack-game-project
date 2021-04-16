@@ -10,6 +10,7 @@ const canvas = document.querySelector('#canvas')
 const ctx = canvas.getContext('2d')
 
 const startButton = document.querySelector('.startButton')
+const restartButton = document.querySelector('.restartButton')
 const splashScreen = document.querySelector('.SplashScreen')
 const finishScreen = document.querySelector('.FinishScreen')
 const score = document.querySelector('#score')
@@ -224,8 +225,10 @@ function animate() {
     if (player.health < 1) {
         // splashScreen.style.display = 'flex'
         finishScreen.style.display = 'flex'
-        cancelAnimationFrame(animate)
+        cancelAnimationFrame(null)
         score.innerHTML = currentLevel - 1
+        restartGame()
+        player.healh = 100
     }
 
     PowerupCollosion(player, powerups)
@@ -376,19 +379,28 @@ zombieImg.onload = () => {
 
 
 //RESET GAME
-//restartGame = () => {
-// ctx.clearRect(0, 0, canvas.width, canvas.height)
-// currentLevel = 1
-// player.health = 100
-// player.stamina = 100
-// player.maxStamina = 100
-// maxAmountOfEnemies = 2
-// maxAmountOfOtherEnemies = 2
-// enemies = [];
-// otherEnemies = []
-// enemies.push(zombie1)
-// enemies.push(zombie2)
-//}
+function restartGame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    currentLevel = 1
+    player.health = 100
+    player.stamina = 100
+    player.maxStamina = 100
+    maxAmountOfEnemies = 2
+    maxAmountOfOtherEnemies = 2
+    enemies = []
+    otherEnemies = []
+
+    // for (let i = 0; i < enemies.length; i++) {
+    //     enemies.slice(0, enemies.length)
+    // }
+    // for (let i = 0; i < enemies.length; i++) {
+    //     otherEnemies.slice(0, otherEnemies.length)
+    // }
+    enemies.push(zombie)
+    enemies.push(zombie2)
+    player.x = defaultPlayerX
+    player.y = defaultPlayerY
+}
 
 
 document.onmousemove = function (e) {
@@ -411,6 +423,15 @@ startButton.addEventListener('click', () => {
 
 })
 
+restartButton.addEventListener('click', () => {
+    console.log("Go!");
+    //animate() doubles the instance of animate.. why?
+    //spawnenemies?
+    splashScreen.style.display = 'none'
+    finishScreen.style.display = 'none'
+    restartGame()
+})
+
 
 // ---------- PLAYER ATTACK EVENT LISTENER ----------
 addEventListener('click', (event) => {
@@ -430,7 +451,11 @@ addEventListener('click', (event) => {
             y: Math.sin(angle) * 14
         }
         projectiles.push(
+<<<<<<< HEAD
             new Projectile(player.x + player.w / 2, player.y + player.h / 2, 2, 'gold', velocity)
+=======
+            new Projectile(player.x + player.w / 2, player.y + player.h / 2, 3, 'rgba(255, 165, 0, 0.6)', velocity)
+>>>>>>> bb137eefd56072ff01d547a77d756b0c79302181
         )
     } else {
         console.log('Not enough Ammo! RELOADING');

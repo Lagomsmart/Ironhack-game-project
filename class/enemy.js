@@ -32,23 +32,25 @@ export default class Enemy {
         // if (player.y < this.y) {
         //     this.y -= this.speed
         // }
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> bb137eefd56072ff01d547a77d756b0c79302181
 
 
         if (player.x > this.x) {
-            this.x += this.speed
+            this.x += this.speed * 2
         }
         if (player.x < this.x) {
-            this.x -= this.speed
+            this.x -= this.speed * 2
         }
         if (player.y > this.y) {
-            this.y += this.speed / 3
+            this.y += this.speed
         }
         if (player.y < this.y) {
-            this.y -= this.speed / 3
+            this.y -= this.speed
         }
-
 
     }
     randomPathing() { //TESTING    Enemy random pathing left
