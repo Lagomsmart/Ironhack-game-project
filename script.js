@@ -387,10 +387,19 @@ function restartGame() {
     player.maxStamina = 100
     maxAmountOfEnemies = 2
     maxAmountOfOtherEnemies = 2
-    enemies = [];
+    enemies = []
     otherEnemies = []
-    enemies.push(zombie1)
+
+    // for (let i = 0; i < enemies.length; i++) {
+    //     enemies.slice(0, enemies.length)
+    // }
+    // for (let i = 0; i < enemies.length; i++) {
+    //     otherEnemies.slice(0, otherEnemies.length)
+    // }
+    enemies.push(zombie)
     enemies.push(zombie2)
+    player.x = defaultPlayerX
+    player.y = defaultPlayerY
 }
 
 
@@ -416,7 +425,7 @@ startButton.addEventListener('click', () => {
 
 restartButton.addEventListener('click', () => {
     console.log("Go!");
-    animate()
+    //animate() doubles the instance of animate.. why?
     //spawnenemies?
     splashScreen.style.display = 'none'
     finishScreen.style.display = 'none'
@@ -442,7 +451,7 @@ addEventListener('click', (event) => {
             y: Math.sin(angle) * 14
         }
         projectiles.push(
-            new Projectile(player.x + player.w / 2, player.y + player.h / 2, 5, 'red', velocity)
+            new Projectile(player.x + player.w / 2, player.y + player.h / 2, 3, 'rgba(255, 165, 0, 0.6)', velocity)
         )
     } else {
         console.log('Not enough Ammo! RELOADING');
