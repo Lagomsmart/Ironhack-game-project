@@ -42,7 +42,7 @@ const fireball = new Fireball(
     Math.random() * 450 + 100,
     3123,
     207,
-    .2,
+    2,
     'red',
     10,
     1
