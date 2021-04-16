@@ -40,9 +40,9 @@ img.src = './images/smallgirlx2.png';
 const fireball = new Fireball(
     1150,
     Math.random() * 450 + 100,
-    3132,
+    3123,
     207,
-    2,
+    .2,
     'red',
     10,
     1
@@ -105,7 +105,7 @@ let fireballsOnScreen = 0
 let maxFireballsOnScreen = 2
 let maxZombiesOnScreen = 2
 const projectiles = [];
-
+let bulletcost = 10
 let powerups = [];
 let maxAmountOfPowerups = 1
 
@@ -256,12 +256,12 @@ setInterval(() => {
 
 
 
-if (powerups.length < 2) {
-    powerups.push(medkit)
-}
-if (powerups.length < 2) {
-    powerups.push(ammoCapUpgrade)
-}
+// if (powerups.length < 1) {
+//     powerups.push(medkit)
+// }
+// if (powerups.length < 2) {
+//     powerups.push(ammoCapUpgrade)
+// }
 
 for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
     otherEnemies.push(fireball)
@@ -394,47 +394,83 @@ function animate() {
         //increase difficulty
         zombiesOnScreen = 0
         fireballsOnScreen = 0
-        maxFireballsOnScreen = 2
-        maxZombiesOnScreen = 2
-        maxAmountOfOtherEnemies += 2
-        maxAmountOfEnemies += 2
+        // maxFireballsOnScreen = 2
+        // maxZombiesOnScreen = 2
+        maxAmountOfOtherEnemies += 3
+        maxAmountOfEnemies += 3
+        maxZombiesOnScreen += 2
+        maxFireballsOnScreen += 1
 
         //reset and push enemy amount
         //(x, y, w, h, speed, color, health, damage, enemyImg)
-        for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) { //(let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++)
-            fireballsOnScreen++
-            otherEnemies.push(new Fireball(
-                1250,
-                Math.random() * 550 + 100,
-                3132,
-                207,
-                fireballspeed,
-                'red',
-                2,
-                1
-            ))
-        }//(x, y, w, h, speed, color, health, damage, enemyImg)
-        for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
-            zombiesOnScreen++
-            enemies.push(new Zombie(
-                1250,
-                Math.random() * 650 + 50,
-                1700,
-                175,
-                1,
-                'blue',
-                10,
-                10
-            ))
-        }
+        setInterval((function () {
+            if (enemies.length < maxAmountOfEnemies && zombiesOnScreen <= maxZombiesOnScreen) {
+                zombiesOnScreen++
+                enemies.push(new Zombie(
+                    1250,
+                    Math.random() * 650 + 50,
+                    1700,
+                    175,
+                    1,
+                    'blue',
+                    10,
+                    10
+                ))
+            }
+            if (otherEnemies.length < maxAmountOfOtherEnemies && fireballsOnScreen <= maxFireballsOnScreen) { //(let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++)
+                fireballsOnScreen++
+                otherEnemies.push(new Fireball(
+                    1250,
+                    Math.random() * 550 + 100,
+                    3132,
+                    207,
+                    fireballspeed,
+                    'red',
+                    2,
+                    1
+                ))
+            }//(x, y, w, h, speed, color, health, damage, enemyImg)
 
 
-        let randompowerup = Math.floor(Math.random() * 2)
+
+
+            // for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) { //(let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++)
+            //     fireballsOnScreen++
+            //     otherEnemies.push(new Fireball(
+            //         1250,
+            //         Math.random() * 550 + 100,
+            //         3132,
+            //         207,
+            //         fireballspeed,
+            //         'red',
+            //         2,
+            //         1
+            //     ))
+            // }//(x, y, w, h, speed, color, health, damage, enemyImg)
+            // for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
+            //     zombiesOnScreen++
+            //     enemies.push(new Zombie(
+            //         1250,
+            //         Math.random() * 650 + 50,
+            //         1700,
+            //         175,
+            //         1,
+            //         'blue',
+            //         10,
+            //         10
+            //     ))
+            // }
+        }), 1000)
+
+
+        let randompowerup = Math.floor(Math.random() * 3)
         // reset and push powerup
         if (randompowerup == 0) { //50% chance to spawn 1 powerup per room
-            powerups.push(medkit)
+            powerups.push(new MedkitPowerup(Math.random() * 600 + 500, 100, 70, 70, 'green', medkitImg))
         } else if (randompowerup == 1) { //50% chance to spawn 1 powerup per room
-            powerups.push(ammoCapUpgrade)
+            powerups.push(new AmmoCap(800, 300, 75, 75, 'yellow', ammoCapUpgradeImg))
+        } else if (randompowerup == 2) {
+            //Nothing spawns
         }
 
 
@@ -489,6 +525,9 @@ function restartGame() {
     player.maxStamina = 100
     maxAmountOfEnemies = 2
     maxAmountOfOtherEnemies = 2
+    maxZombiesOnScreen = 2
+    maxFireballsOnScreen = 2
+    bulletcost = 10
 
     enemies = []
     otherEnemies = []
@@ -501,8 +540,6 @@ function restartGame() {
     // }
     enemies.push(zombie)
     enemies.push(zombie2)
-    powerups.push(medkit)
-    powerups.push(ammoCapUpgrade)
     player.x = defaultPlayerX
     player.y = defaultPlayerY
 }
@@ -540,8 +577,8 @@ restartButton.addEventListener('click', () => {
 
 // ---------- PLAYER ATTACK EVENT LISTENER ----------
 addEventListener('click', (event) => {
-    if (player.stamina >= 10) {
-        player.stamina -= 10;
+    if (player.stamina >= bulletcost) {
+        player.stamina -= bulletcost;
 
         if (player.stamina < 10) {
             console.log('Not enough Ammo! RELOADING'); 0
@@ -577,4 +614,4 @@ window.medkit = medkit
 window.ammoCapUpgrade = ammoCapUpgrade
 
 
-export { ctx, player, powerups, currentLevel }
+export { ctx, player, powerups, currentLevel, bulletcost }

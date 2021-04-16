@@ -15,6 +15,7 @@ export default class Player {
         this.stamina = stamina;
         this.maxStamina = maxStamina;
         this.angle = 0;
+        this.bulletcost = 10
 
 
         // this.numberOfImages = 4

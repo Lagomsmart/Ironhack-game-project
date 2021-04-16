@@ -1,4 +1,4 @@
-import { ctx, player, } from '../script.js'
+import { ctx, player, bulletcost } from '../script.js'
 
 import { Powerups } from './powerups.js';
 
@@ -10,7 +10,7 @@ class AmmoCap extends Powerups {
 
     }
     ability() {
-        player.maxStamina += 20
+        bulletcost *= 1.2
     }
     draw = () => {
         // ctx.fillStyle = this.color
