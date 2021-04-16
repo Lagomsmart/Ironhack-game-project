@@ -105,7 +105,6 @@ let fireballsOnScreen = 0
 let maxFireballsOnScreen = 2
 let maxZombiesOnScreen = 2
 const projectiles = [];
-let bulletcost = 10
 let powerups = [];
 let maxAmountOfPowerups = 1
 
@@ -527,7 +526,7 @@ function restartGame() {
     maxAmountOfOtherEnemies = 2
     maxZombiesOnScreen = 2
     maxFireballsOnScreen = 2
-    bulletcost = 10
+    player.bulletcost = 10
 
     enemies = []
     otherEnemies = []
@@ -577,8 +576,8 @@ restartButton.addEventListener('click', () => {
 
 // ---------- PLAYER ATTACK EVENT LISTENER ----------
 addEventListener('click', (event) => {
-    if (player.stamina >= bulletcost) {
-        player.stamina -= bulletcost;
+    if (player.stamina >= player.bulletcost) {
+        player.stamina -= player.bulletcost;
 
         if (player.stamina < 10) {
             console.log('Not enough Ammo! RELOADING'); 0
@@ -614,4 +613,4 @@ window.medkit = medkit
 window.ammoCapUpgrade = ammoCapUpgrade
 
 
-export { ctx, player, powerups, currentLevel, bulletcost }
+export { ctx, player, powerups, currentLevel }

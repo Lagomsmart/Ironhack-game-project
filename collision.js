@@ -10,6 +10,15 @@ function detectCollision(rect1, rect2) {
     }
 }
 
+function newdetectCollision(rect1, rect2) {
+    if (rect1.x < rect2.x + rect2.w &&
+        rect1.x + rect1.w > rect2.x &&
+        rect1.y < rect2.y + rect2.h &&
+        rect1.y + rect1.h > rect2.y) {
+        return true
+    }
+}
+
 // ---------- COLLISION DETECTION - HERO Projectile VS ENEMY ----------
 // return true if the rectangle and circle are colliding
 function RectCircleColliding(circle, rect) {
@@ -32,7 +41,7 @@ function RectCircleColliding(circle, rect) {
 function PowerupCollosion() {
     powerups.forEach((powerup, x) => {
 
-        if (detectCollision(player, powerup)) {
+        if (newdetectCollision(player, powerup)) {
             powerup.ability()
             powerups.splice(x, 1)
         }
