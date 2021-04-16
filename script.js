@@ -81,7 +81,9 @@ zombie2.enemyImg = zombieImg
 const player = new Player(defaultPlayerX, defaultPlayerY, 101, 101, 5, 100, 100, 5, 100, 100, img) //(x, y, w, h, speed, maxhealth, health, damage, stamina, maxStamina)
 
 let ammoCapUpgrade = new AmmoCap(800, 300, 75, 75, 'yellow') //x, y, w, h, color
-
+let ammoCapUpgradeImg = new Image()
+ammoCapUpgradeImg.src = './images/ammo.png'
+ammoCapUpgrade.img = ammoCapUpgradeImg
 
 
 
@@ -142,10 +144,10 @@ class Explosion {
                 this.sx = 0;
                 i = 0;
             }
-        }).bind(this), 50000000)
+        }).bind(this), 500)
     }
     draw(projectile) {
-        let size = .3
+        let size = .5
         console.log(projectile)
         ctx.drawImage(
             this.explosionImg,
@@ -254,8 +256,11 @@ setInterval(() => {
 
 
 
-if (powerups.length < 1) {
+if (powerups.length < 2) {
     powerups.push(medkit)
+}
+if (powerups.length < 2) {
+    powerups.push(ammoCapUpgrade)
 }
 
 for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
@@ -396,7 +401,7 @@ function animate() {
 
         //reset and push enemy amount
         //(x, y, w, h, speed, color, health, damage, enemyImg)
-        for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies && fireballsOnScreen <= maxFireballsOnScreen; i++) { //(let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++)
+        for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) { //(let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++)
             fireballsOnScreen++
             otherEnemies.push(new Fireball(
                 1250,
@@ -409,8 +414,7 @@ function animate() {
                 1
             ))
         }//(x, y, w, h, speed, color, health, damage, enemyImg)
-        //setInterval
-        for (let i = enemies.length; i < maxAmountOfEnemies && zombiesOnScreen <= maxZombiesOnScreen; i++) {
+        for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
             zombiesOnScreen++
             enemies.push(new Zombie(
                 1250,
@@ -426,11 +430,11 @@ function animate() {
 
 
         let randompowerup = Math.floor(Math.random() * 2)
-        //reset and push powerup
+        // reset and push powerup
         if (randompowerup == 0) { //50% chance to spawn 1 powerup per room
             powerups.push(medkit)
         } else if (randompowerup == 1) { //50% chance to spawn 1 powerup per room
-            //powerups.push(medkit)
+            powerups.push(ammoCapUpgrade)
         }
 
 
@@ -498,6 +502,7 @@ function restartGame() {
     enemies.push(zombie)
     enemies.push(zombie2)
     powerups.push(medkit)
+    powerups.push(ammoCapUpgrade)
     player.x = defaultPlayerX
     player.y = defaultPlayerY
 }
@@ -569,6 +574,7 @@ window.enemies = enemies
 window.otherEnemies = otherEnemies
 window.player = player
 window.medkit = medkit
+window.ammoCapUpgrade = ammoCapUpgrade
 
 
 export { ctx, player, powerups, currentLevel }
