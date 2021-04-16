@@ -409,6 +409,7 @@ function animate() {
                 1
             ))
         }//(x, y, w, h, speed, color, health, damage, enemyImg)
+        //setInterval
         for (let i = enemies.length; i < maxAmountOfEnemies && zombiesOnScreen <= maxZombiesOnScreen; i++) {
             zombiesOnScreen++
             enemies.push(new Zombie(
