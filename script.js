@@ -111,6 +111,63 @@ let maxAmountOfPowerups = 1
 
 
 
+let explosionImg = new Image()
+explosionImg.src = './sprites/explosion.png'
+// explImg = explosionImg
+
+class Explosion {
+    constructor(x, y, w, h, explosionImg) {
+        this.x = x
+        this.y = y
+        this.w = w
+        this.h = h
+        this.explosionImg = explosionImg
+        this.numberOfImages = 24
+        this.numberOfRows = 0
+        this.numOfActualImages = 24
+        this.rowImOn = 0
+        this.sx = 0
+        this.sy = 0
+        this.sw = this.w / this.numberOfImages
+        this.sh = this.h
+        this.dx = 0
+        this.dy = 0
+    }
+    init = () => {
+        let i = 0;
+        setInterval((function () {
+            this.sx += this.sw
+            i++
+            if (i >= this.numOfActualImages - 1) {
+                this.sx = 0;
+                i = 0;
+            }
+        }).bind(this), 50000000)
+    }
+    draw(projectile) {
+        let size = .3
+        console.log(projectile)
+        ctx.drawImage(
+            this.explosionImg,
+            this.sx,
+            this.sy,
+            this.sw,
+            this.sh,
+            projectile.x,
+            projectile.y,
+            this.w / 24 * size, this.h * size
+        )
+    }
+}
+
+const explosion = new Explosion(
+    200,
+    200,
+    3123,
+    135,
+    explosionImg
+)
+console.log(explosion)
 
 
 
@@ -255,7 +312,7 @@ function animate() {
         enemy.move()
     });
 
-    // [enemies] updating   BLUE ZOMBIE
+    // [enemies] updating   BLUE
     enemies.forEach((enemy, index) => {
         enemy.update(
 
@@ -267,6 +324,7 @@ function animate() {
                     if (enemy.health < 1) {
                         enemies.splice(index, 1)
                     }
+                    explosion.draw(projectile)
                     projectiles.splice(pIndex, 1)
                 }
             })
@@ -287,6 +345,7 @@ function animate() {
 
                 if (RectCircleColliding(projectile, enemy)) {
                     otherEnemies.splice(index, 1)
+                    explosion.draw(projectile)
                     projectiles.splice(pIndex, 1)
                 }
 
@@ -410,6 +469,9 @@ fireballImg.onload = () => {
 zombieImg.onload = () => {
     zombie.init()
     zombie2.init()
+}
+explosionImg.onload = () => {
+    explosion.init()
 }
 
 

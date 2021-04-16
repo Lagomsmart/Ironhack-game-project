@@ -16,7 +16,7 @@ export default class Enemy {
     }
     update() {
 
-        
+
         this.draw()
 
 
@@ -34,8 +34,6 @@ export default class Enemy {
         // if (player.y < this.y) {
         //     this.y -= this.speed
         // }
-
-
 
 
         if (player.x > this.x) {

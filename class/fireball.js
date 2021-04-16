@@ -12,7 +12,7 @@ export default class Fireball extends Enemy {
     constructor(x, y, w, h, speed, color, health, damage, enemyImg) {
         super(x, y, w, h, speed, color, health, damage, enemyImg)
         this.numberOfImages = 6
-        this.numberOfRows = 2
+        this.numberOfRows = 0
         this.numOfActualImages = 6
         this.rowImOn = 0
         this.enemyImg = fireballImg
