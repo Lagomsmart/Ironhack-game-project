@@ -2,11 +2,8 @@ import Enemy from './enemy.js';
 import { ctx, player, } from './../script.js'
 
 
-
 let fireballImg = new Image()
 fireballImg.src = './sprites/fireball.png'
-
-
 
 export default class Fireball extends Enemy {
     constructor(x, y, w, h, speed, color, health, damage, enemyImg) {
@@ -47,7 +44,6 @@ export default class Fireball extends Enemy {
             this.x, this.y,
             this.w / 6 * size, this.h * size
         )
-
 
     }
 }

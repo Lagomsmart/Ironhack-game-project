@@ -3,7 +3,7 @@ import { Projectile } from './class/projectile.js';
 import { Zombie } from './class/zombie.js';
 import { Fireball } from './class/fireball.js';
 import { MedkitPowerup } from './class/medkitpowerup.js';
-import { detectCollision, RectCircleColliding, PowerupCollosion } from './collision.js'
+import { detectCollision, RectCircleColliding, PowerupCollosion, fireballdetectCollision, fireballRectCircleColliding } from './collision.js'
 import { AmmoCap } from './class/ammocap.js';
 
 const canvas = document.querySelector('#canvas')
@@ -37,6 +37,7 @@ let defaultPlayerY = canvas.height / 2
 let img = new Image()
 img.src = './images/smallgirlx2.png';
 
+//(x, y, w, h, speed, color, health, damage, enemyImg)
 const fireball = new Fireball(
     1150,
     Math.random() * 450 + 100,
@@ -45,7 +46,7 @@ const fireball = new Fireball(
     2,
     'red',
     10,
-    1
+    30
 )
 let fireballImg = new Image()
 fireballImg.src = './sprites/fireball.png'
@@ -147,7 +148,6 @@ class Explosion {
     }
     draw(projectile) {
         let size = .5
-        console.log(projectile)
         ctx.drawImage(
             this.explosionImg,
             this.sx,
@@ -168,7 +168,6 @@ const explosion = new Explosion(
     135,
     explosionImg
 )
-console.log(explosion)
 
 
 
@@ -231,7 +230,7 @@ setInterval(() => {
     });
 
     otherEnemies.forEach((otherenemy) => {
-        if (detectCollision(otherenemy, player)) {
+        if (fireballdetectCollision(otherenemy, player)) {
             player.health -= otherenemy.damage
         }
     });
@@ -291,7 +290,7 @@ function animate() {
     if (player.health < 1) {
         // splashScreen.style.display = 'flex'
         finishScreen.style.display = 'flex'
-        cancelAnimationFrame(null)
+        //cancelAnimationFrame(animate)
         score.innerHTML = currentLevel - 1
         restartGame()
         player.healh = 100
@@ -330,15 +329,13 @@ function animate() {
                     }
                     explosion.draw(projectile)
                     projectiles.splice(pIndex, 1)
+                    //zombiesOnScreen--
                 }
             })
 
         )
     })
 
-    if (otherEnemies.length < enemies.length) {
-
-    }
 
 
     // [otherEnemies] updating  RED FIREBALL
@@ -347,10 +344,11 @@ function animate() {
 
             projectiles.forEach((projectile, pIndex) => {
 
-                if (RectCircleColliding(projectile, enemy)) {
+                if (fireballRectCircleColliding(projectile, enemy)) {
                     otherEnemies.splice(index, 1)
                     explosion.draw(projectile)
                     projectiles.splice(pIndex, 1)
+                    fireballsOnScreen--
                 }
 
                 //If projectile is outside of screen, delete it
@@ -385,6 +383,10 @@ function animate() {
         if (currentLevel % 3 == 0) {
             fireballspeed++
         }
+        let randomFireballSpeed = Math.floor(Math.random() * 3)
+
+        let randomZombieSpeed = Math.floor(Math.random() * 2)
+
 
         //reset player X and Y back
         player.x = defaultPlayerX
@@ -393,8 +395,6 @@ function animate() {
         //increase difficulty
         zombiesOnScreen = 0
         fireballsOnScreen = 0
-        // maxFireballsOnScreen = 2
-        // maxZombiesOnScreen = 2
         maxAmountOfOtherEnemies += 3
         maxAmountOfEnemies += 3
         maxZombiesOnScreen += 2
@@ -410,23 +410,23 @@ function animate() {
                     Math.random() * 650 + 50,
                     1700,
                     175,
-                    1,
+                    1 + Math.random() * 2,
                     'blue',
                     10,
                     10
                 ))
             }
-            if (otherEnemies.length < maxAmountOfOtherEnemies && fireballsOnScreen <= maxFireballsOnScreen) { //(let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++)
+            if (otherEnemies.length < maxAmountOfOtherEnemies && fireballsOnScreen <= maxFireballsOnScreen && enemies.length) { //(let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++)
                 fireballsOnScreen++
                 otherEnemies.push(new Fireball(
                     1250,
                     Math.random() * 550 + 100,
                     3132,
                     207,
-                    fireballspeed,
+                    fireballspeed + Math.floor(Math.random() * 3),
                     'red',
-                    2,
-                    1
+                    10,
+                    30
                 ))
             }//(x, y, w, h, speed, color, health, damage, enemyImg)
 
@@ -477,7 +477,6 @@ function animate() {
 
         //change background image to next level
         let randomlevel = Math.floor(Math.random() * 5)
-        console.log(randomlevel);
         if (randomlevel == 0) {
             document.querySelector("#canvas").style.backgroundImage = "url('./Levels/1Level.png')"
         } else if (randomlevel == 1) {
@@ -501,7 +500,6 @@ function animate() {
 
 img.onload = () => {
     player.init()
-
 }
 fireballImg.onload = () => {
     fireball.init()
@@ -541,6 +539,10 @@ function restartGame() {
     enemies.push(zombie2)
     player.x = defaultPlayerX
     player.y = defaultPlayerY
+    zombie.x = 1100
+    zombie2.x = 1100
+    zombie.y = 150
+    zombie2.y = 500
 }
 
 

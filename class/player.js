@@ -54,9 +54,7 @@ export default class Player {
 
     init = () => {
         let i = 0;
-        //console.log(player)
         setInterval(function () {
-            //console.log(player.sw, player.sx, player)
             player.sx += player.sw
             i++
             if (i >= player.numOfActualImages - 1) {
