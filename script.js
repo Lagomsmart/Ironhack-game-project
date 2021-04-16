@@ -374,6 +374,10 @@ function animate() {
         //fade screen
         //ctx.fillRect(0, 0, canvas.width, canvas.height)
 
+        powerups.forEach((power, index) => {
+            powerups.splice(index, 1)
+        });
+
 
         //function for spawning enemies in on timer. setInterval
         //on new wave => fill array every second until i = amountofenemies counter 
