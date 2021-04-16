@@ -32,8 +32,7 @@ function PowerupCollosion() {
     powerups.forEach((powerup, x) => {
 
         if (detectCollision(player, powerup)) {
-            powerup.heal()
-            //powerup.increaseAmmoCap()
+            powerup.ability()
             powerups.splice(x, 1)
         }
     })

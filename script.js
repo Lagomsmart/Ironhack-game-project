@@ -2,7 +2,7 @@ import { Player } from './class/player.js';
 import { Projectile } from './class/projectile.js';
 import { Zombie } from './class/zombie.js';
 import { Fireball } from './class/fireball.js';
-import { healPowerup } from './class/healpowerup.js';
+import { MedkitPowerup } from './class/medkitpowerup.js';
 import { detectCollision, RectCircleColliding, PowerupCollosion } from './collision.js'
 import { AmmoCap } from './class/ammocap.js';
 
@@ -53,7 +53,7 @@ fireball.enemyImg = fireballImg
 
 //(x, y, w, h, speed, color, health, damage) 
 const zombie = new Zombie(
-    Math.random() * 800 + 400,
+    Math.random() * 800 + 600,
     Math.random() * 650,
     1700,
     175,
@@ -63,7 +63,7 @@ const zombie = new Zombie(
     10
 )
 const zombie2 = new Zombie(
-    Math.random() * 800 + 400,
+    Math.random() * 800 + 600,
     Math.random() * 650,
     1700,
     175,
@@ -85,7 +85,11 @@ let ammoCapUpgrade = new AmmoCap(800, 300, 75, 75, 'yellow') //x, y, w, h, color
 
 
 
-let healthPotion = new healPowerup(1000, 300, 30, 30, 'green')
+let medkit = new MedkitPowerup(Math.random() * 600 + 500, 100, 70, 70, 'green')
+let medkitImg = new Image()
+medkitImg.src = './images/firstaid.png'
+medkit.img = medkitImg
+
 
 
 
@@ -100,7 +104,7 @@ const projectiles = [];
 let powerups = [];
 let maxAmountOfPowerups = 1
 
-console.log(healthPotion.draw());
+console.log(medkit.draw());
 
 
 
@@ -192,7 +196,7 @@ setInterval(() => {
 
 
 if (powerups.length < 1) {
-    powerups.push(healthPotion)
+    powerups.push(medkit)
 }
 
 // for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
@@ -208,8 +212,8 @@ for (let i = enemies.length; i < 2; i++) {
 
 
 ctx.drawImage(player.img, player.x, player.y)
-healthPotion.draw()
-console.log(healthPotion)
+medkit.draw()
+console.log(medkit)
 
 
 // ---------- ANIMATE ---------- ---------- ANIMATE ---------- ---------- ANIMATE ----------
@@ -233,6 +237,9 @@ function animate() {
 
     PowerupCollosion(player, powerups)
 
+    powerups.forEach((powerup) => {
+        powerup.draw()
+    })
 
     projectiles.forEach((projectile) => {
         projectile.update()
@@ -333,7 +340,7 @@ function animate() {
         let randompowerup = Math.floor(Math.random() * 2)
         //reset and push powerup
         // if (randompowerup == 0) { //50% chance to spawn 1 powerup per room
-        //     //poweruparray.push(healthPotion)
+        //     //poweruparray.push(medkit)
         // } else if (randompowerup == 1) { //50% chance to spawn 1 powerup per room
         //     //poweruparray.push(ammocap)
         // }
@@ -387,6 +394,7 @@ function restartGame() {
     player.maxStamina = 100
     maxAmountOfEnemies = 2
     maxAmountOfOtherEnemies = 2
+
     enemies = []
     otherEnemies = []
 
@@ -398,6 +406,7 @@ function restartGame() {
     // }
     enemies.push(zombie)
     enemies.push(zombie2)
+    powerups.push(medkit)
     player.x = defaultPlayerX
     player.y = defaultPlayerY
 }
@@ -468,6 +477,7 @@ addEventListener('click', (event) => {
 window.enemies = enemies
 window.otherEnemies = otherEnemies
 window.player = player
+window.medkit = medkit
 
 
 export { ctx, player, powerups, currentLevel }
