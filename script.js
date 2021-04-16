@@ -10,6 +10,7 @@ const canvas = document.querySelector('#canvas')
 const ctx = canvas.getContext('2d')
 
 const startButton = document.querySelector('.startButton')
+const restartButton = document.querySelector('.restartButton')
 const splashScreen = document.querySelector('.SplashScreen')
 const finishScreen = document.querySelector('.FinishScreen')
 const score = document.querySelector('#score')
@@ -224,8 +225,10 @@ function animate() {
     if (player.health < 1) {
         // splashScreen.style.display = 'flex'
         finishScreen.style.display = 'flex'
-        cancelAnimationFrame(animate)
+        cancelAnimationFrame(null)
         score.innerHTML = currentLevel - 1
+        restartGame()
+        player.healh = 100
     }
 
     PowerupCollosion(player, powerups)
@@ -376,19 +379,19 @@ zombieImg.onload = () => {
 
 
 //RESET GAME
-//restartGame = () => {
-// ctx.clearRect(0, 0, canvas.width, canvas.height)
-// currentLevel = 1
-// player.health = 100
-// player.stamina = 100
-// player.maxStamina = 100
-// maxAmountOfEnemies = 2
-// maxAmountOfOtherEnemies = 2
-// enemies = [];
-// otherEnemies = []
-// enemies.push(zombie1)
-// enemies.push(zombie2)
-//}
+function restartGame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+    currentLevel = 1
+    player.health = 100
+    player.stamina = 100
+    player.maxStamina = 100
+    maxAmountOfEnemies = 2
+    maxAmountOfOtherEnemies = 2
+    enemies = [];
+    otherEnemies = []
+    enemies.push(zombie1)
+    enemies.push(zombie2)
+}
 
 
 document.onmousemove = function (e) {
@@ -409,6 +412,15 @@ startButton.addEventListener('click', () => {
     splashScreen.style.display = 'none'
     finishScreen.style.display = 'none'
 
+})
+
+restartButton.addEventListener('click', () => {
+    console.log("Go!");
+    animate()
+    //spawnenemies?
+    splashScreen.style.display = 'none'
+    finishScreen.style.display = 'none'
+    restartGame()
 })
 
 
