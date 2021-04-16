@@ -88,9 +88,6 @@ export default class Player {
         ctx.font = '32px ccclobberintimecrunchy';
         ctx.fillText(`Current Level: ${currentLevel}`, 870, 40)
 
-        if (this.health <= 0) {
-            //this.dead()
-        }
     }
     reload = () => {
         setTimeout(() => {
@@ -108,10 +105,6 @@ export default class Player {
     //         this.health = this.maxhealth
     //         console.log('health max')
     //     }
-    // }
-    // dead = () => {
-    //     cancelAnimationFrame(stopGame)
-    //     restartGame()
     // }
 }
 

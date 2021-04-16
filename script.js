@@ -9,6 +9,12 @@ import { AmmoCap } from './class/ammocap.js';
 const canvas = document.querySelector('#canvas')
 const ctx = canvas.getContext('2d')
 
+const startButton = document.querySelector('.startButton')
+const splashScreen = document.querySelector('.SplashScreen')
+const finishScreen = document.querySelector('.FinishScreen')
+const score = document.querySelector('#score')
+
+
 //What if the monsters keep spawning untill you kill X amount, instead of them being there from the start?. Then you can pass through the door. Or combine both?
 //If yes, keep right side "door" more open for bigger spawn area
 
@@ -214,6 +220,13 @@ function animate() {
     player.draw()
     move() //Player movement
 
+    // END THE GAME
+    if (player.health < 1) {
+        // splashScreen.style.display = 'flex'
+        finishScreen.style.display = 'flex'
+        cancelAnimationFrame(animate)
+        score.innerHTML = currentLevel - 1
+    }
 
     PowerupCollosion(player, powerups)
 
@@ -284,7 +297,6 @@ function animate() {
         console.log('next room!');
 
         currentLevel++
-
         //fade screen
         //ctx.fillRect(0, 0, canvas.width, canvas.height)
 
@@ -333,11 +345,11 @@ function animate() {
             document.querySelector("#canvas").style.backgroundImage = "url('./Levels/1Level.png')"
         } else if (randomlevel == 1) {
             document.querySelector("#canvas").style.backgroundImage = "url('./Levels/2Level.png')"
-        } else if (randomelevl == 3) {
+        } else if (randomlevel == 2) {
             document.querySelector("#canvas").style.backgroundImage = "url('./Levels/3Level.png')"
-        } else if (randomelevl == 4) {
+        } else if (randomlevel == 3) {
             document.querySelector("#canvas").style.backgroundImage = "url('./Levels/4Level.png')"
-        } else if (randomelevl == 5) {
+        } else if (randomlevel == 4) {
             document.querySelector("#canvas").style.backgroundImage = "url('./Levels/5Level.png')"
         }
 
@@ -352,7 +364,7 @@ function animate() {
 
 img.onload = () => {
     player.init()
-    animate()
+
 }
 fireballImg.onload = () => {
     fireball.init()
@@ -363,6 +375,21 @@ zombieImg.onload = () => {
 }
 
 
+//RESET GAME
+//restartGame = () => {
+// ctx.clearRect(0, 0, canvas.width, canvas.height)
+// currentLevel = 1
+// player.health = 100
+// player.stamina = 100
+// player.maxStamina = 100
+// maxAmountOfEnemies = 2
+// maxAmountOfOtherEnemies = 2
+// enemies = [];
+// otherEnemies = []
+// enemies.push(zombie1)
+// enemies.push(zombie2)
+//}
+
 
 document.onmousemove = function (e) {
     var dx = e.pageX - (player.x + player.w / 2) - 100;
@@ -371,6 +398,18 @@ document.onmousemove = function (e) {
     player.drawArrow(theta);
 };
 
+
+
+
+//START GAME
+startButton.addEventListener('click', () => {
+    console.log("Go!");
+    animate()
+    //spawnenemies?
+    splashScreen.style.display = 'none'
+    finishScreen.style.display = 'none'
+
+})
 
 
 // ---------- PLAYER ATTACK EVENT LISTENER ----------
