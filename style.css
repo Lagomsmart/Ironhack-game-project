@@ -4,10 +4,13 @@ body {
   font-family: ccclobberintimecrunchy, sans-serif;
   font-weight: 400;
   font-style: normal;
-  background-image: url('./images/cobble\ stone.png');
+  background-image: url('./images/cobblestonezombie.png');
   background-repeat: no repeat;
   display: flex;
+  background-size: auto;
 }
+
+
 
 /* canvas {
   background-position: contain;
