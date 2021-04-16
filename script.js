@@ -93,6 +93,7 @@ const projectiles = [];
 let powerups = [];
 let maxAmountOfPowerups = 1
 
+console.log(healthPotion.draw());
 
 
 
@@ -271,7 +272,7 @@ function animate() {
 
 
     //If player reaches next door
-    if (player.x > 1050 && player.y > 233 && player.y < 466 && otherEnemies.length < 1 && enemies.length < 1) {
+    if (player.x > 1050 && player.y > 150 && player.y < 550 && otherEnemies.length < 1 && enemies.length < 1) {
         console.log('next room!');
 
         currentLevel++
@@ -293,7 +294,7 @@ function animate() {
             otherEnemies.push(fireball)
         }
         for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
-            enemies.push(zombie)
+            enemies.push(new Zombie = (800, 300, 75, 75, 'yellow'))
         }
 
 
@@ -310,7 +311,7 @@ function animate() {
 
         //change background image to next level
         let randomlevel = Math.floor(Math.random() * 5)
-
+        console.log(randomlevel);
         if (randomlevel == 0) {
             document.querySelector("#canvas").style.backgroundImage = "url('./Levels/1Level.png')"
         } else if (randomlevel == 1) {
