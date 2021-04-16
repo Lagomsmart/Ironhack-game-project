@@ -4,11 +4,11 @@ import { Powerups } from './powerups.js';
 
 
 class AmmoCap extends Powerups {
-    constructor(x, y, w, h, color) {
-        super(x, y, w, h, color)
-        
+    constructor(x, y, w, h, color, img) {
+        super(x, y, w, h, color, img)
+
     }
-    increaseAmmoCap() {
+    ability() {
         player.maxStamina += 20
     }
     draw = () => {
