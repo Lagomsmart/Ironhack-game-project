@@ -1,5 +1,5 @@
 import { ctx } from '../script.js';
-import Enemy from './enemy.js';
+import { Enemy } from './enemy.js';
 import { player } from '../script.js'
 
 // let sx = 0
@@ -42,10 +42,6 @@ class Zombie extends Enemy {
 
         ctx.save()
 
-        let angle = Math.atan2(
-            player.y - (this.y + this.h / 2) - 100,
-            player.x - (this.x + this.w / 2) - 100
-        )
 
         let angleDeg = Math.atan2(this.y - player.y, this.x - player.x) * 180 / Math.PI;
 
@@ -67,7 +63,7 @@ class Zombie extends Enemy {
             this.x, this.y,
             this.w / 9 * size, this.h * size
         )
-        
+
         ctx.restore()
 
     }
