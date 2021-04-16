@@ -42,7 +42,7 @@ const fireball = new Fireball(
     Math.random() * 450 + 100,
     3132,
     207,
-    0.5,
+    2,
     'red',
     10,
     1
@@ -98,7 +98,10 @@ let otherEnemies = [];
 let maxAmountOfEnemies = 2; //we can ++ this to increase monsterspawn per room cleared
 let maxAmountOfOtherEnemies = 3
 let currentLevel = 1
-
+let zombiesOnScreen = 0
+let fireballsOnScreen = 0
+let maxFireballsOnScreen = 2
+let maxZombiesOnScreen = 2
 const projectiles = [];
 
 let powerups = [];
@@ -245,17 +248,14 @@ function animate() {
 
 
     // [enemies] moving
+    otherEnemies.forEach((otherenemy) => {
+        otherenemy.randomPathing()
+    });
     enemies.forEach((enemy) => {
-
-        otherEnemies.forEach((otherenemy) => {
-            otherenemy.randomPathing()
-
-        });
         enemy.move()
-
     });
 
-    // [enemies] updating   BLUE
+    // [enemies] updating   BLUE ZOMBIE
     enemies.forEach((enemy, index) => {
         enemy.update(
 
@@ -274,7 +274,12 @@ function animate() {
         )
     })
 
-    // [otherEnemies] updating  RED
+    if (otherEnemies.length < enemies.length) {
+
+    }
+
+
+    // [otherEnemies] updating  RED FIREBALL
     otherEnemies.forEach((enemy, index) => {
         enemy.update(
 
@@ -309,19 +314,44 @@ function animate() {
         //ctx.fillRect(0, 0, canvas.width, canvas.height)
 
 
+        //function for spawning enemies in on timer. setInterval
+        //on new wave => fill array every second until i = amountofenemies counter 
+
+        //declaring and increasing fireball speed
+        let fireballspeed = 2
+        if (currentLevel % 3 == 0) {
+            fireballspeed++
+        }
+
         //reset player X and Y back
         player.x = defaultPlayerX
         player.y = defaultPlayerY
 
         //increase difficulty
+        zombiesOnScreen = 0
+        fireballsOnScreen = 0
+        maxFireballsOnScreen = 2
+        maxZombiesOnScreen = 2
         maxAmountOfOtherEnemies += 2
         maxAmountOfEnemies += 2
 
         //reset and push enemy amount
-        for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
-            otherEnemies.push(fireball)
+        //(x, y, w, h, speed, color, health, damage, enemyImg)
+        for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies && fireballsOnScreen <= maxFireballsOnScreen; i++) { //(let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++)
+            fireballsOnScreen++
+            otherEnemies.push(new Fireball(
+                1250,
+                Math.random() * 550 + 100,
+                3132,
+                207,
+                fireballspeed,
+                'red',
+                2,
+                1
+            ))
         }//(x, y, w, h, speed, color, health, damage, enemyImg)
-        for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
+        for (let i = enemies.length; i < maxAmountOfEnemies && zombiesOnScreen <= maxZombiesOnScreen; i++) {
+            zombiesOnScreen++
             enemies.push(new Zombie(
                 1250,
                 Math.random() * 650 + 50,
@@ -471,7 +501,7 @@ addEventListener('click', (event) => {
 //     state.mouse.y = event.clientY
 // })
 
-
+// Makes you able to console log the variable in browser
 window.enemies = enemies
 window.otherEnemies = otherEnemies
 window.player = player
