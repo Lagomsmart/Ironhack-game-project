@@ -104,7 +104,6 @@ const projectiles = [];
 let powerups = [];
 let maxAmountOfPowerups = 1
 
-console.log(medkit.draw());
 
 
 
@@ -212,8 +211,7 @@ for (let i = enemies.length; i < 2; i++) {
 
 
 ctx.drawImage(player.img, player.x, player.y)
-medkit.draw()
-console.log(medkit)
+
 
 
 // ---------- ANIMATE ---------- ---------- ANIMATE ---------- ---------- ANIMATE ----------
@@ -339,11 +337,11 @@ function animate() {
 
         let randompowerup = Math.floor(Math.random() * 2)
         //reset and push powerup
-        // if (randompowerup == 0) { //50% chance to spawn 1 powerup per room
-        //     //poweruparray.push(medkit)
-        // } else if (randompowerup == 1) { //50% chance to spawn 1 powerup per room
-        //     //poweruparray.push(ammocap)
-        // }
+        if (randompowerup == 0) { //50% chance to spawn 1 powerup per room
+            powerups.push(medkit)
+        } else if (randompowerup == 1) { //50% chance to spawn 1 powerup per room
+            //powerups.push(medkit)
+        }
 
 
 
@@ -460,7 +458,7 @@ addEventListener('click', (event) => {
             y: Math.sin(angle) * 14
         }
         projectiles.push(
-            new Projectile(player.x + player.w / 2, player.y + player.h / 2, 2, 'gold', velocity)
+            new Projectile(player.x + player.w / 2, player.y + player.h / 2, 2, 'rbga(254, 0 , 0)', velocity)
         )
     } else {
         console.log('Not enough Ammo! RELOADING');
