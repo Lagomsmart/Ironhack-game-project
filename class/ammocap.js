@@ -11,6 +11,10 @@ class AmmoCap extends Powerups {
     increaseAmmoCap() {
         player.maxStamina += 20
     }
+    draw = () => {
+        ctx.fillStyle = this.color
+        ctx.fillRect(this.x, this.y, this.w, this.h)
+    }
 }
 
 export { AmmoCap }

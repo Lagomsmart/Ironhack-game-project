@@ -18,6 +18,10 @@ class healPowerup extends Powerups {
             }
         }
     }
+    draw = () => {
+        ctx.fillStyle = this.color
+        ctx.fillRect(this.x, this.y, this.w, this.h)
+    }
 }
 
 export { healPowerup }

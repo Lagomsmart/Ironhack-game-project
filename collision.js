@@ -35,7 +35,11 @@ function PowerupCollosion() {
             powerup.heal()
             powerup.increaseAmmoCap()
             powerups.splice(x, 1)
+<<<<<<< HEAD
+        } 
+=======
         }
+>>>>>>> 243043637aa2ac25195acbfaa0f2c78b0864a1af
     })
 }
 

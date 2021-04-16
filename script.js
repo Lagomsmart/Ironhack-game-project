@@ -44,26 +44,40 @@ let fireballImg = new Image()
 fireballImg.src = './sprites/spritefireball.png'
 fireball.enemyImg = fireballImg
 
+<<<<<<< HEAD
+//(x, y, w, h, speed, color, health, damage)
+=======
 //(x, y, w, h, speed, color, health, damage) 
+>>>>>>> 243043637aa2ac25195acbfaa0f2c78b0864a1af
 const zombie = new Zombie(
     Math.random() * 800 + 400,
     Math.random() * 650,
     1700,
     175,
-    0.5,
+    1,
     'blue',
+<<<<<<< HEAD
+    20,
+    6
+=======
     10,
     10
+>>>>>>> 243043637aa2ac25195acbfaa0f2c78b0864a1af
 )
 const zombie2 = new Zombie(
     Math.random() * 800 + 400,
     Math.random() * 650,
     1700,
     175,
-    0.5,
+    1,
     'blue',
+<<<<<<< HEAD
+    20,
+    6
+=======
     10,
     10
+>>>>>>> 243043637aa2ac25195acbfaa0f2c78b0864a1af
 )
 
 let zombieImg = new Image()
@@ -76,7 +90,7 @@ const player = new Player(defaultPlayerX, defaultPlayerY, 101, 101, 5, 100, 100,
 let ammoCapUpgrade = new AmmoCap(800, 300, 75, 75, 'yellow') //x, y, w, h, color
 
 
-console.log(ammoCapUpgrade)
+
 
 let healthPotion = new healPowerup(1000, 300, 30, 30, 'green')
 
@@ -200,6 +214,8 @@ for (let i = enemies.length; i < 2; i++) {
 
 
 ctx.drawImage(player.img, player.x, player.y)
+healthPotion.draw()
+console.log(healthPotion)
 
 
 // ---------- ANIMATE ---------- ---------- ANIMATE ---------- ---------- ANIMATE ----------
@@ -225,8 +241,9 @@ function animate() {
 
         otherEnemies.forEach((otherenemy) => {
             otherenemy.randomPathing()
-            enemy.move()
+            
         });
+    enemy.move()
 
     });
 
@@ -237,7 +254,11 @@ function animate() {
             projectiles.forEach((projectile, pIndex) => {
 
                 if (RectCircleColliding(projectile, enemy)) {
-                    enemies.splice(index, 1)
+                   
+                    enemy.health -= player.damage
+                    if (enemy.health < 1) {
+                        enemies.splice(index, 1)
+                    }
                     projectiles.splice(pIndex, 1)
                 }
             })
@@ -342,6 +363,7 @@ fireballImg.onload = () => {
 }
 zombieImg.onload = () => {
     zombie.init()
+    zombie2.init()
 }
 
 
