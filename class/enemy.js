@@ -37,7 +37,7 @@ export default class Enemy {
 
 
         if (player.x > this.x) {
-            this.x += this.speed * 2
+            (Math.random() + this.x) += this.speed * 2
         }
         if (player.x < this.x) {
             this.x -= this.speed * 2
