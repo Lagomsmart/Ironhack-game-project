@@ -9,7 +9,8 @@ import { player } from '../script.js'
 // let dx = 0
 // let dy = 0
 
-console.log('hi')
+let zombieImg = new Image()
+zombieImg.src = './images/zombie-revised.png'
 
 class Zombie extends Enemy {
     constructor(x, y, w, h, speed, color, health, damage, enemyImg) {
@@ -18,7 +19,7 @@ class Zombie extends Enemy {
         this.numberOfRows = 3
         this.numOfActualImages = 9
         this.rowImOn = 0
-        this.enemyImg = enemyImg
+        this.enemyImg = zombieImg
         this.sx = 0
         this.sy = 0
         this.sw = this.w / this.numberOfImages

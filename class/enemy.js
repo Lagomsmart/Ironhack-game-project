@@ -32,6 +32,24 @@ export default class Enemy {
         if (player.y < this.y) {
             this.y -= this.speed
         }
+
+
+
+
+        if (player.x > this.x) {
+            this.x += this.speed
+        }
+        if (player.x < this.x) {
+            this.x -= this.speed
+        }
+        if (player.y > this.y) {
+            this.y += this.speed / 3
+        }
+        if (player.y < this.y) {
+            this.y -= this.speed / 3
+        }
+
+
     }
     randomPathing() { //TESTING    Enemy random pathing left
         let randomNum = Math.floor(Math.random() * 2)

@@ -44,11 +44,7 @@ let fireballImg = new Image()
 fireballImg.src = './sprites/spritefireball.png'
 fireball.enemyImg = fireballImg
 
-<<<<<<< HEAD
-//(x, y, w, h, speed, color, health, damage)
-=======
 //(x, y, w, h, speed, color, health, damage) 
->>>>>>> 243043637aa2ac25195acbfaa0f2c78b0864a1af
 const zombie = new Zombie(
     Math.random() * 800 + 400,
     Math.random() * 650,
@@ -56,13 +52,8 @@ const zombie = new Zombie(
     175,
     1,
     'blue',
-<<<<<<< HEAD
-    20,
-    6
-=======
     10,
     10
->>>>>>> 243043637aa2ac25195acbfaa0f2c78b0864a1af
 )
 const zombie2 = new Zombie(
     Math.random() * 800 + 400,
@@ -71,13 +62,8 @@ const zombie2 = new Zombie(
     175,
     1,
     'blue',
-<<<<<<< HEAD
-    20,
-    6
-=======
     10,
     10
->>>>>>> 243043637aa2ac25195acbfaa0f2c78b0864a1af
 )
 
 let zombieImg = new Image()
@@ -127,16 +113,17 @@ var RIGHT = false;
 var UP = false;
 let DOWN = false;
 document.onkeydown = function (e) {
-    if (e.keyCode == 37) LEFT = true;
-    if (e.keyCode == 39) RIGHT = true;
-    if (e.keyCode == 38) UP = true;
-    if (e.keyCode == 40) DOWN = true;
+    if (e.keyCode == 65) LEFT = true;
+    if (e.keyCode == 68) RIGHT = true;
+    if (e.keyCode == 87) UP = true;
+    if (e.keyCode == 83) DOWN = true;
+    if (e.keyCode == 82) player.reload()
 }
 document.onkeyup = function (e) {
-    if (e.keyCode == 37) LEFT = false;
-    if (e.keyCode == 39) RIGHT = false;
-    if (e.keyCode == 38) UP = false;
-    if (e.keyCode == 40) DOWN = false;
+    if (e.keyCode == 65) LEFT = false;
+    if (e.keyCode == 68) RIGHT = false;
+    if (e.keyCode == 87) UP = false;
+    if (e.keyCode == 83) DOWN = false;
 }
 function move() {
     if (LEFT && player.x > 6) {
@@ -201,9 +188,9 @@ if (powerups.length < 1) {
     powerups.push(healthPotion)
 }
 
-for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
-    otherEnemies.push(fireball)
-}
+// for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
+//     otherEnemies.push(fireball)
+// }
 for (let i = enemies.length; i < 1; i++) {
     enemies.push(zombie)
 }
@@ -241,9 +228,9 @@ function animate() {
 
         otherEnemies.forEach((otherenemy) => {
             otherenemy.randomPathing()
-            
+
         });
-    enemy.move()
+        enemy.move()
 
     });
 
@@ -254,7 +241,7 @@ function animate() {
             projectiles.forEach((projectile, pIndex) => {
 
                 if (RectCircleColliding(projectile, enemy)) {
-                   
+
                     enemy.health -= player.damage
                     if (enemy.health < 1) {
                         enemies.splice(index, 1)
@@ -313,9 +300,18 @@ function animate() {
         //reset and push enemy amount
         for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
             otherEnemies.push(fireball)
-        }
+        }//(x, y, w, h, speed, color, health, damage, enemyImg)
         for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
-            enemies.push(new Zombie = (800, 300, 75, 75, 'yellow'))
+            enemies.push(new Zombie(
+                1250,
+                Math.random() * 650 + 50,
+                1700,
+                175,
+                1,
+                'blue',
+                10,
+                10
+            ))
         }
 
 

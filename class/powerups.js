@@ -8,17 +8,10 @@ class Powerups {
         this.h = h;
         this.color = color
     }
-<<<<<<< HEAD
-    // draw = () => {
-    //     ctx.fillStyle = this.color
-    //     ctx.fillRect(this.x, this.y, this.w, this.h)
-    // }
-=======
     draw = () => {
         ctx.fillStyle = this.color
         ctx.fillRect(this.x, this.y, this.w, this.h)
     }
->>>>>>> 243043637aa2ac25195acbfaa0f2c78b0864a1af
 }
 
 
