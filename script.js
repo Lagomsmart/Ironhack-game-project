@@ -29,7 +29,8 @@ const score = document.querySelector('#score')
 //----------------AUDIO--------------//
 let audio = new Audio('./sprites/Horror.wav');
 audio.play();
-audio.volume = 0.2;
+audio.volume = 0.09;
+
 //------------END AUDIO-----------------//
 
 //----------DECLARING PLAYER, ENEMY, OBJECTS ----------
