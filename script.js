@@ -139,7 +139,7 @@ class Explosion {
                 this.sx = 0;
                 i = 0;
             }
-        }).bind(this), 50000000)
+        }).bind(this), 500)
     }
     draw(projectile) {
         let size = .3
