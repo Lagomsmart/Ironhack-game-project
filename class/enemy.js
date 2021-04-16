@@ -20,18 +20,18 @@ export default class Enemy {
 
     }
     move() {
-        if (player.x > this.x) {
-            this.x += this.speed
-        }
-        if (player.x < this.x) {
-            this.x -= this.speed
-        }
-        if (player.y > this.y) {
-            this.y += this.speed
-        }
-        if (player.y < this.y) {
-            this.y -= this.speed
-        }
+        // if (player.x > this.x) {
+        //     this.x += this.speed
+        // }
+        // if (player.x < this.x) {
+        //     this.x -= this.speed
+        // }
+        // if (player.y > this.y) {
+        //     this.y += this.speed
+        // }
+        // if (player.y < this.y) {
+        //     this.y -= this.speed
+        // }
 
 
 
