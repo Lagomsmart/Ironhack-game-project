@@ -36,7 +36,7 @@ export default class Fireball extends Enemy {
     }
     draw() {
 
-        let size = 1
+        let size = .5
 
         ctx.drawImage(
             this.enemyImg,
