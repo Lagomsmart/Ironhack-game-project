@@ -2,14 +2,20 @@ import Enemy from './enemy.js';
 import { ctx, player, } from './../script.js'
 
 
+
+let fireballImg = new Image()
+fireballImg.src = './sprites/fireball.png'
+
+
+
 export default class Fireball extends Enemy {
     constructor(x, y, w, h, speed, color, health, damage, enemyImg) {
         super(x, y, w, h, speed, color, health, damage, enemyImg)
         this.numberOfImages = 6
         this.numberOfRows = 2
         this.numOfActualImages = 6
-        this.rowImOn = 1
-        this.enemyImg = enemyImg
+        this.rowImOn = 0
+        this.enemyImg = fireballImg
         this.sx = 0
         this.sy = 0
         this.sw = this.w / this.numberOfImages
@@ -30,7 +36,17 @@ export default class Fireball extends Enemy {
     }
     draw() {
 
-        ctx.drawImage(this.enemyImg, this.x, this.y, this.dw, this.dh)
+        let size = .3
+
+        ctx.drawImage(
+            this.enemyImg,
+            this.sx,
+            this.sy,
+            this.sw,
+            this.sh,
+            this.x, this.y,
+            this.w / 6 * size, this.h * size
+        )
 
 
     }

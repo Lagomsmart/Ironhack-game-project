@@ -40,15 +40,15 @@ img.src = './images/smallgirlx2.png';
 const fireball = new Fireball(
     1150,
     Math.random() * 450 + 100,
-    233,
-    90,
+    3132,
+    207,
     0.5,
     'red',
     10,
     1
 )
 let fireballImg = new Image()
-fireballImg.src = './sprites/spritefireball.png'
+fireballImg.src = './sprites/fireball.png'
 fireball.enemyImg = fireballImg
 
 //(x, y, w, h, speed, color, health, damage) 
@@ -199,9 +199,9 @@ if (powerups.length < 1) {
     powerups.push(medkit)
 }
 
-// for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
-//     otherEnemies.push(fireball)
-// }
+for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
+    otherEnemies.push(fireball)
+}
 for (let i = enemies.length; i < 1; i++) {
     enemies.push(zombie)
 }
@@ -460,7 +460,11 @@ addEventListener('click', (event) => {
             y: Math.sin(angle) * 14
         }
         projectiles.push(
+<<<<<<< HEAD
+            new Projectile(player.x + player.w / 2, player.y + player.h / 2, 2, 'gold', velocity)
+=======
             new Projectile(player.x + player.w / 2, player.y + player.h / 2, 3, 'rgba(255, 165, 0, 0.6)', velocity)
+>>>>>>> bb137eefd56072ff01d547a77d756b0c79302181
         )
     } else {
         console.log('Not enough Ammo! RELOADING');

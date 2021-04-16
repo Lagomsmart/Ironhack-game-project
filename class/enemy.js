@@ -32,6 +32,11 @@ export default class Enemy {
         // if (player.y < this.y) {
         //     this.y -= this.speed
         // }
+<<<<<<< HEAD
+
+
+=======
+>>>>>>> bb137eefd56072ff01d547a77d756b0c79302181
 
 
         if (player.x > this.x) {
