@@ -476,7 +476,8 @@ function animate() {
 
 
         //change background image to next level
-        let randomlevel = Math.floor(Math.random() * 5)
+        let randomlevel = Math.floor(Math.random() * 4)
+        console.log(randomlevel);
         if (randomlevel == 0) {
             document.querySelector("#canvas").style.backgroundImage = "url('./Levels/1Level.png')"
         } else if (randomlevel == 1) {
