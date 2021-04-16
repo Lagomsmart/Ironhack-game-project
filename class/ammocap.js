@@ -13,8 +13,6 @@ class AmmoCap extends Powerups {
         player.bulletcost *= 0.8
     }
     draw = () => {
-        // ctx.fillStyle = this.color
-        // ctx.fillRect(this.x, this.y, this.w, this.h)
         ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
     }
 }

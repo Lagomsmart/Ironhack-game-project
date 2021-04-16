@@ -22,20 +22,6 @@ export default class Enemy {
 
     }
     move() {
-        // if (player.x > this.x) {
-        //     this.x += this.speed
-        // }
-        // if (player.x < this.x) {
-        //     this.x -= this.speed
-        // }
-        // if (player.y > this.y) {
-        //     this.y += this.speed
-        // }
-        // if (player.y < this.y) {
-        //     this.y -= this.speed
-        // }
-
-
         if (player.x > this.x) {
             this.x += this.speed * 2
         }
@@ -48,9 +34,8 @@ export default class Enemy {
         if (player.y < this.y) {
             this.y -= this.speed
         }
-
     }
-    randomPathing() { //TESTING    Enemy random pathing left
+    randomPathing() { // Enemy random pathing left
         let randomNum = Math.floor(Math.random() * 2)
         this.x -= this.speed
         if (randomNum === 1) {

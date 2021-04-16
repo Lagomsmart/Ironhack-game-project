@@ -42,15 +42,12 @@ class Zombie extends Enemy {
 
         ctx.save()
 
-
         let angle = Math.atan2(
             player.y - (this.y + this.h / 2) - 100,
             player.x - (this.x + this.w / 2) - 100
         )
 
-
         let angleDeg = Math.atan2(this.y - player.y, this.x - player.x) * 180 / Math.PI;
-
 
         let size = .9
 
@@ -58,16 +55,8 @@ class Zombie extends Enemy {
         let centerY = this.y + (this.h * size / 2)
 
         ctx.translate(centerX, centerY);
-
         ctx.rotate(angleDeg * Math.PI / 180);
-        //ctx.rotate(Math.PI / 2);
         ctx.translate(-1 * centerX, -1 * centerY)
-        // ctx.drawImage(
-        //     this.enemyImg, this.x, this.y,
-        //     this.w, this.h
-        // )
-
-
 
         ctx.drawImage(
             this.enemyImg,
@@ -78,9 +67,7 @@ class Zombie extends Enemy {
             this.x, this.y,
             this.w / 9 * size, this.h * size
         )
-
-
-
+        
         ctx.restore()
 
     }

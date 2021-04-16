@@ -58,7 +58,7 @@ body {
   /* padding-left: 100px; */
   width:1200px;
   height: 600px;
-  background-color:darkslategray;
+  background-color:rgb(60, 60, 60, 0.6);
   position: fixed;
 }
 /* canvas {
