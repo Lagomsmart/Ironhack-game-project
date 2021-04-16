@@ -15,6 +15,8 @@ export default class Enemy {
 
     }
     update() {
+
+
         this.draw()
 
 

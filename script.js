@@ -42,7 +42,7 @@ const fireball = new Fireball(
     Math.random() * 450 + 100,
     3132,
     207,
-    0.5,
+    2,
     'red',
     10,
     1
@@ -98,7 +98,10 @@ let otherEnemies = [];
 let maxAmountOfEnemies = 2; //we can ++ this to increase monsterspawn per room cleared
 let maxAmountOfOtherEnemies = 3
 let currentLevel = 1
-
+let zombiesOnScreen = 0
+let fireballsOnScreen = 0
+let maxFireballsOnScreen = 2
+let maxZombiesOnScreen = 2
 const projectiles = [];
 
 let powerups = [];
@@ -108,7 +111,7 @@ let maxAmountOfPowerups = 1
 
 
 
-let explosionImg = new Image ()
+let explosionImg = new Image()
 explosionImg.src = './sprites/explosion.png'
 // explImg = explosionImg
 
@@ -143,19 +146,19 @@ class Explosion {
     }
     draw(projectile) {
         let size = .3
-console.log(projectile)
+        console.log(projectile)
         ctx.drawImage(
             this.explosionImg,
             this.sx,
             this.sy,
             this.sw,
             this.sh,
-            projectile.x, 
+            projectile.x,
             projectile.y,
             this.w / 24 * size, this.h * size
         )
     }
-}   
+}
 
 const explosion = new Explosion(
     200,
@@ -268,8 +271,7 @@ for (let i = enemies.length; i < 2; i++) {
 
 
 ctx.drawImage(player.img, player.x, player.y)
-medkit.draw()
-console.log(medkit)
+
 
 
 // ---------- ANIMATE ---------- ---------- ANIMATE ---------- ---------- ANIMATE ----------
@@ -303,15 +305,11 @@ function animate() {
 
 
     // [enemies] moving
-    enemies.forEach((enemy) => {
-
-        enemy.move()
-
-    });
-
     otherEnemies.forEach((otherenemy) => {
         otherenemy.randomPathing()
-
+    });
+    enemies.forEach((enemy) => {
+        enemy.move()
     });
 
     // [enemies] updating   BLUE
@@ -334,7 +332,12 @@ function animate() {
         )
     })
 
-    // [otherEnemies] updating  RED
+    if (otherEnemies.length < enemies.length) {
+
+    }
+
+
+    // [otherEnemies] updating  RED FIREBALL
     otherEnemies.forEach((enemy, index) => {
         enemy.update(
 
@@ -370,19 +373,44 @@ function animate() {
         //ctx.fillRect(0, 0, canvas.width, canvas.height)
 
 
+        //function for spawning enemies in on timer. setInterval
+        //on new wave => fill array every second until i = amountofenemies counter 
+
+        //declaring and increasing fireball speed
+        let fireballspeed = 2
+        if (currentLevel % 3 == 0) {
+            fireballspeed++
+        }
+
         //reset player X and Y back
         player.x = defaultPlayerX
         player.y = defaultPlayerY
 
         //increase difficulty
+        zombiesOnScreen = 0
+        fireballsOnScreen = 0
+        maxFireballsOnScreen = 2
+        maxZombiesOnScreen = 2
         maxAmountOfOtherEnemies += 2
         maxAmountOfEnemies += 2
 
         //reset and push enemy amount
-        for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++) {
-            otherEnemies.push(fireball)
+        //(x, y, w, h, speed, color, health, damage, enemyImg)
+        for (let i = otherEnemies.length; i < maxAmountOfOtherEnemies && fireballsOnScreen <= maxFireballsOnScreen; i++) { //(let i = otherEnemies.length; i < maxAmountOfOtherEnemies; i++)
+            fireballsOnScreen++
+            otherEnemies.push(new Fireball(
+                1250,
+                Math.random() * 550 + 100,
+                3132,
+                207,
+                fireballspeed,
+                'red',
+                2,
+                1
+            ))
         }//(x, y, w, h, speed, color, health, damage, enemyImg)
-        for (let i = enemies.length; i < maxAmountOfEnemies; i++) {
+        for (let i = enemies.length; i < maxAmountOfEnemies && zombiesOnScreen <= maxZombiesOnScreen; i++) {
+            zombiesOnScreen++
             enemies.push(new Zombie(
                 1250,
                 Math.random() * 650 + 50,
@@ -398,11 +426,11 @@ function animate() {
 
         let randompowerup = Math.floor(Math.random() * 2)
         //reset and push powerup
-        // if (randompowerup == 0) { //50% chance to spawn 1 powerup per room
-        //     //poweruparray.push(medkit)
-        // } else if (randompowerup == 1) { //50% chance to spawn 1 powerup per room
-        //     //poweruparray.push(ammocap)
-        // }
+        if (randompowerup == 0) { //50% chance to spawn 1 powerup per room
+            powerups.push(medkit)
+        } else if (randompowerup == 1) { //50% chance to spawn 1 powerup per room
+            //powerups.push(medkit)
+        }
 
 
 
@@ -522,7 +550,7 @@ addEventListener('click', (event) => {
             y: Math.sin(angle) * 14
         }
         projectiles.push(
-            new Projectile(player.x + player.w / 2, player.y + player.h / 2, 2, 'gold', velocity)
+            new Projectile(player.x + player.w / 2, player.y + player.h / 2, 2, 'rbga(254, 0 , 0)', velocity)
         )
     } else {
         console.log('Not enough Ammo! RELOADING');
@@ -535,7 +563,7 @@ addEventListener('click', (event) => {
 //     state.mouse.y = event.clientY
 // })
 
-
+// Makes you able to console log the variable in browser
 window.enemies = enemies
 window.otherEnemies = otherEnemies
 window.player = player
