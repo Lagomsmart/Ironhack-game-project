@@ -24,5 +24,5 @@ Instructions
     Fight monster and continue to the right to advance to the next level
 
 Run program
-
+    Copy Link in browser or CTRL-Click
     https://lagomsmart.github.io/Ironhack-game-project/
