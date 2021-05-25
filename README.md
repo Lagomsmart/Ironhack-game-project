@@ -1,5 +1,5 @@
 # Ironhack-game-project
-technologies: JavaScript, HTML, CSS
+Technologies: JavaScript, HTML, CSS
 
 # Description
 Ironhack Bootcamp - week 4 project
@@ -25,5 +25,5 @@ Instructions
 
 Run program
 
-    Copy Link in browser or CTRL-Click
+    Copy link in browser or CTRL-Click
     https://lagomsmart.github.io/Ironhack-game-project/
