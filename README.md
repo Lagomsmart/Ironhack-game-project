@@ -1,5 +1,5 @@
 # Ironhack-game-project
-JavaScript, HTML, CSS
+technologies: JavaScript, HTML, CSS
 
 # Description
 Ironhack Bootcamp - week 4 project
@@ -7,8 +7,8 @@ Ironhack Bootcamp - week 4 project
 Task was to create a game using canvas, no other requirements.
 
 # Created By
-Jesper Bennett - https://www.linkedin.com/in/jesperbennett/
-David Medero - https://www.linkedin.com/in/davidmedero/
+Jesper Bennett - https://www.linkedin.com/in/jesperbennett/ <br/>
+David Medero - https://www.linkedin.com/in/davidmedero/ <br/>
 Andres Matos - https://www.linkedin.com/in/andresdmatos/
 
 # Getting Started
@@ -24,5 +24,6 @@ Instructions
     Fight monster and continue to the right to advance to the next level
 
 Run program
+
     Copy Link in browser or CTRL-Click
     https://lagomsmart.github.io/Ironhack-game-project/
