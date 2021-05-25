@@ -25,5 +25,5 @@ Instructions
 
 Run program
 
-    Copy link in browser or CTRL-Click
+    Copy link in browser
     https://lagomsmart.github.io/Ironhack-game-project/
