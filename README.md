@@ -6,10 +6,6 @@ Ironhack Bootcamp - week 4 project
 
 Task was to create a game using canvas, no other requirements.
 
-# Created By
-Jesper Bennett - https://www.linkedin.com/in/jesperbennett/ <br/>
-David Medero - https://www.linkedin.com/in/davidmedero/ <br/>
-Andres Matos - https://www.linkedin.com/in/andresdmatos/
 
 # Getting Started
 
@@ -27,3 +23,9 @@ Run program
 
     Copy link in browser
     https://lagomsmart.github.io/Ironhack-game-project/
+    
+ 
+# Created By
+Jesper Bennett - https://www.linkedin.com/in/jesperbennett/ <br/>
+David Medero - https://www.linkedin.com/in/davidmedero/ <br/>
+Andres Matos - https://www.linkedin.com/in/andresdmatos/
