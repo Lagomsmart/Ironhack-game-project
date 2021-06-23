@@ -10,7 +10,7 @@ class MedkitPowerup extends Powerups {
         this.img = img
 
     }
-    ability() {
+    ability() { // Increase player health by 50 ( Max 100 )
         if (player.health < player.maxhealth) {
             player.health += 50
 

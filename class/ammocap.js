@@ -9,7 +9,7 @@ class AmmoCap extends Powerups {
         this.img = img
 
     }
-    ability() {
+    ability() { //Decrease cost of each bullet shot
         player.bulletcost *= 0.8
     }
     draw = () => {

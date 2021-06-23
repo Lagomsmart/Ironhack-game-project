@@ -21,7 +21,7 @@ export default class Enemy {
 
 
     }
-    move() {
+    move() { // Enemy Zombie Movement
         if (player.x > this.x) {
             this.x += this.speed * 2
         }
@@ -35,7 +35,7 @@ export default class Enemy {
             this.y -= this.speed
         }
     }
-    randomPathing() { // Enemy random pathing left
+    randomPathing() { // Enemy Fireball Movement
         let randomNum = Math.floor(Math.random() * 2)
         this.x -= this.speed
         if (randomNum === 1) {
